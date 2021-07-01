@@ -1,0 +1,50 @@
+{
+  "name": "@contentstack/json-rte-serializer",
+  "version": "1.0.0",
+  "description": "This Package converts Html Document to Json and vice-versa.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "prepare": "npm run build",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/contentstack/json-rte-serializer.git"
+  },
+  "keywords": [
+    "html-to-json",
+    "slate-html"
+  ],
+  "author": "Contentstack",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/contentstack/json-rte-serializer/issues"
+  },
+  "homepage": "https://github.com/contentstack/json-rte-serializer#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/jsdom": "^16.2.12",
+    "@types/lodash": "^4.14.168",
+    "@types/omit-deep-lodash": "^1.1.1",
+    "@types/url-regex-safe": "^1.0.0",
+    "@types/uuid": "^8.3.0",
+    "jest": "^27.0.5",
+    "jsdom": "^16.6.0",
+    "lodash": "^4.17.21",
+    "omit-deep-lodash": "^1.1.5",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "array-flat-polyfill": "^1.0.1",
+    "slate": "^0.63.0",
+    "slate-hyperscript": "^0.62.0",
+    "url-regex-safe": "^2.0.2",
+    "uuid": "^8.3.2"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
