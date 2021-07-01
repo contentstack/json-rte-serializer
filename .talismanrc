@@ -1,0 +1,23 @@
+fileignoreconfig:
+- filename: README.md
+  checksum: a72a5a27a60de20d416b5aa47096476f694970d3ba8a77d9ae3ddad5ee4811d3
+- filename: coverage/lcov-report/base.css
+  checksum: 058694da09a02d022a84b0e12d15175c3a4d30f376b3dfdd5f6f67a3853d2c3d
+- filename: coverage/lcov-report/fromRedactor.tsx.html
+  checksum: dbebf23091b68803efab79b9e7289fbca795d36b3a39e87268d82c3d0ffdd05e
+- filename: coverage/lcov-report/prettify.js
+  checksum: 053a08190c1c491362b0a6dc8787b66969141025810f47481d2a2aec5ee58dda
+- filename: coverage/lcov-report/sorter.js
+  checksum: bae49f0ace6c270d9d02e85c7f52ce91169e23ad3a9d29b2c78a2f549ac5a6ca
+- filename: coverage/lcov-report/toRedactor.tsx.html
+  checksum: b5a16821a35c76ceb775bf57daff1e2c3f6e4ab6b86ada600b3599691590348a
+- filename: lib/toRedactor.js
+  checksum: c3a9ed46474a30061c268b46ab899e8b6a9dcffe12741e699158f01f35ee5d89
+- filename: package-lock.json
+  checksum: 22157a3ac9607d1efa2c4ceab9e29d1ec6b6c72853b40220e748626b331089a8
+- filename: src/fromRedactor.tsx
+  checksum: b7dadf6b2b0b5dacaf4d497511e51d11da9acc645ce8b113ae76a52399dfe3e0
+- filename: src/toRedactor.tsx
+  checksum: 3d014702628ad538065c970d988a695af003c61663596a8f6b9267b4e57ef6ea
+- filename: test/expectedJson.json
+  checksum: 6fe187fc1e68ab7678fc85a9bcec9d28759e00b80bad04435711567ed043e3da
