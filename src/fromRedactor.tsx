@@ -25,7 +25,7 @@ const ELEMENT_TAGS: { [key: string]: Function } = {
   IMG: (el: HTMLElement) => {
     let imageUrl = el.getAttribute('src')?.split(".") || ["png"]
     let imageType = imageUrl[imageUrl?.length - 1]
-    return { type: 'reference', attrs: { "asset-link": el.getAttribute('src'), default: true, "asset-type": `image/${imageType}`, "display-type": "display" } }
+    return { type: 'reference', attrs: { "asset-link": el.getAttribute('src'), default: true, "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset" } }
   },
   LI: () => ({ type: 'li', attrs: {} }),
   OL: () => ({ type: 'ol', attrs: {} }),
@@ -39,7 +39,7 @@ const ELEMENT_TAGS: { [key: string]: Function } = {
   TR: (el: HTMLElement) => ({ type: 'tr', attrs: {} }),
   TD: (el: HTMLElement) => ({ type: 'td', attrs: {} }),
   TH: (el: HTMLElement) => ({ type: 'th', attrs: {} }),
-  FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display" } }),
+  FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
   SPAN: (el: HTMLElement) => {
     return { type: 'span', attrs: {} }
   },
@@ -201,12 +201,12 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
   }
   if (el.nodeName === 'BODY') {
     if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-      return jsx('fragment', {}, [{ type: 'p', attrs: {}, uid: generateId(), children: [{ text: el.childNodes[0].textContent }] }])
+      return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, [{ type: 'p', attrs: {}, uid: generateId(), children: [{ text: el.childNodes[0].textContent }] }])
     }
     if (el.childNodes.length === 0) {
-      return jsx('fragment', {}, [{ type: 'p', attrs: {}, children: [{ text: '' }], uid: generateId() }])
+      return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, [{ type: 'p', attrs: {}, children: [{ text: '' }], uid: generateId() }])
     }
-    return jsx('fragment', {}, children)
+    return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
 
   if (nodeName === "STYLE" && allowExtraTags?.style !== true) {
