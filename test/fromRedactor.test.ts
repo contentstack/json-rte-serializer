@@ -4,13 +4,20 @@ import { isEqual } from "lodash"
 import omitdeep from "omit-deep-lodash"
 import expectedValue from "./expectedJson.json"
 
+const docWrapper = (children: any) => {
+    return {
+        "type": "doc",
+        "attrs": {},
+        children
+    }
+}
 describe("Testing html to json conversion", () => {
     it("paragraph conversion", () => {
         let html = "<p>This is test</p>"
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), [{ "attrs": {}, "children": [{ "text": "This is test" }], "type": "p" }])
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), docWrapper([{ "attrs": {}, "children": [{ "text": "This is test" }], "type": "p" }]))
         expect(testResult).toBe(true)
     })
 
@@ -19,7 +26,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[2].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[2].json), "uid"))
         expect(testResult).toBe(true)
     })
     it("table conversion", () => {
@@ -27,7 +34,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[3].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[3].json), "uid"))
         expect(testResult).toBe(true)
     })
     it("basic formating, block and code conversion", () => {
@@ -35,7 +42,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[4].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[4].json), "uid"))
         expect(testResult).toBe(true)
     })
     it("List and alignment conversion", () => {
@@ -43,7 +50,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[5].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[5].json), "uid"))
         expect(testResult).toBe(true)
     })
     it("Image and iframe conversion", () => {
@@ -51,7 +58,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[6].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[6].json), "uid"))
         expect(testResult).toBe(true)
     })
     it("Link ,divider and property conversion", () => {
@@ -59,7 +66,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[7].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[7].json), "uid"))
         expect(testResult).toBe(true)
     })
 
@@ -68,7 +75,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(JSON.stringify(omitdeep(jsonValue, "uid"), null, 2), JSON.stringify(omitdeep(expectedValue[8].json, "uid"), null, 2))
+        let testResult = isEqual(JSON.stringify(omitdeep(jsonValue, "uid"), null, 2), JSON.stringify(omitdeep(docWrapper(expectedValue[8].json), "uid"), null, 2))
         expect(testResult).toBe(true)
     })
     it("Embedded entry as inline block", () => {
@@ -76,7 +83,7 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[9].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[9].json), "uid"))
         expect(testResult).toBe(true)
     })
 
@@ -86,7 +93,7 @@ describe("Testing html to json conversion", () => {
         let htmlDoc = dom.window.document.querySelector('body')
 
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(expectedValue[10].json, "uid"))
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[10].json), "uid"))
         expect(testResult).toBe(true)
     })
 

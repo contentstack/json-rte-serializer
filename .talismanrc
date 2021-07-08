@@ -1,6 +1,6 @@
 fileignoreconfig:
 - filename: README.md
-  checksum: a72a5a27a60de20d416b5aa47096476f694970d3ba8a77d9ae3ddad5ee4811d3
+  checksum: 4bffa07e1e88d50a311464c9f90ff92bcba7fe434be4d9374bcd49bf76b1e6a8
 - filename: coverage/lcov-report/base.css
   checksum: 058694da09a02d022a84b0e12d15175c3a4d30f376b3dfdd5f6f67a3853d2c3d
 - filename: coverage/lcov-report/fromRedactor.tsx.html
@@ -20,4 +20,4 @@ fileignoreconfig:
 - filename: src/toRedactor.tsx
   checksum: 3d014702628ad538065c970d988a695af003c61663596a8f6b9267b4e57ef6ea
 - filename: test/expectedJson.json
-  checksum: 6fe187fc1e68ab7678fc85a9bcec9d28759e00b80bad04435711567ed043e3da
+  checksum: 9979f84be3e5aa27f24381a0c49e0e6696388d19615c4f3b09082780968236ee

@@ -13,7 +13,7 @@ To get started with JavaScript, you will need the following:
 Install json-rte-serializer with npm
 
 ```bash
-  npm install json-rte-serializer
+  npm install @contentstack/json-rte-serializer
 ```
 
 ## Usage/Examples
@@ -22,7 +22,7 @@ Convert value of the JSON RTE field into HTML format:
 
 ```javascript
 import Component from 'my-project'
-import { jsonToHtml } from "json-rte-serializer"
+import { jsonToHtml } from "@contentstack/json-rte-serializer"
 function App() {
     const htmlValue = jsonToHtml({ JSON Value})
     return <Component />
@@ -33,7 +33,7 @@ Convert HTML value of the Rich Text Editor field into JSON to support rendering 
 
 ```javascript
 import Component from 'my-project'
-import { htmlToJson } from "json-rte-serializer"
+import { htmlToJson } from "@contentstack/json-rte-serializer"
 function App() {
     const htmlDomBody = new DOMParser().parseFromString("<p>This is Html Value</p>", 'text/html').body
     const jsonValue = htmlToJson(htmlDomBody)
@@ -44,10 +44,15 @@ function App() {
 Example of conversion:
 ```JSON
     {
-        "uid":"767a479c6882471d9725852f042b67ce",
-        "type": "p",
+        "type":"doc",
         "attrs":{},
-        "children" : [{"text": "hello world"}]
+        "uid":"547a479c68824767ce1d9725852f042b",
+        "children":[{
+            "uid":"767a479c6882471d9725852f042b67ce",
+            "type": "p",
+            "attrs":{},
+            "children" : [{"text": "This is Html Value"}]
+        }]
     }
 ```
 
