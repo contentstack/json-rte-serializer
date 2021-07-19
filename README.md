@@ -61,7 +61,7 @@ Example of conversion:
 ```
 
 ### Documentation:
-Please refer to our JSON Rich Text Editor [documentation](https://www.contentstack.com/docs/developers/create-content-types/json-rich-text-editor/#migrate-content-from-html-rte-to-json-rte) for more information.
+Please refer to our JSON Rich Text Editor [documentation](https://www.contentstack.com/docs/developers/create-content-types/json-rich-text-editor/) for more information.
 
 ### The MIT License (MIT)
 
