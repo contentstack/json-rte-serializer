@@ -1,5 +1,5 @@
 # JSON RTE SERIALIZER
-Contentstack is a headless CMS with an API-first approach. It is a CMS that developers can use to build powerful cross-platform applications in their favorite languages. Build your application frontend, and Contentstack will take care of the rest. Read More.
+Contentstack is a headless CMS with an API-first approach. It is a CMS that developers can use to build powerful cross-platform applications in their favorite languages. Build your application frontend, and Contentstack will take care of the rest. [Read more](https://www.contentstack.com/docs/).
 
 This package helps the user convert JSON-based data of the JSON Rich Text Editor field to HTML format and vice versa.
 
@@ -59,6 +59,9 @@ Example of conversion:
 ```HTML
     <p>hello world</p>
 ```
+
+### Documentation:
+Please refer to our JSON Rich Text Editor [documentation](https://www.contentstack.com/docs/developers/create-content-types/json-rich-text-editor/#migrate-content-from-html-rte-to-json-rte) for more information.
 
 ### The MIT License (MIT)
 
