@@ -1,6 +1,11 @@
 import { jsx } from 'slate-hyperscript'
 import { v4 } from 'uuid'
-import { kebabCase, isEmpty, flatten, isObject, cloneDeep, isUndefined } from 'lodash'
+import kebabCase from "lodash/kebabCase"
+import isEmpty from "lodash/isEmpty"
+import flatten from "lodash/flatten"
+import isObject from "lodash/isObject"
+import cloneDeep from "lodash/cloneDeep"
+import isUndefined from "lodash/isUndefined"
 
 const generateId = () => v4().split('-').join('')
 const isInline = ['span', 'a', 'inlineCode', 'reference']

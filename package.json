@@ -28,20 +28,19 @@
     "@types/jsdom": "^16.2.12",
     "@types/lodash": "^4.14.168",
     "@types/omit-deep-lodash": "^1.1.1",
-    "@types/url-regex-safe": "^1.0.0",
     "@types/uuid": "^8.3.0",
     "jest": "^27.0.5",
     "jsdom": "^16.6.0",
     "omit-deep-lodash": "^1.1.5",
     "ts-jest": "^27.0.3",
-    "typescript": "^4.2.4"
+    "typescript": "^4.4.2"
   },
   "dependencies": {
     "array-flat-polyfill": "^1.0.1",
+    "lodash": "^4.17.21",
     "slate": "^0.63.0",
     "slate-hyperscript": "^0.62.0",
-    "lodash": "^4.17.21",
-    "url-regex-safe": "^2.0.2",
+    "tslib": "^2.3.1",
     "uuid": "^8.3.2"
   },
   "files": [
