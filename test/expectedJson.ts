@@ -1,4 +1,4 @@
-{
+export default {
     "2": {
         "html": "<h1>heading1</h1><h2>heading2</h2><h3>heading3</h3><h4>heading 4</h4><h5>heading 5</h5><h6>heading 6</h6>",
         "json": [
@@ -860,7 +860,720 @@
         ]
     },
     "12": {
-        "html": "",
-        "json": []
-    }
+        "html": "<p><a target=\"_blank\">Hey</a></p>",
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "type": "a",
+                        "attrs": {
+                            "url": "#",
+                            "style": {},
+                            "redactor-attributes": {
+                                "target": "_blank"
+                            }
+                        },
+                        "children": [
+                            {
+                                "text": "Hey"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "13": {
+        "html": "<p></p><img asset_uid=\"bltecea58c1a7fa27f4\" height=\"auto\"/>",
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "reference",
+                "attrs": {
+                    "asset-link": null,
+                    "default": true,
+                    "asset-type": "image/png",
+                    "display-type": "display",
+                    "type": "asset",
+                    "style": {},
+                    "redactor-attributes": {
+                        "asset_uid": "bltecea58c1a7fa27f4",
+                        "height": "auto"
+                    }
+                },
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            }
+        ]
+    },
+    "14": {
+        "html": "<p>This is <strong>Bold, </strong><em>Italic, </em><u>underline,</u> <del>Strikethrough</del>, <span data-type='inlineCode'>inline-code</span> , 2<sup>x</sup> , 2<sub>x</sub></p><h1>H1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6><blockquote>Block quote</blockquote><p></p><pre>Block Code</pre><p style=\"text-align: center;\">center</p><p style=\"text-align: right;\">Right</p><p style=\"text-align: justify;\">Justify</p><ol><li style=\"text-align: justify;\">order list</li><li style=\"text-align: justify;\">2</li></ol><ul><li>1</li><li>2</li></ul><p></p><iframe src=\"https://www.***REMOVED***.com/embed/v55JVEJg7i4\" width=\"88\" height=\"300\" style=\"width: 88%; height: 300px;\"></iframe><p></p><table><thead><tr><th><p>1</p></th><th><p>2</p></th></tr></thead><tbody><tr><td><p>3</p></td><td><p>4</p></td></tr><tr><td><p>5</p></td><td><p>6</p></td></tr></tbody></table><p></p><figure type=\"asset\" sys-style-type=\"display\" class=\"embedded-asset\" content-type-uid=\"sys_assets\" data-sys-asset-filelink=\"https://images.contentstack.io/v3/assets/bltbdb397c7cc18a214/blt9fedd0336c2f7f0d/61fe9fb699c8a84a577b9f40/crop_area.jpeg\" data-sys-asset-uid=\"blt9fedd0336c2f7f0d\" data-sys-asset-filename=\"crop_area.jpeg\" data-sys-asset-contenttype=\"image/jpeg\"></figure><p></p><hr/>",
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "This is "
+                    },
+                    {
+                        "text": "Bold, ",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "bold": true
+                    },
+                    {
+                        "text": "Italic, ",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "italic": true
+                    },
+                    {
+                        "text": "underline,",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "underline": true
+                    },
+                    {
+                        "text": " "
+                    },
+                    {
+                        "text": "Strikethrough",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "strikethrough": true
+                    },
+                    {
+                        "text": ", "
+                    },
+                    {
+                        "text": "inline-code",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "inlineCode": true
+                    },
+                    {
+                        "text": " , 2"
+                    },
+                    {
+                        "text": "x",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "superscript": true
+                    },
+                    {
+                        "text": " , 2"
+                    },
+                    {
+                        "text": "x",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "subscript": true
+                    }
+                ]
+            },
+            {
+                "type": "h1",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "H1"
+                    }
+                ]
+            },
+            {
+                "type": "h2",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "h2"
+                    }
+                ]
+            },
+            {
+                "type": "h3",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "h3"
+                    }
+                ]
+            },
+            {
+                "type": "h4",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "h4"
+                    }
+                ]
+            },
+            {
+                "type": "h5",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "h5"
+                    }
+                ]
+            },
+            {
+                "type": "h6",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "h6"
+                    }
+                ]
+            },
+            {
+                "type": "blockquote",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "Block quote"
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "code",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "Block Code"
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {
+                    "style": {
+                        "text-align": "center"
+                    },
+                    "redactor-attributes": {
+                        "style": "text-align: center;"
+                    }
+                },
+                "children": [
+                    {
+                        "text": "center"
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {
+                    "style": {
+                        "text-align": "right"
+                    },
+                    "redactor-attributes": {
+                        "style": "text-align: right;"
+                    }
+                },
+                "children": [
+                    {
+                        "text": "Right"
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {
+                    "style": {
+                        "text-align": "justify"
+                    },
+                    "redactor-attributes": {
+                        "style": "text-align: justify;"
+                    }
+                },
+                "children": [
+                    {
+                        "text": "Justify"
+                    }
+                ]
+            },
+            {
+                "type": "ol",
+                "attrs": {},
+                "children": [
+                    {
+                        "type": "li",
+                        "attrs": {
+                            "style": {
+                                "text-align": "justify"
+                            },
+                            "redactor-attributes": {
+                                "style": "text-align: justify;"
+                            }
+                        },
+                        "children": [
+                            {
+                                "text": "order list"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "li",
+                        "attrs": {
+                            "style": {
+                                "text-align": "justify"
+                            },
+                            "redactor-attributes": {
+                                "style": "text-align: justify;"
+                            }
+                        },
+                        "children": [
+                            {
+                                "text": "2"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "ul",
+                "attrs": {},
+                "children": [
+                    {
+                        "type": "li",
+                        "attrs": {},
+                        "children": [
+                            {
+                                "text": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "li",
+                        "attrs": {},
+                        "children": [
+                            {
+                                "text": "2"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "embed",
+                "attrs": {
+                    "src": "https://www.***REMOVED***.com/embed/v55JVEJg7i4",
+                    "style": {
+                        "width": "88%",
+                        "height": "300px"
+                    },
+                    "redactor-attributes": {
+                        "src": "https://www.***REMOVED***.com/embed/v55JVEJg7i4",
+                        "width": "88",
+                        "height": "300",
+                        "style": "width: 88%; height: 300px;"
+                    },
+                    "width": 88
+                },
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "table",
+                "attrs": {
+                    "rows": 3,
+                    "cols": 2,
+                    "colWidths": [
+                        250,
+                        250
+                    ]
+                },
+                "children": [
+                    {
+                        "type": "thead",
+                        "attrs": {},
+                        "children": [
+                            {
+                                "type": "tr",
+                                "attrs": {},
+                                "children": [
+                                    {
+                                        "type": "th",
+                                        "attrs": {},
+                                        "children": [
+                                            {
+                                                "type": "p",
+                                                "attrs": {},
+                                                "children": [
+                                                    {
+                                                        "text": "1"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "th",
+                                        "attrs": {},
+                                        "children": [
+                                            {
+                                                "type": "p",
+                                                "attrs": {},
+                                                "children": [
+                                                    {
+                                                        "text": "2"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "tbody",
+                        "attrs": {},
+                        "children": [
+                            {
+                                "type": "tr",
+                                "attrs": {},
+                                "children": [
+                                    {
+                                        "type": "td",
+                                        "attrs": {},
+                                        "children": [
+                                            {
+                                                "type": "p",
+                                                "attrs": {},
+                                                "children": [
+                                                    {
+                                                        "text": "3"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "td",
+                                        "attrs": {},
+                                        "children": [
+                                            {
+                                                "type": "p",
+                                                "attrs": {},
+                                                "children": [
+                                                    {
+                                                        "text": "4"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "tr",
+                                "attrs": {},
+                                "children": [
+                                    {
+                                        "type": "td",
+                                        "attrs": {},
+                                        "children": [
+                                            {
+                                                "type": "p",
+                                                "attrs": {},
+                                                "children": [
+                                                    {
+                                                        "text": "5"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "td",
+                                        "attrs": {},
+                                        "children": [
+                                            {
+                                                "type": "p",
+                                                "attrs": {},
+                                                "children": [
+                                                    {
+                                                        "text": "6"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "attrs": {
+                    "style": {},
+                    "class-name": "embedded-asset",
+                    "redactor-attributes": {
+                        "type": "asset",
+                        "sys-style-type": "display"
+                    },
+                    "type": "asset",
+                    "target": "_self",
+                    "asset-link": "https://images.contentstack.io/v3/assets/bltbdb397c7cc18a214/blt9fedd0336c2f7f0d/61fe9fb699c8a84a577b9f40/crop_area.jpeg",
+                    "asset-uid": "blt9fedd0336c2f7f0d",
+                    "display-type": "display",
+                    "asset-name": "crop_area.jpeg",
+                    "asset-type": "image/jpeg",
+                    "content-type-uid": "sys_assets"
+                },
+                "type": "reference",
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "fragment",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            }
+        ]
+    },
+    "15": {
+        "html": "<p>This is test</p><test>Custom tag: test</test>",
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "uid": "b472cf509c3149d39b56898f03646636",
+                "children": [
+                    {
+                        "text": "This is test"
+                    }
+                ]
+            },
+            {
+                "type": "test",
+                "attrs": {},
+                "uid": "b9581df522024b3c8e290a206dbefe98",
+                "children": [
+                    {
+                        "text": "Custom tag: test"
+                    }
+                ]
+            }
+        ],
+        "customElementTags": {
+            "TEST": () => ({
+                "type": "test",
+                "attrs": {}
+            })
+        },
+        "customElementTypes": {
+            "test": (attrs:any,child:any) => {
+                return `<test${attrs}>${child}</test>`
+            }
+        }
+    },
+    "16": {
+        "html": `<p>This is test</p><test1 data-test="custom-attrs">Custom tag: test</test1>`,
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "uid": "b472cf509c3149d39b56898f03646636",
+                "children": [
+                    {
+                        "text": "This is test"
+                    }
+                ]
+            },
+            {
+                "type": "test",
+                "attrs": {
+                  "data-test": "custom-attrs",
+                  "style": {},
+                  "redactor-attributes": {
+                    "data-test": "custom-attrs"
+                  }
+                },
+                "children": [
+                  {
+                    "text": "Custom tag: test"
+                  }
+                ]
+              }
+        ],
+        "customElementTags": {
+            "TEST1": (el:HTMLElement) => ({
+                "type": "test",
+                "attrs": {
+                    "data-test": el.getAttribute("data-test") || null
+                }
+            })
+        },
+        "customElementTypes": {
+            "test": (attrs:any,child:any) => {
+                return `<test1${attrs}>${child}</test1>`
+            }
+        }
+    },
+    "17": {
+        "html": `<p>This <color data-color="red">is</color> <wrapper>test</wrapper></p>`,
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "This "
+                    },
+                    {
+                        "text": "is",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "color": "red"
+                    },
+                    {
+                        "text": " "
+                    },
+                    {
+                        "text": "test",
+                        "attrs": {
+                            "style": {}
+                        },
+                        "wrapper": true
+                    }
+                ]
+            }
+        ],
+        "customTextTags": {
+            "WRAPPER": (el:HTMLElement) => ({
+                "wrapper": true
+            }),
+            "COLOR": (el:HTMLElement) => {
+                return {
+                    "color": el.getAttribute("data-color")
+                }
+            }
+        },
+        "customTextWrapper": {
+            "wrapper": (child:any,value:any) => {
+                return `<wrapper>${child}</wrapper>`
+            },
+            'color': (child:any,value:any) => {
+                return `<color data-color="${value}">${child}</color>`
+            }
+        }
+    },
+    "18": {
+        "html": `<p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p>`,
+        "json": [
+            {
+              "type": "p",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "social-embed",
+                  "attrs": {
+                    "url": "https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA",
+                    "style": {},
+                    "redactor-attributes": {
+                      "url": "https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"
+                    }
+                  },
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+        "customElementTags": {
+            "SOCIAL-EMBED": (el:HTMLElement) => ({
+                "type": "social-embed",
+                "attrs": {
+                    "url": el.getAttribute("url") || null
+                }
+            })
+        },
+        "customElementTypes": {
+            "social-embed": (attrs:any,child:any,jsonBlock:any) => {
+                return `<social-embed${attrs}>${child}</social-embed>`
+            }
+        }
+    },
 }

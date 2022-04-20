@@ -7,12 +7,14 @@ import isObject from "lodash/isObject"
 import cloneDeep from "lodash/cloneDeep"
 import isUndefined from "lodash/isUndefined"
 
+import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags} from './types'
+
 const generateId = () => v4().split('-').join('')
 const isInline = ['span', 'a', 'inlineCode', 'reference']
 const isVoid = ['img', 'embed']
 
 
-const ELEMENT_TAGS: { [key: string]: Function } = {
+const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   A: (el: HTMLElement) => ({
     type: 'a',
     attrs: {
@@ -59,7 +61,7 @@ const ELEMENT_TAGS: { [key: string]: Function } = {
   }
 }
 
-const TEXT_TAGS: { [key: string]: Function } = {
+const TEXT_TAGS: IHtmlToJsonTextTags = {
   CODE: () => ({ code: true }),
   DEL: () => ({ strikethrough: true }),
   EM: () => ({ italic: true }),
@@ -139,16 +141,9 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
   }
   return children
 }
-declare type customelement = Node & {
-  parentNode: any
-  attributes: any
-}
-declare type allowExtraTags = {
-  script: boolean,
-  style: boolean
-}
+
 const whiteCharPattern = /^[\s ]{2,}$/
-export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
+export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) => {
   if (el.nodeType === 3) {
     if (whiteCharPattern.test(el.textContent)) return null
     if (el.textContent === '\n') {
@@ -197,8 +192,15 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
   }
   const { nodeName } = el
   let parent = el
-
-  let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, allowExtraTags)))
+  if(el.nodeName === "BODY"){
+    if(options?.customElementTags && !isEmpty(options.customElementTags)){
+      Object.assign(ELEMENT_TAGS, options.customElementTags)
+    }
+    if(options?.customTextTags && !isEmpty(options.customTextTags)) {
+      Object.assign(TEXT_TAGS, options.customTextTags)
+    }
+  }
+  let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
   children = children.filter((child: any) => child !== null)
   children = traverseChildAndWarpChild(children)
   if (children.length === 0) {
@@ -214,10 +216,10 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
 
-  if (nodeName === "STYLE" && allowExtraTags?.style !== true) {
+  if (nodeName === "STYLE" && options?.allowExtraTags?.style !== true) {
     return children
   }
-  if (nodeName === "SCRIPT" && allowExtraTags?.script !== true) {
+  if (nodeName === "SCRIPT" && options?.allowExtraTags?.script !== true) {
     return children
   }
   const isEmbedEntry = el.attributes['data-sys-entry-uid']?.value
@@ -421,7 +423,7 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
       })
     }
 
-    if (el.parentNode.nodeName === 'PRE') {
+    if (el.parentNode?.nodeName === 'PRE') {
       return el.outerHTML
     }
 
@@ -613,7 +615,7 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
         elementAttrs?.attrs?.["redactor-attributes"]?.['data-type']
       ) {
         elementAttrs.type = 'check-list'
-        elementAttrs.checked = elementAttrs.attrs["redactor-attributes"]['data-checked'] === 'true'
+        elementAttrs.attrs.checked = elementAttrs.attrs["redactor-attributes"]['data-checked'] === 'true'
         delete elementAttrs.attrs["redactor-attributes"]['data-checked']
         delete elementAttrs.attrs["redactor-attributes"]['data-type']
       }
@@ -645,12 +647,12 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
         })
       }
       let noOfInlineElement = 0
-      Array.from(el.parentNode.childNodes).forEach((child: any) => {
+      Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
         if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A') {
           noOfInlineElement += 1
         }
       })
-      if (noOfInlineElement !== el.parentNode.childNodes.length) {
+      if (noOfInlineElement !== el.parentNode?.childNodes.length) {
         elementAttrs = {
           type: 'div',
           attrs: {

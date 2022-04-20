@@ -1,7 +1,7 @@
 import { toRedactor } from "../src/toRedactor"
 import { isEqual } from "lodash"
-import omitdeep from "omit-deep-lodash"
-import expectedValue from "./expectedJson.json"
+
+import expectedValue from "./expectedJson"
 
 describe("Testing json to html conversion", () => {
     it("heading conversion", () => {
@@ -69,5 +69,27 @@ describe("Testing json to html conversion", () => {
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
         let testResult = isEqual(htmlValue, expectedValue['10'].htmlValue)
         expect(testResult).toBe(true)
+    })
+    it("Custom ELEMENT_TYPES",() => {
+        let cases = ["15","16","18"]
+        cases.forEach((index:any) => {
+            let json = expectedValue[index]?.json
+            let htmlValue = toRedactor({ type: "doc", attrs: {}, children: json },{customElementTypes:expectedValue[index].customElementTypes})
+            //console.log(htmlValue)
+            //console.log(expectedValue[index].html)
+            let testResult = isEqual(htmlValue, expectedValue[index].html)
+            expect(testResult).toBe(true)
+        })
+    })
+    it("Custom TEXT_WRAPPER",() => {
+        let cases = ["17"]
+        cases.forEach((index:any) => {
+            let json = expectedValue[index]?.json
+            let htmlValue = toRedactor({ type: "doc", attrs: {}, children: json },{customTextWrapper:expectedValue[index].customTextWrapper})
+            //console.log(htmlValue)
+            //console.log(expectedValue[index].html)
+            let testResult = isEqual(htmlValue, expectedValue[index].html)
+            expect(testResult).toBe(true)
+        })
     })
 })
