@@ -25,10 +25,22 @@ Install json-rte-serializer with npm
 ```javascript
 import Component from "my-project";
 import { jsonToHtml } from "@contentstack/json-rte-serializer";
-function App() {
-    const htmlValue = jsonToHtml({"type":"doc","attrs":{},"uid":"547a479c68824767ce1d9725852f042b","children":[{"uid":"767a479c6882471d9725852f042b67ce","type":"p","attrs":{},"children":[{"text":"This is Html Value"}]}]});
-    return <Component />;
-}
+
+const htmlValue = jsonToHtml({
+    type: "doc",
+    attrs: {},
+    uid: "547a479c68824767ce1d9725852f042b",
+    children: [
+        {
+            uid: "767a479c6882471d9725852f042b67ce",
+            type: "p",
+            attrs: {},
+            children: [{ text: "This is Html Value" }],
+        },
+    ],
+});
+
+console.log(htmlValue);
 ```
 
 Result of conversion
@@ -42,14 +54,13 @@ Result of conversion
 ```javascript
 import Component from "my-project";
 import { htmlToJson } from "@contentstack/json-rte-serializer";
-function App() {
-    const htmlDomBody = new DOMParser().parseFromString(
-        "<p>This is Html Value</p>",
-        "text/html"
-    ).body;
-    const jsonValue = htmlToJson(htmlDomBody);
-    return <Component />;
-}
+const htmlDomBody = new DOMParser().parseFromString(
+    "<p>This is Html Value</p>",
+    "text/html"
+).body;
+const jsonValue = htmlToJson(htmlDomBody);
+
+console.log(jsonValue);
 ```
 
 Result of conversion:
@@ -68,7 +79,6 @@ Result of conversion:
 }
 ```
 
-
 ## Custom conversion
 
 We can pass an optional options field to manipulate the working of the serializer.
@@ -85,26 +95,60 @@ The parser function would provide the following arguments:
 ```javascript
 import Component from "my-project";
 import { jsonToHtml } from "@contentstack/json-rte-serializer";
-function App() {
-    const htmlValue = jsonToHtml(
-        {"type":"doc","uid":"cfe8176d1ca04cc0b42f60b3047f611d","attrs":{},"children":[{"type":"p","attrs":{},"uid":"6eae3c5bd7624bf39966c855543d954b","children":[{"type":"social-embed","attrs":{"url":"https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA","style":{},"redactor-attributes":{"url":"https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"}},"uid":"8d8482d852b84822a9b66e55ffd0e57c","children":[{"text":""}]}]},{"type":"p","attrs":{},"uid":"54a7340da87846dda28aaf622069559a","children":[{"text":"This "},{"text":"is","attrs":{"style":{}},"color":"red"},{"text":" test"}]}]},
-        // parser options
+const jsonValue = {
+    type: "doc",
+    uid: "cfe8176d1ca04cc0b42f60b3047f611d",
+    attrs: {},
+    children: [
         {
-            customElement: {
-                "social-embed": (attrs, child, jsonBlock) => {
-                    return `<social-embed${attrs}>${child}</social-embed>`;
+            type: "p",
+            attrs: {},
+            uid: "6eae3c5bd7624bf39966c855543d954b",
+            children: [
+                {
+                    type: "social-embed",
+                    attrs: {
+                        url: "https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA",
+                        style: {},
+                        "redactor-attributes": {
+                            url: "https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA",
+                        },
+                    },
+                    uid: "8d8482d852b84822a9b66e55ffd0e57c",
+                    children: [{ text: "" }],
                 },
+            ],
+        },
+        {
+            type: "p",
+            attrs: {},
+            uid: "54a7340da87846dda28aaf622069559a",
+            children: [
+                { text: "This " },
+                { text: "is", attrs: { style: {} }, color: "red" },
+                { text: " test" },
+            ],
+        },
+    ],
+};
+const htmlValue = jsonToHtml(
+    jsonValue,
+    // parser options
+    {
+        customElement: {
+            "social-embed": (attrs, child, jsonBlock) => {
+                return `<social-embed${attrs}>${child}</social-embed>`;
             },
-            customTextWrapper: {
-                "color": (child, value) => {
-                    return `<color data-color="${value}">${child}</color>`;
-                },
+        },
+        customTextWrapper: {
+            "color": (child, value) => {
+                return `<color data-color="${value}">${child}</color>`;
             },
-        }
-    );
+        },
+    }
+);
 
-    return <Component />;
-}
+console.log(htmlValue);
 ```
 
 > NOTE: the custom parser's key must match exactly with the json-type. This includes the case of the text.
@@ -125,30 +169,29 @@ The parser function would provide the following arguments:
 ```javascript
 import Component from "my-project";
 import { htmlToJson } from "@contentstack/json-rte-serializer";
-function App() {
-    const htmlDomBody = new DOMParser().parseFromString(
-        `<p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p><p>This <color data-color="red">is</color> test</p>`,
-        "text/html"
-    ).body;
-    const jsonValue = htmlToJson(htmlDomBody, {
-        customElementTags: {
-            "SOCIAL-EMBED": (el) => ({
-                type: "social-embed",
-                attrs: {
-                    url: el.getAttribute("url") || null,
-                },
-            }),
-        },
-        customTextTags: {
-            "COLOR": (el) => {
-                return {
-                    color: el.getAttribute("data-color"),
-                };
+const htmlDomBody = new DOMParser().parseFromString(
+    `<p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p><p>This <color data-color="red">is</color> test</p>`,
+    "text/html"
+).body;
+const jsonValue = htmlToJson(htmlDomBody, {
+    customElementTags: {
+        "SOCIAL-EMBED": (el) => ({
+            type: "social-embed",
+            attrs: {
+                url: el.getAttribute("url") || null,
             },
+        }),
+    },
+    customTextTags: {
+        "COLOR": (el) => {
+            return {
+                color: el.getAttribute("data-color"),
+            };
         },
-    });
-    return <Component />;
-}
+    },
+});
+
+console.log(jsonValue);
 ```
 
 > NOTE: the custom parser's key must be capitalized and match the custom HTML tag.
