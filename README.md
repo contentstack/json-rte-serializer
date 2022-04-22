@@ -22,7 +22,7 @@ Let's look at a few code samples that display how we can convert data present in
 
 ## Standard Conversion
 
-For standard conversion scenarios, JSON RTE Serializer supports only the standard tags available in the JSON Rich Text Editor field. To use custom tags of your own, you can follow the Custom Conversion examples provided below.
+For standard conversion scenarios, JSON RTE Serializer supports only the standard tags available in the JSON Rich Text Editor field. To use custom tags of your own, you can follow the [Custom Conversion](#custom-conversion) examples provided below.
 
 ### JSON to HTML Conversion Code
 
