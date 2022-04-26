@@ -70,6 +70,19 @@ const jsonValue = htmlToJson(htmlDomBody);
 
 console.log(jsonValue);
 ```
+> **_Note:_**  The above code snippet would work only for JavaScript-powered frontend websites.
+
+For Node.js-based applications, you can use the following code:
+```javascript
+const { htmlToJson } = require("@contentstack/json-rte-serializer")
+const {JSDOM} = require('jsdom')
+
+const dom = new JSDOM("<p>This is HTML-formatted content.</p>")
+let htmlDoc = dom.window.document.querySelector('body')
+const jsonValue = htmlToJson(htmlDoc)
+
+console.log(jsonValue);
+```
 
 ### Result of Conversion
 
@@ -168,7 +181,7 @@ const htmlValue = jsonToHtml(
 console.log(htmlValue);
 ```
 
-**Note**: The specified custom parser's key must exactly match the element type. This includes the casing of the text.
+> **_Note_**: The specified custom parser's key must exactly match the element type. This includes the casing of the text.
 
 ### Result of Conversion
 
@@ -187,7 +200,6 @@ The parser function provides the `el` argument that references the element of th
 You can use the following customized JSON RTE Serializer code to convert your HTML RTE field data into JSON format.
 
 ```javascript
-import Component from "my-project";
 import { htmlToJson } from "@contentstack/json-rte-serializer";
 const htmlDomBody = new DOMParser().parseFromString(
     `<p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p><p>This <color data-color="red">is</color> text.</p>`,
@@ -213,8 +225,37 @@ const jsonValue = htmlToJson(htmlDomBody, {
 
 console.log(jsonValue);
 ```
+> **_Note:_**  The above code snippet would work only for JavaScript-powered frontend websites.
 
-**Note**: The custom parser's key must always be capitalized and exactly match the custom HTML tag.
+For Node.js-based applications, you can use the following code:
+```javascript
+const { htmlToJson } = require("@contentstack/json-rte-serializer")
+const {JSDOM} = require('jsdom')
+
+const dom = new JSDOM(`<p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p><p>This <color data-color="red">is</color> text.</p>`)
+let htmlDoc = dom.window.document.querySelector('body')
+const jsonValue = htmlToJson(htmlDoc, {
+    customElementTags: {
+        "SOCIAL-EMBED": (el) => ({
+            type: "social-embed",
+            attrs: {
+                url: el.getAttribute("url") || null,
+            },
+        }),
+    },
+    customTextTags: {
+        COLOR: (el) => {
+            return {
+                color: el.getAttribute("data-color"),
+            };
+        },
+    },
+});
+
+console.log(jsonValue);
+```
+
+> **_Note_**: The custom parser's key must always be capitalized and exactly match the custom HTML tag.
 
 ### Result of conversion
 
