@@ -1399,7 +1399,7 @@ export default {
                 ]
             },
             {
-                "type": "fragment",
+                "type": "hr",
                 "attrs": {},
                 "children": [
                     {
@@ -1535,7 +1535,8 @@ export default {
             'color': (child:any,value:any) => {
                 return `<color data-color="${value}">${child}</color>`
             }
-        }
+        },
+        "nonStandardTags": 2
     },
     "18": {
         "html": `<p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p>`,
@@ -1575,5 +1576,85 @@ export default {
                 return `<social-embed${attrs}>${child}</social-embed>`
             }
         }
+    },
+    "19": {
+        "html": `<hangout-module><hangout-chat from="Paul, Addy"><hangout-discussion><hangout-message from="Paul" profile="profile.png" datetime="2013-07-17T12:02"><p>Feelin' this Web Components thing.</p><p>Heard of it?</p></hangout-message></hangout-discussion></hangout-chat><hangout-chat>Hi There!</hangout-chat></hangout-module>`,
+        "json": [
+            {
+              "type": "hangout-module",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "hangout-chat",
+                  "attrs": {
+                    "from": "Paul, Addy"
+                  },
+                  "children": [
+                    {
+                      "type": "hangout-discussion",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "type": "hangout-message",
+                          "attrs": {
+                            "from": "Paul",
+                            "profile": "profile.png",
+                            "datetime": "2013-07-17T12:02"
+                          },
+                          "children": [
+                            {
+                              "type": "p",
+                              "attrs": {},
+                              "children": [
+                                {
+                                  "text": "Feelin' this Web Components thing."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "p",
+                              "attrs": {},
+                              "children": [
+                                {
+                                  "text": "Heard of it?"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "hangout-chat",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "text": "Hi There!"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+        "nonStandardTags": 5
+    },
+    "20": {
+        "html": `<p>This is <font-family data-font-family="Inter">test</font-family></p>`,
+        "json": [{"type":"p","attrs":{},"children":[{"text":"This is "},{"text":"test","attrs":{"style":{}},"font-family":"Inter"}]}],
+        "customTextTags": {
+            "FONT-FAMILY": (el:HTMLElement) => {
+                return {
+                    "font-family": el.getAttribute("data-font-family")
+                }
+            }
+        },
+        "customTextWrapper": {
+            "font-family": (child:any,value:any) => {
+                return `<font-family data-font-family="${value}">${child}</font-family>`
+            }
+        },
+        "nonStandardTags": 0
     },
 }

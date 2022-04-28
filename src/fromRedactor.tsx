@@ -58,7 +58,8 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   },
   SCRIPT: (el: HTMLElement) => {
     return { type: 'script', attrs: {} }
-  }
+  },
+  HR: () => ({ type: 'hr', attrs: {} })
 }
 
 const TEXT_TAGS: IHtmlToJsonTextTags = {
@@ -132,12 +133,10 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
       inlineElementIndex.push(index)
     }
   })
-
   if (hasBlockElement && !isEmpty(inlineElementIndex)) {
     Array.from(inlineElementIndex).forEach((child) => {
       children[child] = generateFragment(childrenCopy[child])
     })
-    // console.log("modified children", children)
   }
   return children
 }
@@ -215,12 +214,14 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) => {
     }
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
-
-  if (nodeName === "STYLE" && options?.allowExtraTags?.style !== true) {
-    return children
-  }
-  if (nodeName === "SCRIPT" && options?.allowExtraTags?.script !== true) {
-    return children
+  if (options?.allowNonStandardTags && !Object.keys(ELEMENT_TAGS).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
+    const attributes = el.attributes
+    const attribute = {}
+    Array.from(attributes).forEach((child: any) => {
+      attribute[child.nodeName] = child.nodeValue
+    })
+    console.warn(`${nodeName} is not a standard tag of JSON RTE.`)
+    return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attribute } }, children)
   }
   const isEmbedEntry = el.attributes['data-sys-entry-uid']?.value
   const type = el.attributes['type']?.value
@@ -506,7 +507,6 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) => {
         }
       }
       let captionElements = el.getElementsByTagName("FIGCAPTION")
-      //console.log("captionElement", captionElements?.[0]?.textContent)
       if (captionElements?.[0]?.textContent) {
         extraAttrs['asset-caption'] = captionElements?.[0]?.textContent
       }
@@ -526,7 +526,6 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) => {
           { ...extraAttrs, ...sizeAttrs }
         )
       }
-      //console.log("elementAttrs", elementAttrs)
       return jsx('element', elementAttrs, [{ text: '' }])
     }
 
@@ -672,12 +671,10 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) => {
   if (TEXT_TAGS[nodeName]) {
     const attrs = TEXT_TAGS[nodeName](el)
     let attrsStyle = { attrs: { style: {} }, ...attrs }
-    //console.log("child", children)
 
     let newChildren = children.map((child: any) => {
       if (isObject(child)) {
         traverseChildAndModifyChild(child, attrsStyle)
-        //console.log("child", child)
         return child
       } else {
         return jsx('text', attrsStyle, child)

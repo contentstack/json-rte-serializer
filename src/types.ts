@@ -1,10 +1,6 @@
-export interface allowExtraTags {
-    script: boolean,
-    style: boolean
-}
 interface anyObject {[key:string]:any}
 export interface IHtmlToJsonOptions {
-    allowExtraTags?: allowExtraTags,
+    allowNonStandardTags?: boolean,
     customElementTags?: IHtmlToJsonElementTags,
     customTextTags?: IHtmlToJsonTextTags
 }
@@ -20,5 +16,6 @@ export interface IJsonToHtmlTextTags { [key: string]: (child:any, value:any) => 
 export interface IJsonToHtmlElementTags { [key: string]: (attrs:string,child:string,jsonBlock:anyObject,extraProps?:object) => string | void }
 export interface IJsonToHtmlOptions {
     customElementTypes?: IJsonToHtmlElementTags,
-    customTextWrapper?: IJsonToHtmlTextTags
+    customTextWrapper?: IJsonToHtmlTextTags,
+    allowNonStandardTypes?: boolean,
 }

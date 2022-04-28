@@ -110,6 +110,10 @@ describe("Testing html to json conversion", () => {
             let jsonValue = fromRedactor(htmlDoc)
             //console.log(JSON.stringify(omitdeep(jsonValue.children, "uid"), null, 2))
             let testResult = compareValue(jsonValue,expectedValue[index].json)
+            if(!testResult){
+                //console.log(JSON.stringify(omitdeep(jsonValue, "uid")))
+                //console.log(JSON.stringify(omitdeep(expectedValue[index].json, "uid")))
+            }
             expect(testResult).toBe(true)
         })
     })
@@ -135,6 +139,24 @@ describe("Testing html to json conversion", () => {
             //console.log(JSON.stringify(omitdeep(jsonValue.children, "uid"), null, 2))
             let testResult = compareValue(jsonValue,expectedValue[index].json)
             expect(testResult).toBe(true)
+        })
+    })
+    it("Conversion with allowNonStandardTags", () => {
+        let cases = ["19","20"]
+        cases.forEach((index:any) => {
+            const mockFunction = jest.fn();
+            console.warn = mockFunction
+            let html = expectedValue[index]?.html
+            const dom = new JSDOM(html)
+            let htmlDoc = dom.window.document.querySelector('body')
+            let jsonValue = fromRedactor(htmlDoc,{allowNonStandardTags:true,customTextTags:expectedValue[index].customTextTags})
+            let testResult = compareValue(jsonValue,expectedValue[index].json)
+            if(!testResult){
+                //console.log(JSON.stringify(omitdeep(jsonValue, "uid")))
+                //console.log(JSON.stringify(omitdeep(expectedValue[index].json, "uid")))
+            }
+            expect(testResult).toBe(true)
+            expect(mockFunction).toHaveBeenCalledTimes(expectedValue[index].nonStandardTags)
         })
     })
 })
