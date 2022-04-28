@@ -7,7 +7,7 @@ import isObject from "lodash/isObject"
 import cloneDeep from "lodash/cloneDeep"
 import isUndefined from "lodash/isUndefined"
 
-import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags} from './types'
+import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags, IAnyObject} from './types'
 
 const generateId = () => v4().split('-').join('')
 const isInline = ['span', 'a', 'inlineCode', 'reference']
@@ -142,7 +142,7 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
 }
 
 const whiteCharPattern = /^[\s ]{2,}$/
-export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) => {
+export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject | null => {
   if (el.nodeType === 3) {
     if (whiteCharPattern.test(el.textContent)) return null
     if (el.textContent === '\n') {

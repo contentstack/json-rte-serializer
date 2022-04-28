@@ -13,7 +13,7 @@ export interface IHtmlToJsonTextTags { [key: string]: (el:HTMLElement) => IAnyOb
 export interface IHtmlToJsonElementTags { [key: string]: (el:HTMLElement) => IHtmlToJsonElementTagsAttributes }
 
 export interface IJsonToHtmlTextTags { [key: string]: (child:any, value:any) => string }
-export interface IJsonToHtmlElementTags { [key: string]: (attrs:string,child:string,jsonBlock:IAnyObject,extraProps?:object) => string | void }
+export interface IJsonToHtmlElementTags { [key: string]: (attrs:string,child:string,jsonBlock:IAnyObject,extraProps?:object) => string }
 export interface IJsonToHtmlOptions {
     customElementTypes?: IJsonToHtmlElementTags,
     customTextWrapper?: IJsonToHtmlTextTags,

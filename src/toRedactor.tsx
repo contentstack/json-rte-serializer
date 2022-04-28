@@ -120,7 +120,7 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     return `<span${attrs}>${child}</span>`
   },
   inlineCode: (attrs: any, child: any) => {
-    return
+    return ""
   },
   fragment: (attrs: any, child: any) => {
     return child
@@ -155,7 +155,7 @@ const TEXT_WRAPPERS: IJsonToHtmlTextTags = {
     return `<span data-type='inlineCode'>${child}</span>`
   }
 }
-export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) => {
+export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string => {
   //TODO: optimize assign once per function call
   if(options?.customTextWrapper && !isEmpty(options.customTextWrapper)){
     Object.assign(TEXT_WRAPPERS,options.customTextWrapper)
