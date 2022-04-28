@@ -171,7 +171,7 @@ const htmlValue = jsonToHtml(
             },
         },
         customTextWrapper: {
-            color: (child, value) => {
+            "color": (child, value) => {
                 return `<color data-color="${value}">${child}</color>`;
             },
         },
@@ -215,7 +215,7 @@ const jsonValue = htmlToJson(htmlDomBody, {
         }),
     },
     customTextTags: {
-        COLOR: (el) => {
+        "COLOR": (el) => {
             return {
                 color: el.getAttribute("data-color"),
             };
@@ -244,7 +244,7 @@ const jsonValue = htmlToJson(htmlDoc, {
         }),
     },
     customTextTags: {
-        COLOR: (el) => {
+        "COLOR": (el) => {
             return {
                 color: el.getAttribute("data-color"),
             };

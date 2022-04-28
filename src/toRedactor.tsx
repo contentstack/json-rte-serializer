@@ -206,6 +206,15 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) => {
     }
     children = children.join('')
   }
+  if (options?.allowNonStandardTypes && !Object.keys(ELEMENT_TYPES).includes(jsonValue['type']) && jsonValue['type'] !== 'doc') {
+    let attrs = ''
+    Object.entries(jsonValue?.attrs|| {}).forEach(([key, val]) => {
+      attrs += val ? ` ${key}="${val}"` : ` ${key}`;
+    })
+    attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
+    console.warn(`${jsonValue['type']} is not a valid element type.`)
+    return `<${jsonValue['type'].toLowerCase()}${attrs}>${children}</${jsonValue['type'].toLowerCase()}>`
+  }
   if (ELEMENT_TYPES[jsonValue['type']]) {
     let attrs = ''
     let orgType
