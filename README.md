@@ -314,6 +314,195 @@ The resulting JSON-formatted data will look as follows:
 }
 ```
 
+## Automatic Conversion
+
+By default, the JSON Rich Text Editor field supports limited HTML tags within the editor. Due to this, the JSON RTE Serializer tool is not able to recognize each and every standard HTML tag.
+
+To help the editor recognize and process additional tags that are commonly used across HTML, you can use the automatic conversion option with the JSON RTE Serializer tool. When using this option, you need to pass the `allowNonStandardTags: true` parameter within the `jsonToHtml` or `htmlToJson` method to manipulate the working of the JSON RTE Serializer package as per your requirements. When you pass this parameter, it customizes your JSON RTE Serializer code to allow the support for all standard HTML-recognized tags or element types in the JSON Rich Text Editor field.
+
+
+### Convert JSON to HTML
+
+You can pass the `allowNonStandardTags: true` parameter within the `jsonToHtml` method to allow the JSON RTE Serializer tool to recognize standard HTML tags or element types and convert them into JSON format.
+
+You can use the following customized JSON RTE Serializer code to convert your JSON RTE field data into HTML format.
+
+
+```js
+import { jsonToHtml } from "@contentstack/json-rte-serializer";
+const jsonValue = {
+  "type": "doc",
+  "uid": "cfe8176d1ca04cc0b42f60b3047f611d",
+  "attrs": {},
+  "children": [
+    {
+      "type": "hangout-module",
+      "attrs": {},
+      "children": [
+        {
+          "type": "hangout-chat",
+          "attrs": {
+            "from": "Paul, Addy"
+          },
+          "children": [
+            {
+              "type": "hangout-discussion",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "hangout-message",
+                  "attrs": {
+                    "from": "Paul",
+                    "profile": "profile.png",
+                    "datetime": "2013-07-17T12:02"
+                  },
+                  "children": [
+                    {
+                      "type": "p",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "text": "Feelin' this Web Components thing."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "p",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "text": "Heard of it?"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "hangout-chat",
+          "attrs": {},
+          "children": [
+            {
+              "text": "Hi There!"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+const htmlValue = jsonToHtml(
+    jsonValue,
+    // parser options
+    {
+       allowNonStandardTypes: true
+    }
+);
+
+console.log(htmlValue);
+```
+
+### Result of Conversion
+
+The resulting HTML data will look as follows:
+
+```html
+<hangout-module><hangout-chat from="Paul, Addy"><hangout-discussion><hangout-message from="Paul" profile="profile.png" datetime="2013-07-17T12:02"><p>Feelin' this Web Components thing.</p><p>Heard of it?</p></hangout-message></hangout-discussion></hangout-chat><hangout-chat>Hi There!</hangout-chat></hangout-module>
+```
+
+
+### Convert HTML to JSON
+
+You can pass the `allowNonStandardTags: true` parameter within the `htmlToJson` method to allow the JSON RTE Serializer tool to recognize standard HTML tags or element types while converting the JSON data into HTML format.
+
+You can use the following customized JSON RTE Serializer code to convert your HTML RTE field data into JSON format.
+
+
+```js
+import { htmlToJson } from "@contentstack/json-rte-serializer";
+const htmlDomBody = new DOMParser().parseFromString(
+    `<hangout-module><hangout-chat from="Paul, Addy"><hangout-discussion><hangout-message from="Paul" profile="profile.png" datetime="2013-07-17T12:02"><p>Feelin' this Web Components thing.</p><p>Heard of it?</p></hangout-message></hangout-discussion></hangout-chat><hangout-chat>Hi There!</hangout-chat></hangout-module>`,
+    "text/html"
+).body;
+const jsonValue = htmlToJson(htmlDomBody, {
+    allowNonStandardTags: true,
+});
+
+console.log(jsonValue);
+```
+### Result of conversion
+The resulting JSON-formatted data will look as follows:
+
+```json
+{
+  "type": "doc",
+  "uid": "cfe8176d1ca04cc0b42f60b3047f611d",
+  "attrs": {},
+  "children": [
+    {
+      "type": "hangout-module",
+      "attrs": {},
+      "children": [
+        {
+          "type": "hangout-chat",
+          "attrs": {
+            "from": "Paul, Addy"
+          },
+          "children": [
+            {
+              "type": "hangout-discussion",
+              "attrs": {},
+              "children": [
+                {
+                  "type": "hangout-message",
+                  "attrs": {
+                    "from": "Paul",
+                    "profile": "profile.png",
+                    "datetime": "2013-07-17T12:02"
+                  },
+                  "children": [
+                    {
+                      "type": "p",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "text": "Feelin' this Web Components thing."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "p",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "text": "Heard of it?"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "hangout-chat",
+          "attrs": {},
+          "children": [
+            {
+              "text": "Hi There!"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
 # Documentation
 
 Refer to our [JSON Rich Text Editor](https://www.contentstack.com/docs/developers/json-rich-text-editor/) documentation for more information.
