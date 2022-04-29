@@ -10,7 +10,7 @@ To use JSON RTE Serializer with Node.js-based applications, you will need the fo
 
 -   Node.js 10 or later
 
-Install the json-rte-serializer package via npm using the following command:
+Install the `json-rte-serializer` package via npm using the following command:
 
 ```bash
   npm install @contentstack/json-rte-serializer
@@ -257,7 +257,7 @@ console.log(jsonValue);
 
 > **_Note_**: The custom parser's key must always be capitalized and exactly match the custom HTML tag.
 
-### Result of conversion
+### Result of Conversion
 
 The resulting JSON-formatted data will look as follows:
 
@@ -318,8 +318,7 @@ The resulting JSON-formatted data will look as follows:
 
 By default, the JSON Rich Text Editor field supports limited HTML tags within the editor. Due to this, the JSON RTE Serializer tool is not able to recognize each and every standard HTML tag.
 
-To help the editor recognize and process additional tags that are commonly used across HTML, you can use the automatic conversion option with the JSON RTE Serializer tool. When using this option, you need to pass the `allowNonStandardTags: true` parameter within the `jsonToHtml` or `htmlToJson` method to manipulate the working of the JSON RTE Serializer package as per your requirements. When you pass this parameter, it customizes your JSON RTE Serializer code to allow the support for all standard HTML-recognized tags or element types in the JSON Rich Text Editor field.
-
+To help the JSON RTE Serializer recognize and process additional tags that are commonly used across HTML, you can use the automatic conversion option. When using this option, you need to pass the `allowNonStandardTags: true` parameter within the `jsonToHtml` or `htmlToJson` method to manipulate the working of the JSON RTE Serializer package as per your requirements. When you pass this parameter, it customizes your JSON RTE Serializer code to allow the support for all standard HTML-recognized tags or element types in the JSON Rich Text Editor field.
 
 ### Convert JSON to HTML
 
@@ -433,7 +432,7 @@ const jsonValue = htmlToJson(htmlDomBody, {
 
 console.log(jsonValue);
 ```
-### Result of conversion
+### Result of Conversion
 The resulting JSON-formatted data will look as follows:
 
 ```json
