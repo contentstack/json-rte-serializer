@@ -1,1 +1,7 @@
 node_modules
+
+coverage
+lib
+
+#OS
+.DS_Store

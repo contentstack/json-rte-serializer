@@ -7,12 +7,14 @@ import isObject from "lodash/isObject"
 import cloneDeep from "lodash/cloneDeep"
 import isUndefined from "lodash/isUndefined"
 
+import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags, IAnyObject} from './types'
+
 const generateId = () => v4().split('-').join('')
 const isInline = ['span', 'a', 'inlineCode', 'reference']
 const isVoid = ['img', 'embed']
 
 
-const ELEMENT_TAGS: { [key: string]: Function } = {
+const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   A: (el: HTMLElement) => ({
     type: 'a',
     attrs: {
@@ -56,10 +58,11 @@ const ELEMENT_TAGS: { [key: string]: Function } = {
   },
   SCRIPT: (el: HTMLElement) => {
     return { type: 'script', attrs: {} }
-  }
+  },
+  HR: () => ({ type: 'hr', attrs: {} })
 }
 
-const TEXT_TAGS: { [key: string]: Function } = {
+const TEXT_TAGS: IHtmlToJsonTextTags = {
   CODE: () => ({ code: true }),
   DEL: () => ({ strikethrough: true }),
   EM: () => ({ italic: true }),
@@ -130,25 +133,16 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
       inlineElementIndex.push(index)
     }
   })
-
   if (hasBlockElement && !isEmpty(inlineElementIndex)) {
     Array.from(inlineElementIndex).forEach((child) => {
       children[child] = generateFragment(childrenCopy[child])
     })
-    // console.log("modified children", children)
   }
   return children
 }
-declare type customelement = Node & {
-  parentNode: any
-  attributes: any
-}
-declare type allowExtraTags = {
-  script: boolean,
-  style: boolean
-}
+
 const whiteCharPattern = /^[\s ]{2,}$/
-export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
+export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject | null => {
   if (el.nodeType === 3) {
     if (whiteCharPattern.test(el.textContent)) return null
     if (el.textContent === '\n') {
@@ -197,8 +191,15 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
   }
   const { nodeName } = el
   let parent = el
-
-  let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, allowExtraTags)))
+  if(el.nodeName === "BODY"){
+    if(options?.customElementTags && !isEmpty(options.customElementTags)){
+      Object.assign(ELEMENT_TAGS, options.customElementTags)
+    }
+    if(options?.customTextTags && !isEmpty(options.customTextTags)) {
+      Object.assign(TEXT_TAGS, options.customTextTags)
+    }
+  }
+  let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
   children = children.filter((child: any) => child !== null)
   children = traverseChildAndWarpChild(children)
   if (children.length === 0) {
@@ -213,12 +214,14 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
     }
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
-
-  if (nodeName === "STYLE" && allowExtraTags?.style !== true) {
-    return children
-  }
-  if (nodeName === "SCRIPT" && allowExtraTags?.script !== true) {
-    return children
+  if (options?.allowNonStandardTags && !Object.keys(ELEMENT_TAGS).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
+    const attributes = el.attributes
+    const attribute = {}
+    Array.from(attributes).forEach((child: any) => {
+      attribute[child.nodeName] = child.nodeValue
+    })
+    console.warn(`${nodeName} is not a standard tag of JSON RTE.`)
+    return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attribute } }, children)
   }
   const isEmbedEntry = el.attributes['data-sys-entry-uid']?.value
   const type = el.attributes['type']?.value
@@ -421,7 +424,7 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
       })
     }
 
-    if (el.parentNode.nodeName === 'PRE') {
+    if (el.parentNode?.nodeName === 'PRE') {
       return el.outerHTML
     }
 
@@ -504,7 +507,6 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
         }
       }
       let captionElements = el.getElementsByTagName("FIGCAPTION")
-      //console.log("captionElement", captionElements?.[0]?.textContent)
       if (captionElements?.[0]?.textContent) {
         extraAttrs['asset-caption'] = captionElements?.[0]?.textContent
       }
@@ -524,7 +526,6 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
           { ...extraAttrs, ...sizeAttrs }
         )
       }
-      //console.log("elementAttrs", elementAttrs)
       return jsx('element', elementAttrs, [{ text: '' }])
     }
 
@@ -613,7 +614,7 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
         elementAttrs?.attrs?.["redactor-attributes"]?.['data-type']
       ) {
         elementAttrs.type = 'check-list'
-        elementAttrs.checked = elementAttrs.attrs["redactor-attributes"]['data-checked'] === 'true'
+        elementAttrs.attrs.checked = elementAttrs.attrs["redactor-attributes"]['data-checked'] === 'true'
         delete elementAttrs.attrs["redactor-attributes"]['data-checked']
         delete elementAttrs.attrs["redactor-attributes"]['data-type']
       }
@@ -645,12 +646,12 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
         })
       }
       let noOfInlineElement = 0
-      Array.from(el.parentNode.childNodes).forEach((child: any) => {
+      Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
         if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A') {
           noOfInlineElement += 1
         }
       })
-      if (noOfInlineElement !== el.parentNode.childNodes.length) {
+      if (noOfInlineElement !== el.parentNode?.childNodes.length) {
         elementAttrs = {
           type: 'div',
           attrs: {
@@ -670,12 +671,10 @@ export const fromRedactor = (el?: any, allowExtraTags?: allowExtraTags) => {
   if (TEXT_TAGS[nodeName]) {
     const attrs = TEXT_TAGS[nodeName](el)
     let attrsStyle = { attrs: { style: {} }, ...attrs }
-    //console.log("child", children)
 
     let newChildren = children.map((child: any) => {
       if (isObject(child)) {
         traverseChildAndModifyChild(child, attrsStyle)
-        //console.log("child", child)
         return child
       } else {
         return jsx('text', attrsStyle, child)

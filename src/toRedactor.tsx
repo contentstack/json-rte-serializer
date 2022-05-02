@@ -1,10 +1,13 @@
 import kebbab from 'lodash/kebabCase'
+import isEmpty from 'lodash/isEmpty'
 
-const ELEMENT_TYPES: { [key: string]: Function } = {
+import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
+
+const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {
     return `<blockquote${attrs}>${child}</blockquote>`
   },
-  'h1': (attrs: any, child: any) => {
+  'h1': (attrs, child) => {
     return `<h1${attrs}>${child}</h1>`
   },
   'h2': (attrs: any, child: any) => {
@@ -22,7 +25,7 @@ const ELEMENT_TYPES: { [key: string]: Function } = {
   'h6': (attrs: any, child: any) => {
     return `<h6${attrs}>${child}</h6>`
   },
-  img: (attrs: any, child: any, figureStyles: any) => {
+  img: (attrs: any, child: any,jsonBlock: any, figureStyles: any) => {
     if (figureStyles.fieldsEdited.length === 0) {
       return `<img${attrs}/>`
     }
@@ -104,7 +107,7 @@ const ELEMENT_TYPES: { [key: string]: Function } = {
   div: (attrs: any, child: any) => {
     return `<div${attrs}>${child}</div>`
   },
-  reference: (attrs: any, child: any, extraAttrs: any) => {
+  reference: (attrs: any, child: any, jsonBlock: any, extraAttrs: any) => {
     if (extraAttrs?.displayType === 'inline') {
       return `<span${attrs}>${child}</span>`
     } else if (extraAttrs?.displayType === 'block') {
@@ -117,7 +120,7 @@ const ELEMENT_TYPES: { [key: string]: Function } = {
     return `<span${attrs}>${child}</span>`
   },
   inlineCode: (attrs: any, child: any) => {
-    return
+    return ""
   },
   fragment: (attrs: any, child: any) => {
     return child
@@ -129,34 +132,44 @@ const ELEMENT_TYPES: { [key: string]: Function } = {
     return `<script ${attrs}>${child}</script>`
   }
 }
-export const toRedactor = (jsonValue: any) => {
+const TEXT_WRAPPERS: IJsonToHtmlTextTags = {
+  'bold': (child: any, value:any) => {
+    return `<strong>${child}</strong>`;
+  },
+  'italic': (child: any, value:any) => {
+    return `<em>${child}</em>`;
+  },
+  'underline': (child: any, value:any) => {
+    return `<u>${child}</u>`;
+  },
+  'strikethrough': (child: any, value:any) => {
+    return `<del>${child}</del>`;
+  },
+  'superscript': (child: any, value:any) => {
+    return `<sup>${child}</sup>`;
+  },
+  'subscript': (child: any, value:any) => {
+    return `<sub>${child}</sub>`;
+  },
+  'inlineCode': (child: any, value:any) => {
+    return `<span data-type='inlineCode'>${child}</span>`
+  }
+}
+export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string => {
+  //TODO: optimize assign once per function call
+  if(options?.customTextWrapper && !isEmpty(options.customTextWrapper)){
+    Object.assign(TEXT_WRAPPERS,options.customTextWrapper)
+  }
   if (jsonValue.hasOwnProperty('text')) {
     let text = jsonValue['text'].replace(/</g, '&lt;').replace(/>/g, '&gt;')
     if (jsonValue['break']) {
       text += `<br/>`
     }
-    if (jsonValue['bold']) {
-      text = `<strong>${text}</strong>`
-    }
-    if (jsonValue['italic']) {
-      text = `<em>${text}</em>`
-    }
-    if (jsonValue['underline']) {
-      text = `<u>${text}</u>`
-    }
-    if (jsonValue['strikethrough']) {
-      text = `<del>${text}</del>`
-    }
-    if (jsonValue['subscript']) {
-      text = `<sub>${text}</sub>`
-    }
-    if (jsonValue['superscript']) {
-      text = `<sup>${text}</sup>`
-    }
-    if (jsonValue['inlineCode']) {
-      text = `<span data-type='inlineCode'>${text}</span>`
-    }
-
+    Object.entries(jsonValue).forEach(([key, value]) => {
+      if(TEXT_WRAPPERS.hasOwnProperty(key)){
+        text = TEXT_WRAPPERS[key](text,value)
+      }
+    })
     if (jsonValue['attrs']) {
       const { style } = jsonValue['attrs']
       if (style) {
@@ -178,8 +191,11 @@ export const toRedactor = (jsonValue: any) => {
     return text
   }
   let children: any = ''
+  if (options?.customElementTypes && !isEmpty(options.customElementTypes)) {
+    Object.assign(ELEMENT_TYPES, options.customElementTypes)
+  }
   if (jsonValue.children) {
-    children = Array.from(jsonValue.children).map(toRedactor)
+    children = Array.from(jsonValue.children).map((child) => toRedactor(child,options))
     if (jsonValue['type'] === 'blockquote') {
       children = children.map((child: any) => {
         if (child === '\n') {
@@ -189,6 +205,15 @@ export const toRedactor = (jsonValue: any) => {
       })
     }
     children = children.join('')
+  }
+  if (options?.allowNonStandardTypes && !Object.keys(ELEMENT_TYPES).includes(jsonValue['type']) && jsonValue['type'] !== 'doc') {
+    let attrs = ''
+    Object.entries(jsonValue?.attrs|| {}).forEach(([key, val]) => {
+      attrs += val ? ` ${key}="${val}"` : ` ${key}`;
+    })
+    attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
+    console.warn(`${jsonValue['type']} is not a valid element type.`)
+    return `<${jsonValue['type'].toLowerCase()}${attrs}>${children}</${jsonValue['type'].toLowerCase()}>`
   }
   if (ELEMENT_TYPES[jsonValue['type']]) {
     let attrs = ''
@@ -360,8 +385,10 @@ export const toRedactor = (jsonValue: any) => {
       if (jsonValue['type'] === "style") {
         delete attrsJson['style-text']
       }
+      if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
+        delete attrsJson['url']
+      }
       delete attrsJson['redactor-attributes']
-      delete attrsJson['url']
       Object.entries(attrsJson).forEach((key) => {
         return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${key[1]}" `) : '') : ''
       })
@@ -415,7 +442,7 @@ export const toRedactor = (jsonValue: any) => {
     }
     attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
 
-    return ELEMENT_TYPES[orgType || jsonValue['type']](attrs, children, figureStyles)
+    return ELEMENT_TYPES[orgType || jsonValue['type']](attrs, children,jsonValue, figureStyles)
   }
 
   return children
