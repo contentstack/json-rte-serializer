@@ -615,7 +615,7 @@ export default {
                 ]
             }
         ],
-        "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.youtube.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
+ "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.youtube.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
     },
     "7": {
         "html": "<p>this is <a href=\"link.com\" target=\"_self\">link</a></p><p></p><div data-type='hr' style='border-top: 3px solid #bbb'></div><p></p><p class=\"className\">paragraph with class</p><p id=\"id\">paragraph with id</p>",
@@ -887,37 +887,7 @@ export default {
     },
     "13": {
         "html": "<p></p><img asset_uid=\"bltecea58c1a7fa27f4\" height=\"auto\"/>",
-        "json": [
-            {
-                "type": "p",
-                "attrs": {},
-                "children": [
-                    {
-                        "text": ""
-                    }
-                ]
-            },
-            {
-                "type": "reference",
-                "attrs": {
-                    "asset-link": null,
-                    "default": true,
-                    "asset-type": "image/png",
-                    "display-type": "display",
-                    "type": "asset",
-                    "style": {},
-                    "redactor-attributes": {
-                        "asset_uid": "bltecea58c1a7fa27f4",
-                        "height": "auto"
-                    }
-                },
-                "children": [
-                    {
-                        "text": ""
-                    }
-                ]
-            }
-        ]
+        "json": [{"type":"p","attrs":{},"uid":"e39e29ed819f49fdb1504b17cf6fe1ff","children":[{"text":""}]},{"type":"reference","attrs":{"asset-name":null,"content-type-uid":"sys_assets","asset-link":null,"asset-type":"image/png","display-type":"display","type":"asset","asset-uid":"bltecea58c1a7fa27f4","style":{},"redactor-attributes":{"asset_uid":"bltecea58c1a7fa27f4","height":"auto"}},"uid":"b87802e2367148e29a2c4ba81c2182ec","children":[{"text":""}]}]
     },
     "14": {
         "html": "<p>This is <strong>Bold, </strong><em>Italic, </em><u>underline,</u> <del>Strikethrough</del>, <span data-type='inlineCode'>inline-code</span> , 2<sup>x</sup> , 2<sub>x</sub></p><h1>H1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6><blockquote>Block quote</blockquote><p></p><pre>Block Code</pre><p style=\"text-align: center;\">center</p><p style=\"text-align: right;\">Right</p><p style=\"text-align: justify;\">Justify</p><ol><li style=\"text-align: justify;\">order list</li><li style=\"text-align: justify;\">2</li></ol><ul><li>1</li><li>2</li></ul><p></p><iframe src=\"https://www.youtube.com/embed/v55JVEJg7i4\" width=\"88\" height=\"300\" style=\"width: 88%; height: 300px;\"></iframe><p></p><table><thead><tr><th><p>1</p></th><th><p>2</p></th></tr></thead><tbody><tr><td><p>3</p></td><td><p>4</p></td></tr><tr><td><p>5</p></td><td><p>6</p></td></tr></tbody></table><p></p><figure type=\"asset\" sys-style-type=\"display\" class=\"embedded-asset\" content-type-uid=\"sys_assets\" data-sys-asset-filelink=\"https://images.contentstack.io/v3/assets/bltbdb397c7cc18a214/blt9fedd0336c2f7f0d/61fe9fb699c8a84a577b9f40/crop_area.jpeg\" data-sys-asset-uid=\"blt9fedd0336c2f7f0d\" data-sys-asset-filename=\"crop_area.jpeg\" data-sys-asset-contenttype=\"image/jpeg\"></figure><p></p><hr/>",
@@ -1657,4 +1627,13 @@ export default {
         },
         "nonStandardTags": 0
     },
+    "image-to-reference": {
+        "html": `<img asset_uid="bltfea8157ddfb8e776" src="https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" height="auto" />`,
+        "json": {"attrs": {}, "children": [{"attrs": {"asset-link": "https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg", "asset-name": "landscape-3.jpg", "asset-type": "image/jpg", "asset-uid": "bltfea8157ddfb8e776", "content-type-uid": "sys_assets", "display-type": "display", "redactor-attributes": {"asset_uid": "bltfea8157ddfb8e776", "height": "auto", "src": "https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg"}, "style": {}, "type": "asset"}, "children": [{"text": ""}], "type": "reference", "uid": "640c377d18dd4613a448734c019dcd0a"}], "type": "doc", "uid": "5b5269ef0d65476d9c3ef300676530b2"},
+        
+    },
+    "image-to-image":{
+        "html": `<img src="https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" height="auto" />`,
+        "json": {"type":"doc","uid":"519ef5a2f4b844239e176033a5b03fff","attrs":{},"children":[{"type":"img","attrs":{"url":"https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","style":{},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","height":"auto"}},"uid":"7afdc063abad4612948f660ae0c98738","children":[{"text":""}]}]}
+    }
 }

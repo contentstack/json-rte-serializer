@@ -57,14 +57,6 @@ describe("Testing html to json conversion", () => {
         let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[5].json), "uid"))
         expect(testResult).toBe(true)
     })
-    it("Image and iframe conversion", () => {
-        let html = expectedValue[6].html
-        const dom = new JSDOM(html)
-        let htmlDoc = dom.window.document.querySelector('body')
-        let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[6].json), "uid"))
-        expect(testResult).toBe(true)
-    })
     it("Link ,divider and property conversion", () => {
         let html = expectedValue[7].html
         const dom = new JSDOM(html)
@@ -157,6 +149,17 @@ describe("Testing html to json conversion", () => {
             }
             expect(testResult).toBe(true)
             expect(mockFunction).toHaveBeenCalledTimes(expectedValue[index].nonStandardTags)
+        })
+    })
+
+    it('Image conversion to image or reference', () => {
+        let cases = ['image-to-image', "image-to-reference"]
+        cases.forEach((index:any) => {
+            const {json: expectedJson, html } =  expectedValue[index]
+            
+            const dom = new JSDOM(html)
+            const json = fromRedactor(dom.window.document.querySelector('body'))
+            expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
         })
     })
 })
