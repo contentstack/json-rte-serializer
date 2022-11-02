@@ -32,7 +32,14 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   IMG: (el: HTMLElement) => {
     let imageUrl = el.getAttribute('src')?.split(".") || ["png"]
     let imageType = imageUrl[imageUrl?.length - 1]
-    return { type: 'reference', attrs: { "asset-link": el.getAttribute('src'), default: true, "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset" } }
+    const assetUid = el.getAttribute('asset_uid')
+    if(assetUid){
+
+        const splittedUrl =  el.getAttribute('src')?.split('/')! || [null]
+        const assetName = splittedUrl[splittedUrl?.length - 1]
+        return { type: 'reference', attrs: { "asset-name": assetName,"content-type-uid" : "sys_assets", "asset-link": el.getAttribute('src'), "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset", "asset-uid": assetUid } }
+    }
+    return { type: 'img', attrs: { url: el.getAttribute('src') } }
   },
   LI: () => ({ type: 'li', attrs: {} }),
   OL: () => ({ type: 'ol', attrs: {} }),
