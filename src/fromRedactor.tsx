@@ -53,7 +53,17 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   TR: (el: HTMLElement) => ({ type: 'tr', attrs: {} }),
   TD: (el: HTMLElement) => ({ type: 'td', attrs: {} }),
   TH: (el: HTMLElement) => ({ type: 'th', attrs: {} }),
-  FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
+  // FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
+  
+  FIGURE: (el: HTMLElement) => {
+    if (el.lastChild && el.lastChild.nodeName === 'P') {
+      return { type: 'figure', attrs: {} }
+    }
+    else {
+      return { type: 'img', attrs: {} }
+    }
+
+  }
   SPAN: (el: HTMLElement) => {
     return { type: 'span', attrs: {} }
   },
@@ -390,7 +400,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       const attrs = {
         type: 'grid-container',
         attrs: {
-          gutter
+          gutter  
         }
       }
       return jsx('element', attrs, children)
@@ -514,9 +524,22 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         }
       }
       let captionElements = el.getElementsByTagName("FIGCAPTION")
-      if (captionElements?.[0]?.textContent) {
-        extraAttrs['asset-caption'] = captionElements?.[0]?.textContent
+      
+      if (captionElements?.[0]) {
+        let caption = captionElements[0]
+        const captionElementsAttrs = caption.attributes
+        const captionAttrs = {}
+        if (captionElementsAttrs) {
+          Array.from(captionElementsAttrs).forEach((child: any) => {
+            captionAttrs[child.nodeName] = child.nodeValue
+          })
+        }
+        extraAttrs['captionAttrs'] = captionAttrs
+        extraAttrs['caption'] = captionElements?.[0]?.textContent
+        console.log(extraAttrs);
+
       }
+
       if (newChildren[0]?.type === 'a') {
         const { link, target } = newChildren[0].attrs?.["redactor-attributes"]
         extraAttrs['link'] = link
