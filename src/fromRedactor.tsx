@@ -63,7 +63,7 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
       return { type: 'img', attrs: {} }
     }
 
-  }
+  },
   SPAN: (el: HTMLElement) => {
     return { type: 'span', attrs: {} }
   },
@@ -536,10 +536,19 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         }
         extraAttrs['captionAttrs'] = captionAttrs
         extraAttrs['caption'] = captionElements?.[0]?.textContent
-        console.log(extraAttrs);
+        // console.log(extraAttrs);
 
       }
-
+      if (newChildren[0]?.type === 'img') {
+        if (newChildren[0].attrs.width) {
+          sizeAttrs.width = newChildren[0].attrs.width.toString()
+        }
+        elementAttrs = getImageAttributes(
+          elementAttrs,
+          { ...newChildren[0].attrs, ...sizeAttrs },
+          { ...extraAttrs, ...sizeAttrs }
+        )
+      }
       if (newChildren[0]?.type === 'a') {
         const { link, target } = newChildren[0].attrs?.["redactor-attributes"]
         extraAttrs['link'] = link
