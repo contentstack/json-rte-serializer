@@ -513,7 +513,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         } 
         
         else if (sizeAttrs.width.slice(sizeAttrs.width.length - 2) === 'px') {
-          sizeAttrs.width = (Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 2)) / 1920) * 100
+          sizeAttrs.width = Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 2))
         }
       }
       if (el.style?.['max-width']) {
@@ -524,7 +524,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         
         else if (sizeAttrs['max-width'].slice(sizeAttrs['max-width'].length - 2) === 'px') {
           sizeAttrs['max-width'] =
-            (Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 2)) / 1920) * 100
+            Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 2))
         }
       }
       let captionElements = el.getElementsByTagName("FIGCAPTION")
