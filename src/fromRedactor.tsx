@@ -510,17 +510,21 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         sizeAttrs.width = el.style.width
         if (sizeAttrs.width[sizeAttrs.width.length - 1] === '%') {
           sizeAttrs.width = Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 1))
-        } else if (sizeAttrs.width.slice(sizeAttrs.width.length - 2) === 'px') {
-          sizeAttrs.width = (Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 2)) / window?.screen?.width || 1920) * 100
+        } 
+        
+        else if (sizeAttrs.width.slice(sizeAttrs.width.length - 2) === 'px') {
+          sizeAttrs.width = (Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 2)) / 1920) * 100
         }
       }
       if (el.style?.['max-width']) {
         sizeAttrs['max-width'] = el.style['max-width']
         if (sizeAttrs['max-width'][sizeAttrs['max-width'].length - 1] === '%') {
           sizeAttrs['max-width'] = Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 1))
-        } else if (sizeAttrs['max-width'].slice(sizeAttrs['max-width'].length - 2) === 'px') {
+        } 
+        
+        else if (sizeAttrs['max-width'].slice(sizeAttrs['max-width'].length - 2) === 'px') {
           sizeAttrs['max-width'] =
-            (Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 2)) / window?.screen?.width || 1920) * 100
+            (Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 2)) / 1920) * 100
         }
       }
       let captionElements = el.getElementsByTagName("FIGCAPTION")
@@ -536,7 +540,6 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         }
         extraAttrs['captionAttrs'] = captionAttrs
         extraAttrs['caption'] = captionElements?.[0]?.textContent
-        // console.log(extraAttrs);
 
       }
       if (newChildren[0]?.type === 'img') {
@@ -545,9 +548,8 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         }
         elementAttrs = getImageAttributes(
           elementAttrs,
-          { ...newChildren[0].attrs, ...sizeAttrs },
-          { ...extraAttrs, ...sizeAttrs }
-        )
+          { ...newChildren[0].attrs, ...sizeAttrs, caption: extraAttrs['caption'], style: {'text-align': style['text-align']} }, 
+          { ...extraAttrs, ...sizeAttrs });
       }
       if (newChildren[0]?.type === 'a') {
         const { link, target } = newChildren[0].attrs?.["redactor-attributes"]
@@ -558,12 +560,13 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         const imageAttrs = newChildren[0].children[0]
         elementAttrs = getImageAttributes(elementAttrs, imageAttrs.attrs || {}, { ...extraAttrs, ...sizeAttrs })
       }
-      if (newChildren[0]?.type === 'reference' && newChildren[0]?.attrs?.default) {
+      if (newChildren[0]?.type === 'reference') {
+        extraAttrs['asset-caption'] = extraAttrs['caption']
         elementAttrs = getImageAttributes(
-          elementAttrs,
-          { ...newChildren[0].attrs, ...sizeAttrs },
-          { ...extraAttrs, ...sizeAttrs }
-        )
+          elementAttrs, 
+          { ...newChildren[0].attrs, ...sizeAttrs, position: extraAttrs.position, style: {'text-align': style['text-align']} },
+          { ...extraAttrs, ...sizeAttrs });
+        elementAttrs.type = "reference"
       }
       return jsx('element', elementAttrs, [{ text: '' }])
     }
