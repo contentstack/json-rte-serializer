@@ -543,31 +543,28 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
 
       }
       if (newChildren[0]?.type === 'img') {
-        if (newChildren[0].attrs.width) {
-          sizeAttrs.width = newChildren[0].attrs.width.toString()
-        }
-        elementAttrs = getImageAttributes(
-          elementAttrs,
-          { ...newChildren[0].attrs, ...sizeAttrs, caption: extraAttrs['caption'], style: {'text-align': style['text-align']} }, 
-          { ...extraAttrs, ...sizeAttrs });
-      }
-      if (newChildren[0]?.type === 'a') {
-        const { link, target } = newChildren[0].attrs?.["redactor-attributes"]
-        extraAttrs['link'] = link
-        if (target && target !== '') {
-          extraAttrs['target'] = true
-        }
-        const imageAttrs = newChildren[0].children[0]
-        elementAttrs = getImageAttributes(elementAttrs, imageAttrs.attrs || {}, { ...extraAttrs, ...sizeAttrs })
+        elementAttrs = getFinalImageAttributes({elementAttrs, newChildren, extraAttrs, sizeAttrs})
       }
       if (newChildren[0]?.type === 'reference') {
-        extraAttrs['asset-caption'] = extraAttrs['caption']
-        elementAttrs = getImageAttributes(
-          elementAttrs, 
-          { ...newChildren[0].attrs, ...sizeAttrs, position: extraAttrs.position, style: {'text-align': style['text-align']} },
-          { ...extraAttrs, ...sizeAttrs });
-        elementAttrs.type = "reference"
+        elementAttrs = getReferenceAttributes({elementAttrs, newChildren, extraAttrs, sizeAttrs})
       }
+      if (newChildren[0]?.type === 'a') {
+        const { href, target } = newChildren[0].attrs?.["redactor-attributes"]
+        extraAttrs['anchorLink'] = href;
+        if (target && target !== '') {
+            extraAttrs['target'] = true;
+        }
+        const imageAttrs = newChildren[0].children;
+
+        if(imageAttrs[0].type === 'img'){
+        elementAttrs = getFinalImageAttributes({elementAttrs, newChildren : imageAttrs, extraAttrs, sizeAttrs})
+
+        }
+        if(imageAttrs[0].type === 'reference'){
+        elementAttrs = getReferenceAttributes({elementAttrs, newChildren: imageAttrs, extraAttrs, sizeAttrs})
+        }
+      }
+      
       return jsx('element', elementAttrs, [{ text: '' }])
     }
 
@@ -754,4 +751,44 @@ const getImageAttributes = (elementAttrs: any, childAttrs: any, extraAttrs: any)
     delete elementAttrs.attrs["link"]
   }
   return elementAttrs
+}
+
+const getReferenceAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttrs} : any) => {
+
+  let { style } = elementAttrs.attrs;
+  
+  extraAttrs['asset-caption'] = extraAttrs['caption'];
+
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, position: extraAttrs.position }
+  extraAttrs = { ...extraAttrs, ...sizeAttrs }
+
+  if (!childAttrs.position) {
+    delete childAttrs.position
+  }
+
+  const referenceAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
+
+  referenceAttrs.type = "reference";
+
+  return referenceAttrs
+}
+
+const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttrs} : any) => {
+
+  let { style } = elementAttrs.attrs;
+
+  if (newChildren[0].attrs.width) {
+      sizeAttrs.width = newChildren[0].attrs.width.toString();
+  }
+
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, caption: extraAttrs['caption'] }
+  extraAttrs = { ...extraAttrs, ...sizeAttrs }
+
+  if (!childAttrs.caption) {
+    delete childAttrs.caption
+  }
+
+  const imageAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
+
+  return imageAttrs
 }
