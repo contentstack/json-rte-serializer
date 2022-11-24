@@ -57,14 +57,6 @@ describe("Testing html to json conversion", () => {
         let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[5].json), "uid"))
         expect(testResult).toBe(true)
     })
-    it("Image and iframe conversion", () => {
-        let html = expectedValue[6].html
-        const dom = new JSDOM(html)
-        let htmlDoc = dom.window.document.querySelector('body')
-        let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[6].json), "uid"))
-        expect(testResult).toBe(true)
-    })
     it("Link ,divider and property conversion", () => {
         let html = expectedValue[7].html
         const dom = new JSDOM(html)
@@ -157,6 +149,63 @@ describe("Testing html to json conversion", () => {
             }
             expect(testResult).toBe(true)
             expect(mockFunction).toHaveBeenCalledTimes(expectedValue[index].nonStandardTags)
+        })
+    })
+
+    it('Image conversion to image or reference', () => {
+        let cases = ['image-to-image', "image-to-reference"]
+        cases.forEach((index:any) => {
+            const {json: expectedJson, html } =  expectedValue[index]
+            
+            const dom = new JSDOM(html)
+            const json = fromRedactor(dom.window.document.querySelector('body'))
+            expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
+        })
+    })
+
+    test("image, asset image should have caption", () => {
+        let cases = ['image-caption', 'reference-caption']
+
+        cases.forEach((index:any) => {
+            const {json: expectedJson, html } =  expectedValue[index]
+            
+            const dom = new JSDOM(html)
+            const json = fromRedactor(dom.window.document.querySelector('body'))
+            expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
+        })
+    })
+    test("image and asset should maintain width with caption ", () => {
+        let cases = ['image-caption-width', 'reference-caption-width']
+
+        cases.forEach((index:any) => {
+            const {json: expectedJson, html } =  expectedValue[index]
+            
+            const dom = new JSDOM(html)
+            const json = fromRedactor(dom.window.document.querySelector('body'))
+            expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
+        })
+    })
+    test("image and asset image should maintain position with caption", () => {
+        let cases = ['image-caption-position', 'reference-caption-position']
+
+        cases.forEach((index:any) => {
+            const {json: expectedJson, html } =  expectedValue[index]
+            
+            const dom = new JSDOM(html)
+            const json = fromRedactor(dom.window.document.querySelector('body'))
+            expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
+        })
+    })
+
+    test("image and asset image as links should maintain caption, width, position along with link target", () => {
+        let cases = ['anchor-image-width-position-caption', 'anchor-reference-width-position-caption']
+
+        cases.forEach((index:any) => {
+            const {json: expectedJson, html } =  expectedValue[index]
+            
+            const dom = new JSDOM(html)
+            const json = fromRedactor(dom.window.document.querySelector('body'))
+            expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
         })
     })
 })
