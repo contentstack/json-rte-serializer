@@ -1701,4 +1701,18 @@ export default {
         </figure>`,
         "json": {"type":"doc","uid":"d6cd7b938dcc41a8a75fb8bad29aa2e9","attrs":{},"children":[{"type":"p","attrs":{},"uid":"c17f2b982464422aaa58499b9525b437","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","anchorLink":"https://app.contentstack.com/","width":204},"url":"https://images.contentstack.io/v3/assets/blt858e12437ac2679e/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","width":204,"caption":"Landscape"},"uid":"929929b627704d38ae53ba6792ec8f69","children":[{"text":""}]}]}
     },
+    "'\n' to <br>": {
+        "html": '<p>This is test for break element<br/>This is text on the next line.</p>',
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "children": [
+                    {
+                        "text": "This is test for break element\nThis is text on the next line."
+                    }
+                ]
+            }
+        ]
+    }
 }
