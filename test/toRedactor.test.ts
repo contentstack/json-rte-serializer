@@ -109,4 +109,10 @@ describe("Testing json to html conversion", () => {
 
         })
     })
+    it('"\n" to <br/> conversion', () => {
+        let jsonValue = expectedValue["'\n' to <br>"].json
+        let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
+        let testResult = isEqual(htmlValue, expectedValue["'\n' to <br>"].html)
+        expect(testResult).toBe(true)
+    })
 })

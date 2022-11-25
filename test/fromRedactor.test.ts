@@ -208,4 +208,20 @@ describe("Testing html to json conversion", () => {
             expect(omitdeep(json, 'uid')).toStrictEqual(omitdeep(expectedJson, 'uid'))
         })
     })
+
+    test("<br/> converted to '\n'", () => {
+        let html = "<p>This is test for break element<br/>This is text on the next line.</p>"
+        const dom = new JSDOM(html)
+        let htmlDoc = dom.window.document.querySelector('body')
+        let jsonValue = fromRedactor(htmlDoc)
+        let testResult = isEqual(omitdeep(jsonValue, "uid", "separaterId") ,docWrapper([{ "attrs": {}, "children": [
+            { text: 'This is test for break element' },
+            {
+              text: '\n',
+              break: false
+            },
+            { text: 'This is text on the next line.' }
+          ], "type": "p" }]))
+        expect(testResult).toBe(true)
+    })
 })
