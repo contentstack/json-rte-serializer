@@ -30,6 +30,7 @@
     "@types/omit-deep-lodash": "^1.1.1",
     "@types/uuid": "^8.3.0",
     "jest": "^27.5.1",
+    "jest-html-reporter": "^3.7.0",
     "jsdom": "^16.6.0",
     "omit-deep-lodash": "^1.1.5",
     "ts-jest": "^27.0.3",
