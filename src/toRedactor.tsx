@@ -165,6 +165,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
     if (jsonValue['break']) {
       text += `<br/>`
     }
+    if (jsonValue.text.includes('\n')) {
+      text = text.replace(/\n/g, '<br/>')
+    }
     Object.entries(jsonValue).forEach(([key, value]) => {
       if(TEXT_WRAPPERS.hasOwnProperty(key)){
         text = TEXT_WRAPPERS[key](text,value)

@@ -200,7 +200,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   } else if (el.nodeType !== 1) {
     return null
   } else if (el.nodeName === 'BR') {
-    return { text: ' ', break: true, separaterId: generateId() }
+    return { text: '\n', break: false, separaterId: generateId() }
   } else if (el.nodeName === 'META') {
     return null
   } else if (el.nodeName === 'COLGROUP') {
