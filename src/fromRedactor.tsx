@@ -32,7 +32,14 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   IMG: (el: HTMLElement) => {
     let imageUrl = el.getAttribute('src')?.split(".") || ["png"]
     let imageType = imageUrl[imageUrl?.length - 1]
-    return { type: 'reference', attrs: { "asset-link": el.getAttribute('src'), default: true, "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset" } }
+    const assetUid = el.getAttribute('asset_uid')
+    if(assetUid){
+
+        const splittedUrl =  el.getAttribute('src')?.split('/')! || [null]
+        const assetName = splittedUrl[splittedUrl?.length - 1]
+        return { type: 'reference', attrs: { "asset-name": assetName,"content-type-uid" : "sys_assets", "asset-link": el.getAttribute('src'), "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset", "asset-uid": assetUid } }
+    }
+    return { type: 'img', attrs: { url: el.getAttribute('src') } }
   },
   LI: () => ({ type: 'li', attrs: {} }),
   OL: () => ({ type: 'ol', attrs: {} }),
@@ -46,7 +53,17 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   TR: (el: HTMLElement) => ({ type: 'tr', attrs: {} }),
   TD: (el: HTMLElement) => ({ type: 'td', attrs: {} }),
   TH: (el: HTMLElement) => ({ type: 'th', attrs: {} }),
-  FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
+  // FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
+  
+  FIGURE: (el: HTMLElement) => {
+    if (el.lastChild && el.lastChild.nodeName === 'P') {
+      return { type: 'figure', attrs: {} }
+    }
+    else {
+      return { type: 'img', attrs: {} }
+    }
+
+  },
   SPAN: (el: HTMLElement) => {
     return { type: 'span', attrs: {} }
   },
@@ -183,7 +200,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   } else if (el.nodeType !== 1) {
     return null
   } else if (el.nodeName === 'BR') {
-    return { text: ' ', break: true, separaterId: generateId() }
+    return { text: '\n', break: false, separaterId: generateId() }
   } else if (el.nodeName === 'META') {
     return null
   } else if (el.nodeName === 'COLGROUP') {
@@ -383,7 +400,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       const attrs = {
         type: 'grid-container',
         attrs: {
-          gutter
+          gutter  
         }
       }
       return jsx('element', attrs, children)
@@ -493,39 +510,61 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         sizeAttrs.width = el.style.width
         if (sizeAttrs.width[sizeAttrs.width.length - 1] === '%') {
           sizeAttrs.width = Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 1))
-        } else if (sizeAttrs.width.slice(sizeAttrs.width.length - 2) === 'px') {
-          sizeAttrs.width = (Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 2)) / window?.screen?.width || 1920) * 100
+        } 
+        
+        else if (sizeAttrs.width.slice(sizeAttrs.width.length - 2) === 'px') {
+          sizeAttrs.width = Number(sizeAttrs.width.slice(0, sizeAttrs.width.length - 2))
         }
       }
       if (el.style?.['max-width']) {
         sizeAttrs['max-width'] = el.style['max-width']
         if (sizeAttrs['max-width'][sizeAttrs['max-width'].length - 1] === '%') {
           sizeAttrs['max-width'] = Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 1))
-        } else if (sizeAttrs['max-width'].slice(sizeAttrs['max-width'].length - 2) === 'px') {
+        } 
+        
+        else if (sizeAttrs['max-width'].slice(sizeAttrs['max-width'].length - 2) === 'px') {
           sizeAttrs['max-width'] =
-            (Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 2)) / window?.screen?.width || 1920) * 100
+            Number(sizeAttrs['max-width'].slice(0, sizeAttrs['max-width'].length - 2))
         }
       }
       let captionElements = el.getElementsByTagName("FIGCAPTION")
-      if (captionElements?.[0]?.textContent) {
-        extraAttrs['asset-caption'] = captionElements?.[0]?.textContent
+      
+      if (captionElements?.[0]) {
+        let caption = captionElements[0]
+        const captionElementsAttrs = caption.attributes
+        const captionAttrs = {}
+        if (captionElementsAttrs) {
+          Array.from(captionElementsAttrs).forEach((child: any) => {
+            captionAttrs[child.nodeName] = child.nodeValue
+          })
+        }
+        extraAttrs['captionAttrs'] = captionAttrs
+        extraAttrs['caption'] = captionElements?.[0]?.textContent
+
+      }
+      if (newChildren[0]?.type === 'img') {
+        elementAttrs = getFinalImageAttributes({elementAttrs, newChildren, extraAttrs, sizeAttrs})
+      }
+      if (newChildren[0]?.type === 'reference') {
+        elementAttrs = getReferenceAttributes({elementAttrs, newChildren, extraAttrs, sizeAttrs})
       }
       if (newChildren[0]?.type === 'a') {
-        const { link, target } = newChildren[0].attrs?.["redactor-attributes"]
-        extraAttrs['link'] = link
+        const { href, target } = newChildren[0].attrs?.["redactor-attributes"]
+        extraAttrs['anchorLink'] = href;
         if (target && target !== '') {
-          extraAttrs['target'] = true
+            extraAttrs['target'] = true;
         }
-        const imageAttrs = newChildren[0].children[0]
-        elementAttrs = getImageAttributes(elementAttrs, imageAttrs.attrs || {}, { ...extraAttrs, ...sizeAttrs })
+        const imageAttrs = newChildren[0].children;
+
+        if(imageAttrs[0].type === 'img'){
+        elementAttrs = getFinalImageAttributes({elementAttrs, newChildren : imageAttrs, extraAttrs, sizeAttrs})
+
+        }
+        if(imageAttrs[0].type === 'reference'){
+        elementAttrs = getReferenceAttributes({elementAttrs, newChildren: imageAttrs, extraAttrs, sizeAttrs})
+        }
       }
-      if (newChildren[0]?.type === 'reference' && newChildren[0]?.attrs?.default) {
-        elementAttrs = getImageAttributes(
-          elementAttrs,
-          { ...newChildren[0].attrs, ...sizeAttrs },
-          { ...extraAttrs, ...sizeAttrs }
-        )
-      }
+      
       return jsx('element', elementAttrs, [{ text: '' }])
     }
 
@@ -712,4 +751,44 @@ const getImageAttributes = (elementAttrs: any, childAttrs: any, extraAttrs: any)
     delete elementAttrs.attrs["link"]
   }
   return elementAttrs
+}
+
+const getReferenceAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttrs} : any) => {
+
+  let { style } = elementAttrs.attrs;
+  
+  extraAttrs['asset-caption'] = extraAttrs['caption'];
+
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, position: extraAttrs.position }
+  extraAttrs = { ...extraAttrs, ...sizeAttrs }
+
+  if (!childAttrs.position) {
+    delete childAttrs.position
+  }
+
+  const referenceAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
+
+  referenceAttrs.type = "reference";
+
+  return referenceAttrs
+}
+
+const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttrs} : any) => {
+
+  let { style } = elementAttrs.attrs;
+
+  if (newChildren[0].attrs.width) {
+      sizeAttrs.width = newChildren[0].attrs.width.toString();
+  }
+
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, caption: extraAttrs['caption'] }
+  extraAttrs = { ...extraAttrs, ...sizeAttrs }
+
+  if (!childAttrs.caption) {
+    delete childAttrs.caption
+  }
+
+  const imageAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
+
+  return imageAttrs
 }

@@ -1,6 +1,7 @@
 node_modules
 
 coverage
+test-report.html
 lib
 
 #OS
