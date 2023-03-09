@@ -153,7 +153,7 @@ const TEXT_WRAPPERS: IJsonToHtmlTextTags = {
   },
   'inlineCode': (child: any, value:any) => {
     return `<span data-type='inlineCode'>${child}</span>`
-  }
+  },
 }
 export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string => {
   //TODO: optimize assign once per function call
@@ -164,6 +164,17 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
     let text = jsonValue['text'].replace(/</g, '&lt;').replace(/>/g, '&gt;')
     if (jsonValue['break']) {
       text += `<br/>`
+    }
+    if(jsonValue['classname'] || jsonValue['id']){
+      if(jsonValue['classname'] && jsonValue['id']){
+        text = `<span class-name=${jsonValue['classname']} id=${jsonValue['id']}>${text}</span>`
+      }
+      else if(jsonValue['classname'] && !jsonValue['id']){
+        text = `<span class-name=${jsonValue['classname']}>${text}</span>`
+      }
+      else if(jsonValue['id'] && !jsonValue['classname']){
+        text = `<span id=${jsonValue['id']}>${text}</span>`
+      }
     }
     if (jsonValue.text.includes('\n')) {
       text = text.replace(/\n/g, '<br/>')
