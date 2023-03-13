@@ -1714,5 +1714,36 @@ export default {
                 ]
             }
         ]
+    },
+    "inline-classname-and-id": {
+        "html": '<p><span>This is test for adding inline <span class=class>class</span> and <span id=id>id</span></span></p>',
+        "json": [
+                    {
+                        "type": "p",
+                        "attrs": {},
+                        "children": [
+                            {
+                                "type": "span",
+                                "attrs": {},
+                                "children": [
+                                    {
+                                        "text": "This is test for adding inline "
+                                    },
+                                    {
+                                        "text": "class",
+                                        "classname": "class"
+                                    },
+                                    {
+                                        "text": " and "
+                                    },
+                                    {
+                                        "text": "id",
+                                        "id": "id"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+        ]
     }
 }
