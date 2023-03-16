@@ -115,4 +115,11 @@ describe("Testing json to html conversion", () => {
         let testResult = isEqual(htmlValue, expectedValue["'\n' to <br>"].html)
         expect(testResult).toBe(true)
     })
+
+    it("Inline classname and id", () => {
+        let jsonValue = expectedValue["inline-classname-and-id"].json
+        let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
+        let testResult = isEqual(htmlValue, expectedValue["inline-classname-and-id"].html)
+        expect(testResult).toBe(true)
+    })
 })
