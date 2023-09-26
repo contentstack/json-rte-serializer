@@ -122,4 +122,11 @@ describe("Testing json to html conversion", () => {
         let testResult = isEqual(htmlValue, expectedValue["inline-classname-and-id"].html)
         expect(testResult).toBe(true)
     })
+    test("should have stringified attrs for nested json", () => {
+        for (const testCase of expectedValue["nested-attrs"]) {
+          const { json, html } = testCase;
+          const htmlValue = toRedactor(json, { allowNonStandardTypes: true });
+          expect(htmlValue).toBe(html);
+        }
+      });
 })

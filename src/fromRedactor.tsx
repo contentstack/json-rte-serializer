@@ -232,13 +232,14 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
   if (options?.allowNonStandardTags && !Object.keys(ELEMENT_TAGS).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
-    const attributes = el.attributes
-    const attribute = {}
-    Array.from(attributes).forEach((child: any) => {
-      attribute[child.nodeName] = child.nodeValue
+    const attributes = (el as HTMLElement).attributes
+    const attributeMap = {}
+    Array.from(attributes).forEach((attribute) => {
+      let { nodeName, value } = attribute
+        attributeMap[nodeName] = getNestedValueIfAvailable(value)
     })
     console.warn(`${nodeName} is not a standard tag of JSON RTE.`)
-    return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attribute } }, children)
+    return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attributeMap } }, children)
   }
   const isEmbedEntry = el.attributes['data-sys-entry-uid']?.value
   const type = el.attributes['type']?.value
@@ -792,3 +793,14 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
 
   return imageAttrs
 }
+
+const getNestedValueIfAvailable = (value: string) => {
+  try {
+    if (typeof value === "string" && value.match(/^{|\[/i)) {
+      return JSON.parse(value);
+    }
+    return value
+  } catch {
+    return value;
+  }
+};
