@@ -15,6 +15,8 @@ const docWrapper = (children: any) => {
 const compareValue = (json1,json2) => {
     return isEqual(JSON.stringify(omitdeep(json1, "uid")), JSON.stringify(omitdeep(docWrapper(json2), "uid")))
 }
+
+jest.mock('uuid', () => ({ v4: () => 'uid' }));
 describe("Testing html to json conversion", () => {
     it("paragraph conversion", () => {
         let html = "<p>This is test</p>"
@@ -224,4 +226,14 @@ describe("Testing html to json conversion", () => {
           ], "type": "p" }]))
         expect(testResult).toBe(true)
     })
+
+    test("should convert stringified attrs to proper nested JSON attrs", () => {
+      for (const testCase of expectedValue["nested-attrs"]) {
+        const { json, html } = testCase;
+        const dom = new JSDOM(html);
+        let htmlDoc = dom.window.document.querySelector("body");
+        const jsonValue = fromRedactor(htmlDoc, { allowNonStandardTags: true });
+        expect(jsonValue).toStrictEqual(json);
+      }
+    });
 })
