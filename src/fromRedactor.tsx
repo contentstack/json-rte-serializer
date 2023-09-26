@@ -782,7 +782,7 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
       sizeAttrs.width = newChildren[0].attrs.width.toString();
   }
 
-  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, caption: extraAttrs['caption'] }
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style?.['text-align'] }, caption: extraAttrs['caption'] }
   extraAttrs = { ...extraAttrs, ...sizeAttrs }
 
   if (!childAttrs.caption) {
