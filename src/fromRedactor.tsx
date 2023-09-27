@@ -235,9 +235,12 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     const attributes = (el as HTMLElement).attributes
     const attributeMap = {}
     Array.from(attributes).forEach((attribute) => {
-      let { nodeName, value } = attribute
-        attributeMap[nodeName] = getNestedValueIfAvailable(value)
-    })
+      let { nodeName, nodeValue } = attribute;
+      if (typeof nodeValue === "string") {
+        nodeValue = getNestedValueIfAvailable(nodeValue);
+      }
+      attributeMap[nodeName] = nodeValue;
+    });
     console.warn(`${nodeName} is not a standard tag of JSON RTE.`)
     return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attributeMap } }, children)
   }
