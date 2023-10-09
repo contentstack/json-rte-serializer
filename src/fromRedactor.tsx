@@ -797,7 +797,7 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
   return imageAttrs
 }
 
-const getNestedValueIfAvailable = (value: string) => {
+export const getNestedValueIfAvailable = (value: string) => {
   try {
     if (typeof value === "string" && value.trim().match(/^{|\[/i)) {
       return JSON.parse(value);
