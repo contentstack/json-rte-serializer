@@ -122,4 +122,23 @@ describe("Testing json to html conversion", () => {
         let testResult = isEqual(htmlValue, expectedValue["inline-classname-and-id"].html)
         expect(testResult).toBe(true)
     })
+
+    describe("Nested attrs", () => {
+
+        test("should have stringified attrs for nested json", () => {
+            for (const testCase of expectedValue["nested-attrs"]) {
+                const { json, html } = testCase;
+                const htmlValue = toRedactor(json, { allowNonStandardTypes: true });
+                expect(htmlValue).toBe(html);
+            }
+        });
+
+        test("should not convert to stringify attrs when `allowNonStandardTypes` is not true", () => {
+          const html = `This is HTML-formatted content.`
+          const json = {"type":"doc","attrs":{}, "children":[{"type":"aprimo","attrs":{ nestedAttrs: { "k1" : "v1"} },"children":[{"text":"This is HTML-formatted content."}]}]};
+
+          const htmlValue = toRedactor(json);
+          expect(htmlValue).toBe(html);
+        });
+    })
 })
