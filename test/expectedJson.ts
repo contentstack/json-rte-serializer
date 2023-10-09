@@ -1745,5 +1745,15 @@ export default {
                         ]
                     }
         ]
-    }
+    },
+    "nested-attrs": [   
+        {
+            json: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"hangout-module","attrs":{},"children":[{"type":"hangout-chat","attrs":{"from":"Paul, Addy","nested":{"to":"JD"}},"children":[{"type":"hangout-discussion","attrs":{},"children":[{"type":"hangout-message","attrs":{"from":"Paul","profile":"profile.png","datetime":"2013-07-17T12:02"},"children":[{"type":"p","uid":"uid","attrs":{},"children":[{"text":"Feelin' this Web Components thing."}]},{"type":"p","uid":"uid","attrs":{},"children":[{"text":"Heard of it?"}]}]}]}]},{"type":"hangout-chat","attrs":{},"children":[{"text":"Hi There!"}]}]}]},
+            html : `<hangout-module><hangout-chat from="Paul, Addy" nested='{"to":"JD"}'><hangout-discussion><hangout-message from="Paul" profile="profile.png" datetime="2013-07-17T12:02"><p>Feelin' this Web Components thing.</p><p>Heard of it?</p></hangout-message></hangout-discussion></hangout-chat><hangout-chat>Hi There!</hangout-chat></hangout-module>`
+        },
+        {
+            json: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"hangout-module","attrs":{},"children":[{"type":"hangout-chat","attrs":{"from":"Paul, Addy","nested-json":{"to":"Hello World","more-nesting":{"from":"Beautiful World"}}},"children":[{"type":"hangout-discussion","attrs":{},"children":[{"type":"hangout-message","attrs":{"from":"Paul","profile":"profile.png","datetime":"2013-07-17T12:02"},"children":[{"type":"p","uid":"uid","attrs":{},"children":[{"text":"Feelin' this Web Components thing."}]},{"type":"p","uid":"uid","attrs":{},"children":[{"text":"Heard of it?"}]}]}]}]},{"type":"hangout-chat","attrs":{},"children":[{"text":"Hi There!"}]}]}]},
+            html : `<hangout-module><hangout-chat from="Paul, Addy" nested-json='{"to":"Hello World","more-nesting":{"from":"Beautiful World"}}'><hangout-discussion><hangout-message from="Paul" profile="profile.png" datetime="2013-07-17T12:02"><p>Feelin' this Web Components thing.</p><p>Heard of it?</p></hangout-message></hangout-discussion></hangout-chat><hangout-chat>Hi There!</hangout-chat></hangout-module>`
+        },
+    ]
 }
