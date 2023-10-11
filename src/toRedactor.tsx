@@ -2,6 +2,7 @@ import kebbab from 'lodash/kebabCase'
 import isEmpty from 'lodash/isEmpty'
 
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
+import { isPlainObject } from 'lodash'
 
 const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {
@@ -223,7 +224,13 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
   if (options?.allowNonStandardTypes && !Object.keys(ELEMENT_TYPES).includes(jsonValue['type']) && jsonValue['type'] !== 'doc') {
     let attrs = ''
     Object.entries(jsonValue?.attrs|| {}).forEach(([key, val]) => {
-      attrs += val ? ` ${key}="${val}"` : ` ${key}`;
+      if(isPlainObject(val)){
+        val = JSON.stringify(val)
+        attrs += ` ${key}='${val}'` 
+      }
+      else{
+        attrs += val ? ` ${key}="${val}"` : ` ${key}`;
+      }
     })
     attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     console.warn(`${jsonValue['type']} is not a valid element type.`)

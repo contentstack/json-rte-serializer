@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { fromRedactor } from "../src/fromRedactor"
+import { fromRedactor, getNestedValueIfAvailable } from "../src/fromRedactor"
 import { JSDOM } from "jsdom"
 import { isEqual } from "lodash"
 import omitdeep from "omit-deep-lodash"
@@ -15,6 +15,8 @@ const docWrapper = (children: any) => {
 const compareValue = (json1,json2) => {
     return isEqual(JSON.stringify(omitdeep(json1, "uid")), JSON.stringify(omitdeep(docWrapper(json2), "uid")))
 }
+
+jest.mock('uuid', () => ({ v4: () => 'uid' }));
 describe("Testing html to json conversion", () => {
     it("paragraph conversion", () => {
         let html = "<p>This is test</p>"
@@ -224,4 +226,47 @@ describe("Testing html to json conversion", () => {
           ], "type": "p" }]))
         expect(testResult).toBe(true)
     })
+
+    describe("Nested attrs", () =>{
+
+    test("should convert stringified attrs to proper nested JSON attrs", () => {
+      for (const testCase of expectedValue["nested-attrs"]) {
+        const { json, html } = testCase;
+        const dom = new JSDOM(html);
+        let htmlDoc = dom.window.document.querySelector("body");
+        const jsonValue = fromRedactor(htmlDoc, { allowNonStandardTags: true });
+        expect(jsonValue).toStrictEqual(json);
+      }
+    });
+
+    test("should not convert stringify attrs when `allowNonStandardTags` is not true", () => {
+        const html = `<p><span from="Paul, Addy" to="[object Object]">Hi There!</span></p>`;
+        const json = {"attrs": {}, "children": [{"attrs": {}, "children": [{"attrs": {"redactor-attributes": {"from": "Paul, Addy", "to": "[object Object]"}, "style": {}}, "children": [{"attrs": {"style": {}}, "text": "Hi There!"}], "type": "span", "uid": "uid"}], "type": "p", "uid": "uid"}], "type": "doc", "uid": "uid"};
+  
+        const dom = new JSDOM(html);
+        let htmlDoc = dom.window.document.querySelector("body");
+        const jsonValue = fromRedactor(htmlDoc);
+        expect(jsonValue).toStrictEqual(json);
+      });
+    })
+
 })
+
+
+describe('getNestedValueIfAvailable', () => {
+
+    it('should return the input value when it\'s not a string containing JSON', () => {
+      expect(getNestedValueIfAvailable(10)).toBe(10);
+      expect(getNestedValueIfAvailable(null)).toBeNull();
+      expect(getNestedValueIfAvailable('{ "name": "John", "age": }')).toBe('{ "name": "John", "age": }');
+      expect(getNestedValueIfAvailable({ "name": "John", "age": 30})).toStrictEqual({ "name": "John", "age": 30});
+      expect(getNestedValueIfAvailable('[Object Object]')).toBe('[Object Object]');
+    });
+
+    it('should return the parsed JSON when the input value is a string containing JSON', () => {
+      const value = '{ "name": "John", "age": 30 }';
+      const result = getNestedValueIfAvailable(value);
+      expect(result).toEqual({ name: "John", age: 30 });
+    });
+
+});
