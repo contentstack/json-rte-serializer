@@ -232,13 +232,17 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
   if (options?.allowNonStandardTags && !Object.keys(ELEMENT_TAGS).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
-    const attributes = el.attributes
-    const attribute = {}
-    Array.from(attributes).forEach((child: any) => {
-      attribute[child.nodeName] = child.nodeValue
-    })
+    const attributes = (el as HTMLElement).attributes
+    const attributeMap = {}
+    Array.from(attributes).forEach((attribute) => {
+      let { nodeName, nodeValue } = attribute;
+      if (typeof nodeValue === "string") {
+        nodeValue = getNestedValueIfAvailable(nodeValue);
+      }
+      attributeMap[nodeName] = nodeValue;
+    });
     console.warn(`${nodeName} is not a standard tag of JSON RTE.`)
-    return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attribute } }, children)
+    return jsx('element', { type: nodeName.toLowerCase(), attrs: { ...attributeMap } }, children)
   }
   const isEmbedEntry = el.attributes['data-sys-entry-uid']?.value
   const type = el.attributes['type']?.value
@@ -781,7 +785,7 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
       sizeAttrs.width = newChildren[0].attrs.width.toString();
   }
 
-  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, caption: extraAttrs['caption'] }
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style?.['text-align'] }, caption: extraAttrs['caption'] }
   extraAttrs = { ...extraAttrs, ...sizeAttrs }
 
   if (!childAttrs.caption) {
@@ -792,3 +796,14 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
 
   return imageAttrs
 }
+
+export const getNestedValueIfAvailable = (value: string) => {
+  try {
+    if (typeof value === "string" && value.trim().match(/^{|\[/i)) {
+      return JSON.parse(value);
+    }
+    return value
+  } catch {
+    return value;
+  }
+};
