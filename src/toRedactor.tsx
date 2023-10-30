@@ -118,6 +118,46 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     } else if (extraAttrs?.displayType === 'asset') {
       return `<figure${attrs}>${child}</figure>`
     }
+     
+    else if (extraAttrs?.displayType === "display") {
+      const anchor = jsonBlock?.["attrs"]?.["link"];
+
+      const caption = jsonBlock?.["attrs"]?.["asset-caption"];
+      const position = jsonBlock?.["attrs"]?.["position"];
+      const inline = jsonBlock?.["attrs"]?.["inline"]
+      
+      attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
+      let img = `<img${attrs}/>`;
+
+      if (anchor) {
+        const target = jsonBlock?.["attrs"]?.["target"];
+        let anchorAttrs = `href="${anchor}"`;
+        if (target) {
+          anchorAttrs = `${anchorAttrs} target="${target}"`;
+        }
+        img = `<a ${anchorAttrs}>${img}</a>`;
+      }
+
+      if (caption || (position && position !== "none")) {
+        const figcaption = `<figcaption style="text-align:center">${caption}</figcaption>`;
+        let figureAttrs = ``;
+
+        if (position && position !== "none") {
+          const style = Object.entries(jsonBlock["attrs"]["style"])
+            .map((entry) => entry.join(":"))
+            .join(";");
+
+          if (style) figureAttrs = ` style="${style}"`;
+        }
+        img = `<figure${figureAttrs ? figureAttrs : ""}>${img}${
+          caption ? figcaption : ""
+        }</figure>`;
+      }
+      if(inline){
+        img = `<span>${img}</span>`
+      }
+      return `${img}`;
+    }
     return `<span${attrs}>${child}</span>`
   },
   inlineCode: (attrs: any, child: any) => {
