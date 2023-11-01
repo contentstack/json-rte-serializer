@@ -127,7 +127,10 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
       const caption = jsonBlock?.["attrs"]?.["asset-caption"];
       const position = jsonBlock?.["attrs"]?.["position"];
       const inline = jsonBlock?.["attrs"]?.["inline"]
-      
+      let figureAttrs = ""
+      const figureStyles = {
+        margin: "0",
+      };
       attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
       let img = `<img${attrs}/>`;
 
@@ -144,19 +147,25 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
         const figcaption = caption
           ? `<figcaption style="text-align:center">${caption}</figcaption>`
           : "";
-        const figureStyles = {
-          margin: "0",
-        };
+        
         if (inline && position !== "right" && position !== "left") {
           figureStyles["display"] = "inline-block";
         }
         if (position && position !== "none") {
           figureStyles[inline ? "float" : "text-align"] = position;
         }
-
-        img = `<figure style="${getStyleStringFromObject(figureStyles)}"><div style="display: inline-block">${img}${figcaption}</div></figure>`;
+        
+        if(figcaption){
+          img = `<div style="display: inline-block">${img}${figcaption}</div>`;
+        }
       }
-      return `${img}`;
+      if(!isEmpty(figureStyles)){
+        figureAttrs = ` style="${getStyleStringFromObject(figureStyles)}"`
+      }
+      if(inline && !caption && (!position ||position==='none')){
+        return img
+      }
+      return `<figure${figureAttrs ? figureAttrs : ""}>${img}</figure>`;
     }
     return `<span${attrs}>${child}</span>`
   },
@@ -442,12 +451,14 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
             attrsJson['sys-style-type'] = String(allattrs['asset-type']).indexOf('image') > -1 ? 'display' : 'download'
           }
           if (attrsJson?.["display-type"] === "display") {
-            const styleObj = jsonValue?.["attrs"]?.["style"] ?? {}
+            const styleObj = jsonValue?.["attrs"]?.["style"] ?? {};
             if (!styleObj["width"]) {
               styleObj["width"] = "auto";
             }
             delete styleObj["float"];
-            attrsJson["style"] = attrsJson["style"] + "; " + getStyleStringFromObject(styleObj);
+            attrsJson["style"]
+              ? (attrsJson["style"] += getStyleStringFromObject(styleObj))
+              : (attrsJson["style"] = getStyleStringFromObject(styleObj));
           }
           delete attrsJson['display-type']
         }
