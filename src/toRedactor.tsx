@@ -49,6 +49,8 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     return `<iframe${attrs}></iframe>`
   },
   p: (attrs: any, child: any) => {
+    if(child.includes("<figure"))
+    return `<div${attrs} style="overflow: hidden"><span>${child}</span></div>`
     return `<p${attrs}>${child}</p>`
   },
   ol: (attrs: any, child: any) => {
@@ -140,21 +142,20 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
 
       if (caption || (position && position !== "none")) {
         const figcaption = `<figcaption style="text-align:center">${caption}</figcaption>`;
-        let figureAttrs = ``;
-
-        if (position && position !== "none") {
-          const style = Object.entries(jsonBlock["attrs"]["style"])
-            .map((entry) => entry.join(":"))
-            .join(";");
-
-          if (style) figureAttrs = ` style="${style}"`;
+        const figureStyles = {
+          margin: '0'
         }
-        img = `<figure${figureAttrs ? figureAttrs : ""}>${img}${
+        if(inline && position !== 'right' && position !== 'left') {
+          figureStyles["display"] = "inline-block"
+        }
+        if (position && position !== "none") {
+          figureStyles[ inline ? "float": "text-align"]= position
+        }
+        
+        
+        img = `<figure style="${getStyleStringFromObject(figureStyles)}">${img}${
           caption ? figcaption : ""
         }</figure>`;
-      }
-      if(inline){
-        img = `<span>${img}</span>`
       }
       return `${img}`;
     }
@@ -402,7 +403,18 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           delete attrsJson['content-type-uid']
           attrsJson['sys-style-type'] = allattrs['display-type']
           delete attrsJson['display-type']
-        } else if (attrsJson['type'] === "asset") {
+        } 
+        else if (attrsJson["display-type"]) {
+          const styleObj = jsonValue["attrs"]["style"];
+          if(jsonValue["attrs"]["position"] === 'center'){
+            styleObj['object-fit'] = "contain"
+          }
+          delete styleObj['float']
+          attrsJson["style"] = getStyleStringFromObject(styleObj);
+          console.dir({jsonValue, attrsJson, figureStyles, styleObj}, {depth:null})
+
+        }
+        else if (attrsJson['type'] === "asset") {
           attrsJson['data-sys-asset-filelink'] = allattrs['asset-link']
           delete attrsJson['asset-link']
           attrsJson['data-sys-asset-uid'] = allattrs['asset-uid']
@@ -507,4 +519,11 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
   }
 
   return children
+}
+
+
+function getStyleStringFromObject(styleObj: { [key: string]: string }) {
+  return Object.keys(styleObj)
+    .map((key) => `${key}: ${styleObj[key]}`)
+    .join("; ");
 }
