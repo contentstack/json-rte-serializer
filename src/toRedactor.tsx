@@ -141,21 +141,20 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
       }
 
       if (caption || (position && position !== "none")) {
-        const figcaption = `<figcaption style="text-align:center">${caption}</figcaption>`;
+        const figcaption = caption
+          ? `<figcaption style="text-align:center">${caption}</figcaption>`
+          : "";
         const figureStyles = {
-          margin: '0'
-        }
-        if(inline && position !== 'right' && position !== 'left') {
-          figureStyles["display"] = "inline-block"
+          margin: "0",
+        };
+        if (inline && position !== "right" && position !== "left") {
+          figureStyles["display"] = "inline-block";
         }
         if (position && position !== "none") {
-          figureStyles[ inline ? "float": "text-align"]= position
+          figureStyles[inline ? "float" : "text-align"] = position;
         }
-        
-        
-        img = `<figure style="${getStyleStringFromObject(figureStyles)}">${img}${
-          caption ? figcaption : ""
-        }</figure>`;
+
+        img = `<figure style="${getStyleStringFromObject(figureStyles)}"><div style="display: inline-block">${img}${figcaption}</div></figure>`;
       }
       return `${img}`;
     }
@@ -404,16 +403,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           attrsJson['sys-style-type'] = allattrs['display-type']
           delete attrsJson['display-type']
         } 
-        else if (attrsJson["display-type"]) {
-          const styleObj = jsonValue["attrs"]["style"];
-          if(jsonValue["attrs"]["position"] === 'center'){
-            styleObj['object-fit'] = "contain"
-          }
-          delete styleObj['float']
-          attrsJson["style"] = getStyleStringFromObject(styleObj);
-          console.dir({jsonValue, attrsJson, figureStyles, styleObj}, {depth:null})
-
-        }
+        
         else if (attrsJson['type'] === "asset") {
           attrsJson['data-sys-asset-filelink'] = allattrs['asset-link']
           delete attrsJson['asset-link']
@@ -451,7 +441,14 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           if (!attrsJson['sys-style-type']) {
             attrsJson['sys-style-type'] = String(allattrs['asset-type']).indexOf('image') > -1 ? 'display' : 'download'
           }
-
+          if (attrsJson?.["display-type"] === "display") {
+            const styleObj = jsonValue?.["attrs"]?.["style"] ?? {}
+            if (!styleObj["width"]) {
+              styleObj["width"] = "auto";
+            }
+            delete styleObj["float"];
+            attrsJson["style"] = attrsJson["style"] + "; " + getStyleStringFromObject(styleObj);
+          }
           delete attrsJson['display-type']
         }
       }
