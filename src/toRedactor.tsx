@@ -49,6 +49,8 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     return `<iframe${attrs}></iframe>`
   },
   p: (attrs: any, child: any) => {
+    if(child.includes("<figure"))
+    return `<div${attrs} style="overflow: hidden"><span>${child}</span></div>`
     return `<p${attrs}>${child}</p>`
   },
   ol: (attrs: any, child: any) => {
@@ -117,6 +119,53 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
       return `<a${attrs}>${child}</a>`
     } else if (extraAttrs?.displayType === 'asset') {
       return `<figure${attrs}>${child}</figure>`
+    }
+     
+    else if (extraAttrs?.displayType === "display") {
+      const anchor = jsonBlock?.["attrs"]?.["link"];
+
+      const caption = jsonBlock?.["attrs"]?.["asset-caption"];
+      const position = jsonBlock?.["attrs"]?.["position"];
+      const inline = jsonBlock?.["attrs"]?.["inline"]
+      let figureAttrs = ""
+      const figureStyles = {
+        margin: "0",
+      };
+      attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
+      let img = `<img${attrs}/>`;
+
+      if (anchor) {
+        const target = jsonBlock?.["attrs"]?.["target"];
+        let anchorAttrs = `href="${anchor}"`;
+        if (target) {
+          anchorAttrs = `${anchorAttrs} target="${target}"`;
+        }
+        img = `<a ${anchorAttrs}>${img}</a>`;
+      }
+
+      if (caption || (position && position !== "none")) {
+        const figcaption = caption
+          ? `<figcaption style="text-align:center">${caption}</figcaption>`
+          : "";
+        
+        if (inline && position !== "right" && position !== "left") {
+          figureStyles["display"] = "inline-block";
+        }
+        if (position && position !== "none") {
+          figureStyles[inline ? "float" : "text-align"] = position;
+        }
+        
+        if(figcaption){
+          img = `<div style="display: inline-block">${img}${figcaption}</div>`;
+        }
+      }
+      if(!isEmpty(figureStyles)){
+        figureAttrs = ` style="${getStyleStringFromObject(figureStyles)}"`
+      }
+      if(inline && !caption && (!position ||position==='none')){
+        return img
+      }
+      return `<figure${figureAttrs ? figureAttrs : ""}>${img}</figure>`;
     }
     return `<span${attrs}>${child}</span>`
   },
@@ -362,7 +411,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           delete attrsJson['content-type-uid']
           attrsJson['sys-style-type'] = allattrs['display-type']
           delete attrsJson['display-type']
-        } else if (attrsJson['type'] === "asset") {
+        } 
+        
+        else if (attrsJson['type'] === "asset") {
           attrsJson['data-sys-asset-filelink'] = allattrs['asset-link']
           delete attrsJson['asset-link']
           attrsJson['data-sys-asset-uid'] = allattrs['asset-uid']
@@ -399,7 +450,16 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           if (!attrsJson['sys-style-type']) {
             attrsJson['sys-style-type'] = String(allattrs['asset-type']).indexOf('image') > -1 ? 'display' : 'download'
           }
-
+          if (attrsJson?.["display-type"] === "display") {
+            const styleObj = jsonValue?.["attrs"]?.["style"] ?? {};
+            if (!styleObj["width"]) {
+              styleObj["width"] = "auto";
+            }
+            delete styleObj["float"];
+            (attrsJson["style"] && typeof attrsJson["style"] === 'string')
+              ? (attrsJson["style"] += getStyleStringFromObject(styleObj))
+              : (attrsJson["style"] = getStyleStringFromObject(styleObj));
+          }
           delete attrsJson['display-type']
         }
       }
@@ -467,4 +527,11 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
   }
 
   return children
+}
+
+
+function getStyleStringFromObject(styleObj: { [key: string]: string }) {
+  return Object.keys(styleObj)
+    .map((key) => `${key}: ${styleObj[key]}`)
+    .join("; ");
 }
