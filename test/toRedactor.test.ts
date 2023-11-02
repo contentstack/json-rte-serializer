@@ -2,6 +2,7 @@ import { toRedactor } from "../src/toRedactor"
 import { isEqual } from "lodash"
 
 import expectedValue from "./expectedJson"
+import { imageAssetData } from "./testingData"
 
 describe("Testing json to html conversion", () => {
     it("heading conversion", () => {
@@ -141,4 +142,85 @@ describe("Testing json to html conversion", () => {
           expect(htmlValue).toBe(html);
         });
     })
+    describe("Image Type Asset", () => {
+      describe("Block", () => {
+        let f = "";
+        it("should convert to <figure><img/></figure> (base case)", () => {
+          const { value, expectedHtml } = imageAssetData["base"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><img alt/></figure> (alt)", () => {
+          const { value, expectedHtml } = imageAssetData["alt"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><img/><figcaption/></figure> (caption)", () => {
+          const { value, expectedHtml } = imageAssetData["caption"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure style><img/></figure> (alignment)", () => {
+          const { value, expectedHtml } = imageAssetData["alignment"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><a><img/></a></figure> (anchor)", () => {
+          const { value, expectedHtml } = imageAssetData["anchor"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><a target><img/></a></figure> (anchor and target)", () => {
+          const { value, expectedHtml } = imageAssetData["anchor-target"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><a target><img alt/></a></figure> (anchor alignment target alt caption)", () => {
+          const { value, expectedHtml } =
+            imageAssetData["anchor-alignment-target-alt-caption"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+      });
+  
+      describe("Inline", () => {
+        it("should convert to <figure><img/></figure> (base case)", () => {
+          const { value, expectedHtml } = imageAssetData["inline-base"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><img alt/></figure> (alt)", () => {
+          const { value, expectedHtml } = imageAssetData["inline-alt"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><img/><figcaption/></figure> (caption)", () => {
+          const { value, expectedHtml } = imageAssetData["inline-caption"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure style><img/></figure> (alignment)", () => {
+          const { value, expectedHtml } = imageAssetData["inline-alignment"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><a><img/></a></figure> (anchor)", () => {
+          const { value, expectedHtml } = imageAssetData["inline-anchor"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><a target><img/></a></figure> (anchor and target)", () => {
+          const { value, expectedHtml } = imageAssetData["inline-anchor-target"];
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+        it("should convert to <figure><a target><img alt/></a></figure> (anchor alignment target alt caption)", () => {
+          const { value, expectedHtml } =
+            imageAssetData["inline-anchor-alignment-target-alt-caption"];
+  
+          const html = toRedactor(value);
+          expect(html).toBe(expectedHtml);
+        });
+      });
+    });
 })
