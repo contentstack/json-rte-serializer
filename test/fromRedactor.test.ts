@@ -270,3 +270,38 @@ describe('getNestedValueIfAvailable', () => {
     });
 
 });
+describe("CS-41001", () =>{
+    test("should not add fragment for text nodes having white spaces", () => {
+        const dom = new JSDOM();
+        const document = dom.window.document;
+        const body = document.createElement("body");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const tr = document.createElement("tr");
+        const text = document.createTextNode(` `)
+        td1.textContent = "Hello";
+        td2.textContent = "World";
+        tr.appendChild(td1);
+        tr.append(text)
+        tr.appendChild(td2);
+        body.append(tr)
+        const jsonValue = fromRedactor(body);
+        expect(jsonValue).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Hello"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"World"}]}]}]})
+    })
+    test("should add fragment for text nodes between block nodes", () => {
+        const dom = new JSDOM();
+        const document = dom.window.document;
+        const body = document.createElement("body");
+        const p1 = document.createElement("p");
+        const p2 = document.createElement("p");
+        const text = document.createTextNode(` beautiful `)
+        p1.textContent = "Hello";
+        p2.textContent = "World";
+        body.appendChild(p1);
+        body.append(text)
+        body.appendChild(p2);
+        const jsonValue = fromRedactor(body);
+        expect(jsonValue).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello"}]},{"type":"fragment","attrs":{},"uid":"uid","children":[{"text":" beautiful "}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":"World"}]}]})
+    })
+})
+
