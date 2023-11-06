@@ -163,7 +163,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   // If node is text node
   if (el.nodeType === 3) {
     if (whiteCharPattern.test(el.textContent)) return null
-    if (["TABLE", "THEAD", "TBODY", "TR"].includes(el?.parentElement?.nodeName ?? "") && (el.textContent as string).trim().length === 0) return null
+    if (["TABLE", "THEAD", "TBODY", "TR"].includes(el?.parentElement?.nodeName ?? "") && el?.textContent?.trim?.()?.length === 0) return null
     if (el.textContent === '\n') {
       return null
     }
