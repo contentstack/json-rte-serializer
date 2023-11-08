@@ -456,9 +456,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
               styleObj["width"] = "auto";
             }
             delete styleObj["float"];
-            (attrsJson["style"] && typeof attrsJson["style"] === 'string')
-              ? (attrsJson["style"] += getStyleStringFromObject(styleObj))
-              : (attrsJson["style"] = getStyleStringFromObject(styleObj));
+            // (attrsJson["style"] && typeof attrsJson["style"] === 'string')
+            //   ? (attrsJson["style"] += getStyleStringFromObject(styleObj)) :
+            (attrsJson["style"] = getStyleStringFromObject(styleObj));
           }
           delete attrsJson['display-type']
         }
