@@ -325,10 +325,3 @@ function htmlToJson (html, options) {
    return fromRedactor(htmlDoc, options);
 
 }
-
-
-test.only('test', () => {
-    const html = `<table><tbody></tbody></table>`
-  const json = htmlToJson(html)
-  console.log(JSON.stringify(json))
-})
