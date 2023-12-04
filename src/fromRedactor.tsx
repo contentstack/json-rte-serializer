@@ -213,22 +213,21 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     const thead = el.querySelector('thead')
 
     if (!tbody && !thead) {
-      el.append(document.createElement('tbody'))
+      el.innerHTML += "<tbody></tbody>"
     }
   }
   else if (['TBODY', 'THEAD'].includes(el.nodeName)) {
     const row = el.querySelector('tr')
     if (!row) {
-      const tr = document.createElement('tr')
-      el.append(tr)
+      el.innerHTML += "<tr></tr>"
     }
   }
   else if (el.nodeName === 'TR') {
     const cell = el.querySelector('th, td')
     if (!cell) {
       const cellType = el.parentElement.nodeName === 'THEAD' ? 'th' : 'td'
-      const cell = document.createElement(cellType)
-      el.append(cell)
+      el.innerHTML += `<${cellType}></${cellType}>`
+
     }
   }
   const { nodeName } = el
@@ -726,7 +725,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         return Array(colSpan).fill(0).map((_, i) => cellIndex + i)
       })
 
-      if (disabledCols.length)
+      if (disabledCols?.length)
         elementAttrs.attrs['disabledCols'] = disabledCols
 
 
