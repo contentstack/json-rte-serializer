@@ -80,6 +80,9 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   tr: (attrs: any, child: any) => {
     return `<tr${attrs}>${child}</tr>`
   },
+  trgrp: (attrs: any, child: any) => {
+    return child
+  },
   td: (attrs: any, child: any) => {
     return `<td${attrs}>${child}</td>`
   },
@@ -399,6 +402,15 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         delete allattrs['cols']
         delete allattrs['colWidths']
       }
+      if (allattrs['disabledCols']) {
+        delete allattrs['disabledCols']
+      }
+      if (allattrs['colSpan']) {
+        delete allattrs['colSpan']
+      }
+      if (allattrs['rowSpan']) {
+        delete allattrs['rowSpan']
+      }
 
       attrsJson = { ...attrsJson, ...allattrs, style: style }
       if (jsonValue['type'] === 'reference') {
@@ -482,7 +494,10 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       if (!(setCol.size === 1 && jsonValue.attrs.cols * setCol.values().next().value === totalWidth)) {
         let col = ''
         Array.from(colWidths).forEach(
-          (child, index) => (col += `<col style="width:${(colWidths[index] / totalWidth) * 100}%"/>`)
+          (colWidth, index) => {
+            const width = (colWidth as number / totalWidth) * 100
+            col += `<col style="width:${width}%"/>`
+          }
         )
         let colgroup = `<colgroup data-width='${totalWidth}'>${col}</colgroup>`
         children = colgroup + children
@@ -521,6 +536,11 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         return children
       }
     }
+
+    if(['td','th'].includes(jsonValue['type'])){
+      if(jsonValue?.['attrs']?.['void']) return ''
+    }
+
     attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
 
     return ELEMENT_TYPES[orgType || jsonValue['type']](attrs, children,jsonValue, figureStyles)

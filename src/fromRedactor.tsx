@@ -51,8 +51,8 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   THEAD: (el: HTMLElement) => ({ type: 'thead', attrs: {} }),
   TBODY: (el: HTMLElement) => ({ type: 'tbody', attrs: {} }),
   TR: (el: HTMLElement) => ({ type: 'tr', attrs: {} }),
-  TD: (el: HTMLElement) => ({ type: 'td', attrs: {} }),
-  TH: (el: HTMLElement) => ({ type: 'th', attrs: {} }),
+  TD: (el: HTMLElement) => ({ type: 'td', attrs: { ...spanningAttrs(el) } }),
+  TH: (el: HTMLElement) => ({ type: 'th', attrs: { ...spanningAttrs(el) } }),
   // FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
   
   FIGURE: (el: HTMLElement) => {
@@ -219,6 +219,28 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     return null
   } else if (el.nodeName === 'COLGROUP') {
     return null
+  }
+  else if (el.nodeName === "TABLE") {
+    const tbody = el.querySelector('tbody')
+    const thead = el.querySelector('thead')
+
+    if (!tbody && !thead) {
+      el.innerHTML += "<tbody></tbody>"
+    }
+  }
+  else if (['TBODY', 'THEAD'].includes(el.nodeName)) {
+    const row = el.querySelector('tr')
+    if (!row) {
+      el.innerHTML += "<tr></tr>"
+    }
+  }
+  else if (el.nodeName === 'TR') {
+    const cell = el.querySelector('th, td')
+    if (!cell) {
+      const cellType = el.parentElement.nodeName === 'THEAD' ? 'th' : 'td'
+      el.innerHTML += `<${cellType}></${cellType}>`
+
+    }
   }
   const { nodeName } = el
   let parent = el
@@ -628,45 +650,110 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       })
     }
     if (nodeName === 'TABLE') {
-      let row = 0
+      const row = el.querySelectorAll('TR').length
       let table_child = ['THEAD', 'TBODY']
       let cell_type = ['TH', 'TD']
       let col = 0
-      Array.from(el.childNodes).forEach((child: any) => {
-        if (table_child.includes(child.nodeName)) {
-          row += child.childNodes.length
-        }
-      })
-      let rowElement = el.getElementsByTagName('TR')[0]
-      if (rowElement)
-        Array.from(rowElement.childNodes).forEach((child: any) => {
-          if (cell_type.includes(child.nodeName)) {
-            col += 1
-          }
-        })
+      
+      const colElementLength = el.getElementsByTagName('COLGROUP')[0]?.children?.length ?? 0
+      col = Math.max(...Array.from(el.getElementsByTagName('TR')).map((row: any) => row.children.length), colElementLength)
       let colWidths: Array<any> = Array.from({ length: col }).fill(250)
-      if (el?.childNodes?.[0]?.nodeName === 'COLGROUP') {
-        let colGroupWidth: Array<any> = []
-        let totalWidth = parseFloat(el.childNodes[0].getAttribute('data-width')) || col * 250
-        Array.from(el.childNodes[0].childNodes).forEach((child: any) => {
-          let width = child?.style?.width || '250px'
-          if (width.slice(width.length - 1) === '%') {
-            colGroupWidth.push((parseFloat(width.slice(0, width.length - 1)) * totalWidth) / 100)
-          } else if (width.slice(width.length - 2) === 'px') {
-            colGroupWidth.push(parseFloat(width.slice(0, width.length - 2)))
+
+  Array.from(el.childNodes).forEach((child: any) => {
+    if (child?.nodeName === 'COLGROUP') {
+      let colGroupWidth = Array<number>(col).fill(250)
+      let totalWidth = parseFloat(child.getAttribute('data-width')) || col * 250
+      Array.from(child.children).forEach((child: any, index) => {
+        if (child?.nodeName === 'COL') {
+          let width = child?.style?.width ?? '250px'
+          if (width.substr(-1) === '%') {
+            colGroupWidth[index] = (parseFloat(width.slice(0, width.length - 1)) * totalWidth) / 100
+          } else if (width.substr(-2) === 'px') {
+            colGroupWidth[index] = parseFloat(width.slice(0, width.length - 2))
+          }
           }
         })
         colWidths = colGroupWidth
       }
+    })
+    let tableHead : any
+    let tableBody: any
+
+    children.forEach((tableChild: any) => {
+      if (tableChild?.type === 'thead') {
+        tableHead = tableChild
+        return
+      }
+      if (tableChild?.type === 'tbody') {
+        tableBody = tableChild
+        return
+      }
+    });
+
+    let disabledCols = [...tableHead?.attrs?.disabledCols ?? [], ...tableBody?.attrs?.disabledCols ?? []]
+    delete tableHead?.attrs?.disabledCols
+    delete tableBody?.attrs?.disabledCols
+
+    const tableAttrs = {
+      ...elementAttrs.attrs,
+      rows: row,
+      cols: col,
+      colWidths: colWidths,
+    }
+      
+      if(!isEmpty(disabledCols)){
+        tableAttrs['disabledCols'] = Array.from(new Set(disabledCols))
+      }
+
       elementAttrs = {
         ...elementAttrs,
-        attrs: {
-          ...elementAttrs.attrs,
-          rows: row,
-          cols: col,
-          colWidths: colWidths
-        }
+        attrs: tableAttrs
       }
+    }
+    if (["THEAD", "TBODY"].includes(nodeName)) {
+      const rows = children as any[]
+      const disabledCols = rows.flatMap(row => {
+        const { disabledCols } = row.attrs
+        delete row['attrs']['disabledCols']
+        return disabledCols ?? []
+      })
+      elementAttrs.attrs['disabledCols'] = disabledCols
+    }
+    if (nodeName === "TBODY") {
+
+      const rows = children
+
+      addVoidCellsAndApplyAttributes(rows)
+
+      children = getTbodyChildren(rows)
+    }
+
+    if (nodeName === "TR") {
+
+      const cells = children.filter((child:any) => ['th', 'td'].includes(child.type)) as any[]
+
+
+      const disabledCols = cells.flatMap((cell, cellIndex) => {
+        let { colSpan } = cell.attrs
+        if (!colSpan) return []
+        colSpan = parseInt(colSpan)
+        return Array(colSpan).fill(0).map((_, i) => cellIndex + i)
+      })
+
+      if (disabledCols?.length)
+        elementAttrs.attrs['disabledCols'] = disabledCols
+
+
+    }
+    if (['TD', 'TH'].includes(nodeName)) {
+      const { colSpan = 1, rowSpan } = elementAttrs?.['attrs']
+
+      return [
+        jsx('element', elementAttrs, children),
+        ...Array(colSpan - 1)
+          .fill(0)
+          .map((_) => emptyCell(nodeName.toLowerCase(), rowSpan ? { inducedRowSpan: rowSpan } : {}))
+      ]
     }
     if (nodeName === 'P') {
       if (
@@ -824,3 +911,84 @@ export const getNestedValueIfAvailable = (value: string) => {
     return value;
   }
 };
+
+
+const spanningAttrs = (el: HTMLElement) => {
+  const attrs = {}
+  const rowSpan = parseInt(el.getAttribute('rowspan') ?? '1')
+  const colSpan = parseInt(el.getAttribute('colspan') ?? '1')
+  if (rowSpan > 1) attrs['rowSpan'] = rowSpan
+  if (colSpan > 1) attrs['colSpan'] = colSpan
+
+  return attrs
+}
+const emptyCell = (cellType: string, attrs = {}) => {
+  return jsx('element', { type: cellType, attrs: { void: true, ...attrs } }, [{ text: '' }])
+}
+
+const addVoidCellsAndApplyAttributes = (rows: any[]) => {
+  rows.forEach((row, currIndex) => {
+    const cells = row.children as any[]
+
+    cells.forEach((cell, cellIndex) => {
+      if (!cell || !cell.attrs) return
+
+      const { rowSpan, inducedRowSpan } = cell.attrs
+
+      let span = rowSpan ?? inducedRowSpan ?? 0
+
+      if (!span || span < 2) return
+      const nextRow = rows[currIndex + 1]
+      if (!nextRow) {
+        delete cell?.attrs?.inducedRowSpan
+        return
+      }
+
+      // set inducedRowSpan on cell in row at cellIndex
+      span--
+      nextRow?.children?.splice(cellIndex, 0,
+        emptyCell('td',
+          (span > 1) ? { inducedRowSpan: span } : {}
+        ))
+
+      // Include next row in trgrp
+      nextRow['attrs']['included'] = true
+
+      // Make a new trgrp
+      if (rowSpan) {
+        row['attrs']['origin'] = true
+      }
+
+      delete cell?.['attrs']?.['inducedRowSpan']
+
+    })
+  })
+}
+
+
+function getTbodyChildren  (rows: any[]) {
+  const newTbodyChildren = rows.reduce((tBodyChildren, row, rowIndex) => {
+
+    const { included, origin } = row.attrs
+    const l = tBodyChildren.length
+
+    if (included || origin) {
+
+      if (origin && !included) {
+        tBodyChildren.push(jsx('element', { type: 'trgrp' }, row))
+      }
+      if (included) {
+        tBodyChildren[l - 1].children.push(row)
+
+      }
+      delete row['attrs']['included']
+      delete row['attrs']['origin']
+      return tBodyChildren
+    }
+
+    tBodyChildren.push(row)
+    return tBodyChildren
+
+  }, [])
+  return newTbodyChildren
+}
