@@ -303,5 +303,13 @@ describe("CS-41001", () =>{
         const jsonValue = fromRedactor(body);
         expect(jsonValue).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello"}]},{"type":"fragment","attrs":{},"uid":"uid","children":[{"text":" beautiful "}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":"World"}]}]})
     })
+    test("should convert video tag into embed", () => {
+        expectedValue['video-tag'].forEach((testCase) => {
+            const dom = new JSDOM(testCase.html);
+            let htmlDoc = dom.window.document.querySelector("body");
+            const jsonValue = fromRedactor(htmlDoc);
+            expect(omitdeep(jsonValue, "uid")).toStrictEqual( omitdeep(testCase.json, "uid"))
+        })
+    })
 })
 

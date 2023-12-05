@@ -1755,5 +1755,14 @@ export default {
             json: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"hangout-module","attrs":{},"children":[{"type":"hangout-chat","attrs":{"from":"Paul, Addy","nested-json":{"to":"Hello World","more-nesting":{"from":"Beautiful World"}}},"children":[{"type":"hangout-discussion","attrs":{},"children":[{"type":"hangout-message","attrs":{"from":"Paul","profile":"profile.png","datetime":"2013-07-17T12:02"},"children":[{"type":"p","uid":"uid","attrs":{},"children":[{"text":"Feelin' this Web Components thing."}]},{"type":"p","uid":"uid","attrs":{},"children":[{"text":"Heard of it?"}]}]}]}]},{"type":"hangout-chat","attrs":{},"children":[{"text":"Hi There!"}]}]}]},
             html : `<hangout-module><hangout-chat from="Paul, Addy" nested-json='{"to":"Hello World","more-nesting":{"from":"Beautiful World"}}'><hangout-discussion><hangout-message from="Paul" profile="profile.png" datetime="2013-07-17T12:02"><p>Feelin' this Web Components thing.</p><p>Heard of it?</p></hangout-message></hangout-discussion></hangout-chat><hangout-chat>Hi There!</hangout-chat></hangout-module>`
         },
+    ],
+    "video-tag": [
+        {
+            json: {"type":"doc","uid":"cfd06695ff85459c90f2d2d4da01af10","attrs":{},"children":[{"type":"embed","attrs":{"src":"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"},"uid":"2c144d07b3a14d8f98c78125b964edcb","children":[{"text":""}]}]}, 
+            html: `<video><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" /></video>`},
+        {
+            json: {"type":"doc","uid":"00459467e3184fdcab0ba1819f0e3645","attrs":{},"children":[{"type":"embed","attrs":{"src":"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm","style":{},"redactor-attributes":{"controls":"","width":"250"},"width":250},"uid":"83fb5d7ce52c4f78872d33478bb12f2f","children":[{"text":""}]}]},
+            html: `<video controls width="250"><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm" /><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" /></video>`,
+        }
     ]
 }
