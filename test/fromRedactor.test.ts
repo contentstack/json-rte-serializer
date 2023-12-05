@@ -311,5 +311,25 @@ describe("CS-41001", () =>{
             expect(omitdeep(jsonValue, "uid")).toStrictEqual( omitdeep(testCase.json, "uid"))
         })
     })
+
+    test('table JSON should have proper structure with rowspan and colspan', () => {
+        const testCases = ['table-rowspan-colspan', 'table-rowspan-colspan-2', 'table-rowspan-colspan-3']
+        testCases.forEach(testCase => {
+          try {
+            const { html, expectedJson } = expectedValue[testCase]
+            const json = htmlToJson(html)
+            expect(json).toStrictEqual(expectedJson)
+          }
+          catch (e) {
+            throw new Error(`Test failed for ${testCase} - ${e}`)
+          }
+        })
+      })
 })
 
+function htmlToJson (html, options) {
+    const dom = new JSDOM(html);
+    let htmlDoc = dom.window.document.querySelector("body");
+   return fromRedactor(htmlDoc, options);
+
+}

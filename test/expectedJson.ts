@@ -1764,5 +1764,108 @@ export default {
             json: {"type":"doc","uid":"00459467e3184fdcab0ba1819f0e3645","attrs":{},"children":[{"type":"embed","attrs":{"src":"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm","style":{},"redactor-attributes":{"controls":"","width":"250"},"width":250},"uid":"83fb5d7ce52c4f78872d33478bb12f2f","children":[{"text":""}]}]},
             html: `<video controls width="250"><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm" /><source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" /></video>`,
         }
-    ]
+    ],
+    'table-rowspan-colspan': {
+        html: `<p></p>
+            <table style="text-align: center;">
+              <colgroup data-width='444.99982'>
+                <col style="width:26.2921%" />
+                <col style="width:24.494399999999995%" />
+                <col style="width:25.617999999999995%" />
+                <col style="width:23.5955%" />
+              </colgroup>
+              <thead style="text-align: center;">
+                <tr style="text-align: center;">
+                  <th colspan="4" style="text-align: center;">h1</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2" colspan="2">1</td>
+                  <td colspan="2">2</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td rowspan="4">4</td>
+                </tr>
+                <tr>
+                  <td rowspan="3">5</td>
+                  <td>6</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <td colspan="2">8</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>12</td>
+                  <td>13</td>
+                  <td>14</td>
+                </tr>
+              </tbody>
+            </table>
+            <p></p>`,
+        expectedJson: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"table","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"style":"text-align: center;"},"rows":7,"cols":4,"colWidths":[116.99979767422,109.00003591007999,114.00005388759998,104.9999325281],"disabledCols":[0,1,2,3]},"uid":"uid","children":[{"type":"thead","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"style":"text-align: center;"}},"uid":"uid","children":[{"type":"tr","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"style":"text-align: center;"}},"uid":"uid","children":[{"type":"th","attrs":{"colSpan":4,"style":{"text-align":"center"},"redactor-attributes":{"colspan":"4","style":"text-align: center;"}},"uid":"uid","children":[{"text":"h1"}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]}]}]},{"type":"tbody","attrs":{},"uid":"uid","children":[{"type":"trgrp","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"rowSpan":2,"colSpan":2,"style":{},"redactor-attributes":{"rowspan":"2","colspan":"2"}},"uid":"uid","children":[{"text":"1"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"colSpan":2,"style":{},"redactor-attributes":{"colspan":"2"}},"uid":"uid","children":[{"text":"2"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"3"}]},{"type":"td","attrs":{"rowSpan":4,"style":{},"redactor-attributes":{"rowspan":"4"}},"uid":"uid","children":[{"text":"4"}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"rowSpan":3,"style":{},"redactor-attributes":{"rowspan":"3"}},"uid":"uid","children":[{"text":"5"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"6"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"7"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"colSpan":2,"style":{},"redactor-attributes":{"colspan":"2"}},"uid":"uid","children":[{"text":"8"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"9"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"10"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":"11"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"12"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"13"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"14"}]}]}]}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]}]}
+    },
+    'table-rowspan-colspan-2': {
+    html: `<p></p>
+        <table>
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td rowspan="4"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <p></p>`,
+    expectedJson: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"table","attrs":{"rows":3,"cols":2,"colWidths":[250,250]},"uid":"uid","children":[{"type":"tbody","attrs":{},"uid":"uid","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":""}]}]},{"type":"trgrp","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"rowSpan":4,"style":{},"redactor-attributes":{"rowspan":"4"}},"uid":"uid","children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":""}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":""}]}]}]}]}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]}]}
+    },
+    'table-rowspan-colspan-3': {
+    html: `<table border="1">
+    <thead>
+      <tr>
+        <th>Header 1</th>
+        <th colspan="3">Header 2</th>
+        <th>Header 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2">Row 1, Col 1</td>
+        <td colspan="2">Row 1, Col 2</td>
+        <td>Row 1, Col 3</td>
+        <td rowspan="2">Row 1, Col 4</td>
+      </tr>
+      <tr>
+        <td>Row 2, Col 2</td>
+        <td>Row 2, Col 3</td>
+        <td>Row 2, Col 4</td>
+      </tr>
+      <tr>
+        <td>Row 3, Col 1</td>
+        <td colspan="3" rowspan="2">Row 3, Col 2</td>
+        <td>Row 3, Col 5</td>
+      </tr>
+      <tr>
+        <td>Row 4, Col 1</td>
+        <td>Row 4, Col 5</td>
+      </tr>
+    </tbody>
+  </table>
+  `,
+    expectedJson: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"table","attrs":{"style":{},"redactor-attributes":{"border":"1"},"rows":5,"cols":4,"colWidths":[250,250,250,250],"disabledCols":[1,2,3]},"uid":"uid","children":[{"type":"thead","attrs":{},"uid":"uid","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"th","attrs":{},"uid":"uid","children":[{"text":"Header 1"}]},{"type":"th","attrs":{"colSpan":3,"style":{},"redactor-attributes":{"colspan":"3"}},"uid":"uid","children":[{"text":"Header 2"}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]},{"type":"th","attrs":{},"uid":"uid","children":[{"text":"Header 3"}]}]}]},{"type":"tbody","attrs":{},"uid":"uid","children":[{"type":"trgrp","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"rowSpan":2,"style":{},"redactor-attributes":{"rowspan":"2"}},"uid":"uid","children":[{"text":"Row 1, Col 1"}]},{"type":"td","attrs":{"colSpan":2,"style":{},"redactor-attributes":{"colspan":"2"}},"uid":"uid","children":[{"text":"Row 1, Col 2"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 1, Col 3"}]},{"type":"td","attrs":{"rowSpan":2,"style":{},"redactor-attributes":{"rowspan":"2"}},"uid":"uid","children":[{"text":"Row 1, Col 4"}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 2, Col 2"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 2, Col 3"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 2, Col 4"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]}]}]},{"type":"trgrp","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 3, Col 1"}]},{"type":"td","attrs":{"rowSpan":2,"colSpan":3,"style":{},"redactor-attributes":{"colspan":"3","rowspan":"2"}},"uid":"uid","children":[{"text":"Row 3, Col 2"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 3, Col 5"}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 4, Col 1"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 4, Col 5"}]}]}]}]}]}]}
+    },
+    
 }
