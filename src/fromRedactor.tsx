@@ -70,6 +70,18 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   DIV: (el: HTMLElement) => {
     return { type: 'div', attrs: {} }
   },
+  VIDEO: (el: HTMLElement) => {
+    const srcArray = Array.from(el.querySelectorAll("source")).map((source) =>
+      source.getAttribute("src")
+    );
+
+    return {
+      type: 'embed',
+      attrs: {
+        src: srcArray.length > 0 ? srcArray[0] : null,
+      },
+    }
+  },
   STYLE: (el: HTMLElement) => {
     return { type: 'style', attrs: { "style-text": el.textContent } }
   },
@@ -403,6 +415,9 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   if (nodeName === 'FIGCAPTION') {
     return null
   }
+  if (nodeName === 'SOURCE') {
+    return null;
+  }
   if (nodeName === 'DIV') {
     const dataType = el.attributes['data-type']?.value
     if (dataType === 'row') {
@@ -610,7 +625,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         return jsx('element', elementAttrs, [{ text: '' }])
       }
     }
-    if (nodeName === 'IMG' || nodeName === 'IFRAME') {
+    if (nodeName === 'IMG' || nodeName === 'IFRAME' || nodeName === 'VIDEO') {
       if (elementAttrs?.attrs?.["redactor-attributes"]?.width) {
         let width = elementAttrs.attrs["redactor-attributes"].width
         if (width.slice(width.length - 1) === '%') {
