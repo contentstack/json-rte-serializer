@@ -1,6 +1,6 @@
 {
   "name": "@contentstack/json-rte-serializer",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "This Package converts Html Document to Json and vice-versa.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
