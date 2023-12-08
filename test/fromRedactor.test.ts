@@ -303,5 +303,33 @@ describe("CS-41001", () =>{
         const jsonValue = fromRedactor(body);
         expect(jsonValue).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello"}]},{"type":"fragment","attrs":{},"uid":"uid","children":[{"text":" beautiful "}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":"World"}]}]})
     })
+    test("should convert video tag into embed", () => {
+        expectedValue['video-tag'].forEach((testCase) => {
+            const dom = new JSDOM(testCase.html);
+            let htmlDoc = dom.window.document.querySelector("body");
+            const jsonValue = fromRedactor(htmlDoc);
+            expect(omitdeep(jsonValue, "uid")).toStrictEqual( omitdeep(testCase.json, "uid"))
+        })
+    })
+
+    test('table JSON should have proper structure with rowspan and colspan', () => {
+        const testCases = ['table-rowspan-colspan', 'table-rowspan-colspan-2', 'table-rowspan-colspan-3']
+        testCases.forEach(testCase => {
+          try {
+            const { html, expectedJson } = expectedValue[testCase]
+            const json = htmlToJson(html)
+            expect(json).toStrictEqual(expectedJson)
+          }
+          catch (e) {
+            throw new Error(`Test failed for ${testCase} - ${e}`)
+          }
+        })
+      })
 })
 
+function htmlToJson (html, options) {
+    const dom = new JSDOM(html);
+    let htmlDoc = dom.window.document.querySelector("body");
+   return fromRedactor(htmlDoc, options);
+
+}
