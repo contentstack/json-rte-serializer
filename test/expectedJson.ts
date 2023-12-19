@@ -632,6 +632,7 @@ export default {
                         "type": "a",
                         "attrs": {
                             "url": "link.com",
+                            "target": "_self",
                             "style": {},
                             "redactor-attributes": {
                                 "href": "link.com",
@@ -870,6 +871,7 @@ export default {
                         "type": "a",
                         "attrs": {
                             "url": "#",
+                            "target": "_blank",
                             "style": {},
                             "redactor-attributes": {
                                 "target": "_blank"

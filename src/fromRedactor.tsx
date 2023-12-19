@@ -15,13 +15,22 @@ const isVoid = ['img', 'embed']
 
 
 const ELEMENT_TAGS: IHtmlToJsonElementTags = {
-  A: (el: HTMLElement) => ({
-    type: 'a',
-    attrs: {
-      url:
-        el.getAttribute('href') ? el.getAttribute('href') : '#'
+  A: (el: HTMLElement) => {
+    const attrs: Record<string, string> = {}
+    const target = el.getAttribute('target');
+    const href = el.getAttribute('href');
+
+    attrs.url = href ? href : '#';
+    
+    if(target && target !== '') {
+      attrs.target = target; 
     }
-  }),
+
+    return {
+      type: "a",
+      attrs: attrs,
+    };
+  },
   BLOCKQUOTE: () => ({ type: 'blockquote', attrs: {} }),
   H1: () => ({ type: 'h1', attrs: {} }),
   H2: () => ({ type: 'h2', attrs: {} }),
