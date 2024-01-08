@@ -1,5 +1,5 @@
 import { toRedactor } from "../src/toRedactor"
-import { isEqual } from "lodash"
+import isEqual from "lodash.isequal"
 
 import expectedValue from "./expectedJson"
 import { imageAssetData } from "./testingData"
