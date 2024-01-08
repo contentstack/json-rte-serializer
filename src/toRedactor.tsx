@@ -1,8 +1,8 @@
-import kebbab from 'lodash/kebabCase'
-import isEmpty from 'lodash/isEmpty'
+import kebbab from 'lodash.kebabcase'
+import isEmpty from 'lodash.isempty'
 
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
-import { isPlainObject } from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
 
 const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {

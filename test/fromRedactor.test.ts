@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { fromRedactor, getNestedValueIfAvailable } from "../src/fromRedactor"
 import { JSDOM } from "jsdom"
-import { isEqual } from "lodash"
+import isEqual from "lodash.isequal"
 import omitdeep from "omit-deep-lodash"
 import expectedValue from "./expectedJson"
 
