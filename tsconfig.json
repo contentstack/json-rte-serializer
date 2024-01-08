@@ -8,7 +8,7 @@
         "strict": true,
         "jsx": "react",
         "resolveJsonModule": true,
-        "importHelpers": true,
+        "importHelpers": false,
         "suppressImplicitAnyIndexErrors": true
     },
     "include": [
