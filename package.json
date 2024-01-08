@@ -3,11 +3,14 @@
   "version": "2.0.5",
   "description": "This Package converts Html Document to Json and vice-versa.",
   "main": "lib/index.js",
+  "module": "lib/index.mjs",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
     "prepare": "npm run build",
-    "build": "tsc"
+    "build:cjs": "esbuild src/index.tsx --bundle --outdir=lib --platform=node --minify",
+    "build:esm": "esbuild src/index.tsx --bundle --outdir=lib --format=esm --out-extension:.js=.mjs --minify",
+    "build": "npm run build:cjs && npm run build:esm && tsc --emitDeclarationOnly --outDir lib"
   },
   "repository": {
     "type": "git",
@@ -24,11 +27,19 @@
   },
   "homepage": "https://github.com/contentstack/json-rte-serializer#readme",
   "devDependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.0.3",
     "@types/jsdom": "^16.2.12",
-    "@types/lodash": "^4.14.168",
+    "@types/lodash.clonedeep": "^4.5.9",
+    "@types/lodash.flatten": "^4.4.9",
+    "@types/lodash.isempty": "^4.4.9",
+    "@types/lodash.isequal": "^4.5.8",
+    "@types/lodash.isobject": "^3.0.9",
+    "@types/lodash.isplainobject": "^4.0.9",
+    "@types/lodash.isundefined": "^3.0.9",
+    "@types/lodash.kebabcase": "^4.1.9",
     "@types/omit-deep-lodash": "^1.1.1",
     "@types/uuid": "^8.3.0",
+    "esbuild": "0.19.11",
     "jest": "^27.5.1",
     "jest-html-reporter": "^3.7.0",
     "jsdom": "^16.6.0",
@@ -38,10 +49,14 @@
   },
   "dependencies": {
     "array-flat-polyfill": "^1.0.1",
-    "lodash": "^4.17.21",
-    "slate": "^0.72.0",
-    "slate-hyperscript": "^0.62.0",
-    "tslib": "^2.3.1",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.flatten": "^4.4.0",
+    "lodash.isempty": "^4.4.0",
+    "lodash.isequal": "^4.5.0",
+    "lodash.isobject": "^3.0.2",
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.isundefined": "^3.0.1",
+    "lodash.kebabcase": "^4.1.1",
     "uuid": "^8.3.2"
   },
   "files": [
