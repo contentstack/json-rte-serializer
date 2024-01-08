@@ -1,4 +1,3 @@
-import { jsx } from 'slate-hyperscript'
 import { v4 } from 'uuid'
 import kebabCase from "lodash/kebabCase"
 import isEmpty from "lodash/isEmpty"
@@ -7,6 +6,8 @@ import isObject from "lodash/isObject"
 import cloneDeep from "lodash/cloneDeep"
 import isUndefined from "lodash/isUndefined"
 
+import { jsx } from './utils/jsx'
+ 
 import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags, IAnyObject} from './types'
 
 const generateId = () => v4().split('-').join('')
