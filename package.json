@@ -2,12 +2,11 @@
   "name": "@contentstack/json-rte-serializer",
   "version": "2.0.5",
   "description": "This Package converts Html Document to Json and vice-versa.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "prepare": "npm run build",
-    "build": "tsc"
+    "build": "esbuild src/index.tsx --bundle --outdir=lib --minify  && tsc --emitDeclarationOnly --outDir lib"
   },
   "repository": {
     "type": "git",
@@ -24,7 +23,7 @@
   },
   "homepage": "https://github.com/contentstack/json-rte-serializer#readme",
   "devDependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.0.3",
     "@types/jsdom": "^16.2.12",
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.flatten": "^4.4.9",
@@ -36,6 +35,7 @@
     "@types/lodash.kebabcase": "^4.1.9",
     "@types/omit-deep-lodash": "^1.1.1",
     "@types/uuid": "^8.3.0",
+    "esbuild": "0.19.11",
     "jest": "^27.5.1",
     "jest-html-reporter": "^3.7.0",
     "jsdom": "^16.6.0",
