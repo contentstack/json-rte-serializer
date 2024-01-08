@@ -3,10 +3,14 @@
   "version": "2.0.5",
   "description": "This Package converts Html Document to Json and vice-versa.",
   "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
     "prepare": "npm run build",
-    "build": "esbuild src/index.tsx --bundle --outdir=lib --minify  && tsc --emitDeclarationOnly --outDir lib"
+    "build:cjs": "esbuild src/index.tsx --bundle --outdir=lib --platform=node --minify",
+    "build:esm": "esbuild src/index.tsx --bundle --outdir=lib --format=esm --out-extension:.js=.mjs --minify",
+    "build": "npm run build:cjs && npm run build:esm && tsc --emitDeclarationOnly --outDir lib"
   },
   "repository": {
     "type": "git",
