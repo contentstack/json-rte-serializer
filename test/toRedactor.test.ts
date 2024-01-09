@@ -241,9 +241,6 @@ describe("Testing json to html conversion", () => {
       let jsonValue = expectedValue["fix_EB-745"].expectedJson
 
       let htmlValue = toRedactor(jsonValue)
-      console.log("🚀 ~ test ~ htmlValue:", htmlValue)
-      console.log(expectedValue["fix_EB-745"].html);
-      
       let testResult = isEqual(htmlValue, expectedValue["fix_EB-745"].html)
       expect(testResult).toBe(true)
     })
