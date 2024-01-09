@@ -229,7 +229,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         text = `<span id=${jsonValue['id']}>${text}</span>`
       }
     }
-    if (jsonValue.text.includes('\n')) {
+    if (jsonValue.text.includes('\n') && !jsonValue['break']) {
       text = text.replace(/\n/g, '<br/>')
     }
     Object.entries(jsonValue).forEach(([key, value]) => {
