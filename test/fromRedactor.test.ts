@@ -333,7 +333,3 @@ function htmlToJson (html, options) {
    return fromRedactor(htmlDoc, options);
 
 }
-
-test("test", () => {
-   console.log("%j", htmlToJson(`<table></table>`))
-})
