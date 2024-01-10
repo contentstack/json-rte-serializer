@@ -1,8 +1,8 @@
-import kebbab from 'lodash/kebabCase'
-import isEmpty from 'lodash/isEmpty'
+import kebbab from 'lodash.kebabcase'
+import isEmpty from 'lodash.isempty'
 
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
-import { isPlainObject } from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
 
 const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {
@@ -229,7 +229,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         text = `<span id=${jsonValue['id']}>${text}</span>`
       }
     }
-    if (jsonValue.text.includes('\n')) {
+    if (jsonValue.text.includes('\n') && !jsonValue['break']) {
       text = text.replace(/\n/g, '<br/>')
     }
     Object.entries(jsonValue).forEach(([key, value]) => {
