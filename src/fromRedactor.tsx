@@ -1,4 +1,3 @@
-import { jsx } from 'slate-hyperscript'
 import { v4 } from 'uuid'
 import kebabCase from "lodash/kebabCase"
 import isEmpty from "lodash/isEmpty"
@@ -7,6 +6,8 @@ import isObject from "lodash/isObject"
 import cloneDeep from "lodash/cloneDeep"
 import isUndefined from "lodash/isUndefined"
 
+import { jsx } from './utils/jsx'
+ 
 import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags, IAnyObject} from './types'
 
 const generateId = () => v4().split('-').join('')
@@ -15,13 +16,22 @@ const isVoid = ['img', 'embed']
 
 
 const ELEMENT_TAGS: IHtmlToJsonElementTags = {
-  A: (el: HTMLElement) => ({
-    type: 'a',
-    attrs: {
-      url:
-        el.getAttribute('href') ? el.getAttribute('href') : '#'
+  A: (el: HTMLElement) => {
+    const attrs: Record<string, string> = {}
+    const target = el.getAttribute('target');
+    const href = el.getAttribute('href');
+
+    attrs.url = href ? href : '#';
+    
+    if(target && target !== '') {
+      attrs.target = target; 
     }
-  }),
+
+    return {
+      type: "a",
+      attrs: attrs,
+    };
+  },
   BLOCKQUOTE: () => ({ type: 'blockquote', attrs: {} }),
   H1: () => ({ type: 'h1', attrs: {} }),
   H2: () => ({ type: 'h2', attrs: {} }),
@@ -225,20 +235,20 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     const thead = el.querySelector('thead')
 
     if (!tbody && !thead) {
-      el.innerHTML += "<tbody></tbody>"
+      el.append(el.ownerDocument.createElement('tbody'))
     }
   }
   else if (['TBODY', 'THEAD'].includes(el.nodeName)) {
     const row = el.querySelector('tr')
     if (!row) {
-      el.innerHTML += "<tr></tr>"
+      el.append(el.ownerDocument.createElement('tr'))
     }
   }
   else if (el.nodeName === 'TR') {
     const cell = el.querySelector('th, td')
     if (!cell) {
       const cellType = el.parentElement.nodeName === 'THEAD' ? 'th' : 'td'
-      el.innerHTML += `<${cellType}></${cellType}>`
+      el.append(el.ownerDocument.createElement(cellType))
 
     }
   }

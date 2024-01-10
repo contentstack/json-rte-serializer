@@ -1,5 +1,5 @@
 import { toRedactor } from "../src/toRedactor"
-import { isEqual } from "lodash"
+import isEqual from "lodash.isequal"
 
 import expectedValue from "./expectedJson"
 import { imageAssetData } from "./testingData"
@@ -235,6 +235,14 @@ describe("Testing json to html conversion", () => {
           children: json
         })
         expect(html).toStrictEqual(expectedHtml)
+    })
+    
+    test("should not add duplicate <br/> when we have both break and \n together", () => {
+      let jsonValue = expectedValue["fix_EB-745"].expectedJson
+
+      let htmlValue = toRedactor(jsonValue)
+      let testResult = isEqual(htmlValue, expectedValue["fix_EB-745"].html)
+      expect(testResult).toBe(true)
     })
     
 })
