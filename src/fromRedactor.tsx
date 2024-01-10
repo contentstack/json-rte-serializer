@@ -235,20 +235,20 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     const thead = el.querySelector('thead')
 
     if (!tbody && !thead) {
-      el.innerHTML += "<tbody></tbody>"
+      el.append(el.ownerDocument.createElement('tbody'))
     }
   }
   else if (['TBODY', 'THEAD'].includes(el.nodeName)) {
     const row = el.querySelector('tr')
     if (!row) {
-      el.innerHTML += "<tr></tr>"
+      el.append(el.ownerDocument.createElement('tr'))
     }
   }
   else if (el.nodeName === 'TR') {
     const cell = el.querySelector('th, td')
     if (!cell) {
       const cellType = el.parentElement.nodeName === 'THEAD' ? 'th' : 'td'
-      el.innerHTML += `<${cellType}></${cellType}>`
+      el.append(el.ownerDocument.createElement(cellType))
 
     }
   }
