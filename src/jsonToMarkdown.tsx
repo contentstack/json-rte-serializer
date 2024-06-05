@@ -1,10 +1,15 @@
 import {IJsonToMarkdownElementTags, IJsonToMarkdownTextTags} from './types'
+import {cloneDeep} from 'lodash'
+import {Node} from 'slate'
+
+let listTypes = ['ol', 'ul']
+const elementsToAvoidWithinMarkdownTable = ['ol', 'ul', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'reference', 'img', 'fragment']
 
 const ELEMENT_TYPES: IJsonToMarkdownElementTags = {
   'blockquote': (attrs: any, child: any) => {
     return `
 
-> ${child}${attrs}`
+> ${child}`
   },
   'h1': (attrs: any, child: string) => {
     return `
@@ -97,6 +102,42 @@ ${child}`
   fragment: (attrs: any, child: any) => {
     return child
   },
+  table: (attrs: any, child: any) => {
+    return `${child}`
+  },
+  tbody: (attrs: any, child: any) => {    
+    return `${child}`
+  },
+  thead: (attrs: any, child: any) => {     
+    let tableBreak = '|'
+    if(attrs.cols) {
+        if(attrs.addEmptyThead) {
+          let tHeadChildren = '|       '
+        for(let i = 0; i < attrs.cols; i++) {
+          tHeadChildren += '|       '
+          tableBreak += ' ----- |'
+        }
+        return `${tHeadChildren}\n${tableBreak}\n`  
+        }
+        else{
+          for(let i = 0; i < attrs.cols; i++) {
+            tableBreak += ' ----- |'
+          }
+          return `${child}\n${tableBreak}\n`
+        }
+    }
+    
+    return `${child}`
+  },
+  tr: (attrs: any, child: any) => {
+    return `| ${child}\n`
+  },
+  td: (attrs: any, child: any) => {
+    return ` ${child.trim()} |`
+  },
+  th: (attrs: any, child: any) => {
+    return ` ${child.trim()} |`
+  }
 }
 const TEXT_WRAPPERS: IJsonToMarkdownTextTags = {
   'bold': (child: any, value: any) => {
@@ -105,17 +146,8 @@ const TEXT_WRAPPERS: IJsonToMarkdownTextTags = {
   'italic': (child: any, value: any) => {
     return `*${child}*`;
   },
-  // 'underline': (child: any, value: any) => {
-  //   return `<u>${child}</u>`;
-  // }, underline is not supported in markdown
   'strikethrough': (child: any, value: any) => {
     return `~~${child}~~`;
-  },
-  'superscript': (child: any, value: any) => {
-    return `^${child}^`;
-  },
-  'subscript': (child: any, value: any) => {
-    return `~${child}~`;
   },
   'inlineCode': (child: any, value: any) => {
     return `\`${child}\``
@@ -125,39 +157,29 @@ const TEXT_WRAPPERS: IJsonToMarkdownTextTags = {
 const getOLOrULStringFromJson = (value: any) => {
   let child = ''
   let nestedListFound = false
-  if(value.type === 'ol'){
+  if(listTypes.includes(value.type)){
   let start = parseInt(value?.attrs?.start || 1)
+  let symbol = value?.attrs?.listStyleType || '- '
   Array.from(value.children).forEach((val: any, index) => { 
-    if(val.hasOwnProperty('type') && val.type === 'li' && value.children[index + 1] && value.children[index + 1]?.type === 'ol'){
+    if(val.hasOwnProperty('type') && val.type === 'li' && value.children[index + 1] && value.children[index + 1]?.type && listTypes.includes(value.children[index + 1].type)){
       let liChildren = jsonToMarkdownSerializer(val)
       let nestedListChildren = getOLOrULStringFromJson(value.children[index + 1])
       let indentedNestedListChildren = nestedListChildren.split('\n').filter((child) => child.length).map((child) => `  ${child}`).join('\n')
-      child += `${index + start}. ${liChildren}\n${indentedNestedListChildren}\n`
-      nestedListFound = true
+      if(value.type === 'ol') {
+        child += `${index + start}. ${liChildren}\n${indentedNestedListChildren}\n`
+        nestedListFound = true
+      }
+      if(value.type === 'ul') child += `${symbol}${liChildren}\n${indentedNestedListChildren}\n`
     }
-    else if(val.hasOwnProperty('type') && val.type !== 'ol'){
+    else if(val.hasOwnProperty('type') && !listTypes.includes(val.type)){
       let liChildren = jsonToMarkdownSerializer(val) 
-      child += `${nestedListFound ? (index + start - 1): index + start}. ${liChildren}\n`
+      if(value.type === 'ol') child += `${nestedListFound ? (index + start - 1): index + start}. ${liChildren}\n`
+      if(value.type === 'ul') child += `${symbol}${liChildren}\n`
     }
-
   })
   }
-  if(value.type === 'ul') {
-    let symbol = value?.attrs?.listStyleType || '- '
-    Array.from(value.children).forEach((val: any, index) => {
-      if(val.hasOwnProperty('type') && val.type === 'li' && value.children[index + 1] && value.children[index + 1]?.type === 'ol'){
-        let liChildren = jsonToMarkdownSerializer(val)
-        let nestedListChildren = getOLOrULStringFromJson(value.children[index + 1])
-        let indentedNestedListChildren = nestedListChildren.split('\n').filter((child) => child.length).map((child) => `  ${child}`).join('\n')
-        child += `${symbol}${liChildren}\n${indentedNestedListChildren}\n`
-      }
-      else if(val.hasOwnProperty('type') && val.type !== 'ol'){
-        let liChildren = jsonToMarkdownSerializer(val) 
-        child += `${symbol}${liChildren}\n`
-      }
-    })
-  }
   return `
+
 ${child}`
 }
 
@@ -178,6 +200,7 @@ export const jsonToMarkdownSerializer = (jsonValue: any): string => {
     return text
   }
   let children: any = ''
+  if(!jsonValue['type']) return children
   if (jsonValue.children) {
     children = Array.from(jsonValue.children).map((child) => jsonToMarkdownSerializer(child))
     if (jsonValue['type'] === 'blockquote') {
@@ -192,13 +215,25 @@ export const jsonToMarkdownSerializer = (jsonValue: any): string => {
   }
 
   if (ELEMENT_TYPES[jsonValue['type']]) {
+    let tableAttrs = {}
     if(jsonValue['type'] === 'ol' || jsonValue['type'] === 'ul') {
       //@ts-ignore  
       return getOLOrULStringFromJson(jsonValue)
     }
-
+    if(jsonValue['type'] === 'table') {
+      tableAttrs = cloneDeep(jsonValue['attrs'])
+      let thead = Array.from(jsonValue['children']).find((child: any) => child.type && child.type === 'thead')
+      if(!thead) {
+        tableAttrs['addEmptyThead'] = true
+        let emptyTableHead = ELEMENT_TYPES['thead'](tableAttrs, children)
+        if(emptyTableHead) children = emptyTableHead + children
+      }
+    }
+    if(jsonValue['type'] === 'td' || jsonValue['type'] === 'th') {
+      let NonAllowedTableChild = Array.from(jsonValue['children']).find((child: any) => elementsToAvoidWithinMarkdownTable.includes(child.type))
+      if(NonAllowedTableChild) children = Node.string(jsonValue)
+    }
     return ELEMENT_TYPES[jsonValue['type']](jsonValue['attrs'], children)
-  }
-
+  }  
   return children
 }
