@@ -1,6 +1,6 @@
 {
   "name": "@contentstack/json-rte-serializer",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "This Package converts Html Document to Json and vice-versa.",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "array-flat-polyfill": "^1.0.1",
+    "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
     "lodash.flatten": "^4.4.0",
     "lodash.isempty": "^4.4.0",
@@ -57,6 +58,7 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.isundefined": "^3.0.1",
     "lodash.kebabcase": "^4.1.1",
+    "slate": "^0.103.0",
     "uuid": "^8.3.2"
   },
   "files": [
