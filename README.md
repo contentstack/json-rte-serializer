@@ -2,7 +2,8 @@
 
 Contentstack is a headless CMS with an API-first approach. It is a CMS that developers can use to build powerful cross-platform applications in their favorite languages. Build your application frontend, and Contentstack will take care of the rest. [Read more](https://www.contentstack.com/docs/).
 
-The JSON RTE Serializer package helps you convert the data inside your JSON Rich Text Editor field from JSON to HTML format and vice versa.
+The JSON RTE Serializer package assists in converting the content within your JSON Rich Text Editor field between JSON and HTML formats. This means you can easily change your data from JSON format to HTML format for display purposes, and vice versa, for data storage or processing.
+If you need to convert JSON to Markdown format, we offer the Markdown Serializer function. This function is specifically designed to transform your JSON data into Markdown, making it easier to handle text formatting for platforms that use Markdown. 
 
 # Installation
 
@@ -100,6 +101,45 @@ The resulting JSON-formatted data will look as follows:
         "children" : [{"text": "This is HTML-formatted content."}]
     }]
 }
+```
+
+### JSON to Markdown Conversion Code
+
+You can use the following JSON RTE Serializer code to convert your JSON RTE field data into Markdown format.
+
+```javascript
+import { jsonToMarkdown } from "@contentstack/json-rte-serializer";
+
+const markdownValue = jsonToHtml({
+    type: "doc",
+    attrs: {},
+    uid: "547a479c68824767ce1d9725852f042b",
+    children: [
+        {
+            uid: "767a479c6882471d9725852f042b67ce",
+            type: "p",
+            attrs: {},
+            children: [
+              { text: "This is Markdown-formatted content which has some " },
+              { text: "BOLD", bold: true },
+              { text: " text and some "}, 
+              { text: "Italic", italic: true },
+              { text: " text."}
+            ]
+        },
+    ],
+});
+
+console.log(markdownValue);
+```
+
+### Result of Conversion
+
+The resulting Markdown data will look as follows:
+
+```MARKDOWN
+
+This is Markdown-formatted content which has some **BOLD** text and some *Italic* text.
 ```
 
 ## Custom Conversion
