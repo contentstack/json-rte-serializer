@@ -615,7 +615,7 @@ export default {
                 ]
             }
         ],
- "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.youtube.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
+        "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.youtube.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://dev16-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
     },
     "7": {
         "html": "<p>this is <a href=\"link.com\" target=\"_self\">link</a></p><p></p><div data-type='hr' style='border-top: 3px solid #bbb'></div><p></p><p class=\"className\">paragraph with class</p><p id=\"id\">paragraph with id</p>",
@@ -1909,6 +1909,6 @@ export default {
               }
             ]
           }
-    }
-    
+    }   
+     
 }

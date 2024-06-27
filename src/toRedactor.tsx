@@ -375,9 +375,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       if (attrsJson['width']) {
         let width = attrsJson['width']
         if (width.slice(width.length - 1) === '%') {
-          style = `width: ${allattrs['width']}; height: ${attrsJson['height'] ? attrsJson['height'] : 'auto'};`
-        } else {
           style = `width: ${allattrs['width'] + '%'}; height: ${attrsJson['height'] ? attrsJson['height'] : 'auto'};`
+        } else {
+          style = `width: ${allattrs['width']}; height: ${attrsJson['height'] ? attrsJson['height'] : 'auto'};`
         }
       } else {
         if (allattrs['width']) {
