@@ -33,12 +33,10 @@ describe("Testing json to html conversion", () => {
         let testResult = isEqual(htmlValue, expectedValue['5'].html)
         expect(testResult).toBe(true)
     })
-    it("Image and iframe conversion", () => {
-        let jsonValue = expectedValue["6"].json
-
-        let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['6'].htmlUpdated)
-        expect(testResult).toBe(true)
+    it.each(["6", "RT-154"])("Image and iframe conversion", (index) => {
+      let jsonValue = expectedValue[index].json
+      let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
+      expect(htmlValue).toBe(expectedValue[index].htmlUpdated)
     })
     it("Link ,divider and property conversion", () => {
         let jsonValue = expectedValue["7"].json
