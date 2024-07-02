@@ -615,7 +615,7 @@ export default {
                 ]
             }
         ],
- "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.***REMOVED***.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
+        "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.***REMOVED***.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
     },
     "7": {
         "html": "<p>this is <a href=\"link.com\" target=\"_self\">link</a></p><p></p><div data-type='hr' style='border-top: 3px solid #bbb'></div><p></p><p class=\"className\">paragraph with class</p><p id=\"id\">paragraph with id</p>",
@@ -1909,6 +1909,97 @@ export default {
               }
             ]
           }
+    },   
+    "RT-154": {
+        "html": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776; height: auto;\"/><p></p><iframe src=\"https://www.***REMOVED***.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\"/>",
+        "json": [
+            {
+                "type": "p",
+                "attrs": {},
+                "uid": "67d60b59926c48b58cb6b5d899401c01",
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "reference",
+                "attrs": {
+                    "asset-link": "https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg",
+                    "default": true,
+                    "asset-type": "image/jpg",
+                    "display-type": "display",
+                    "type": "asset",
+                    "style": {
+                        "height": "auto"
+                    },
+                    "redactor-attributes": {
+                        "asset_uid": "blt5523ee02703e39f5",
+                        "src": "https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg",
+                        "width": "24.193548387096776%",
+                        "height": "auto",
+                        "style": "width: 24.193548387096776; height: auto;"
+                    },
+                    "width": 24.193548387096776
+                },
+                "uid": "fe969de8727c4074a23442a71b57ebb8",
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "p",
+                "attrs": {},
+                "uid": "8c912298ad0a4a458c189f12603c05fb",
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "embed",
+                "attrs": {
+                    "src": "https://www.***REMOVED***.com/embed/CSvFpBOe8eY",
+                    "style": {},
+                    "redactor-attributes": {
+                        "src": "https://www.***REMOVED***.com/embed/CSvFpBOe8eY"
+                    }
+                },
+                "uid": "26067652d613404b8091f6e83d7af301",
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+            {
+                "type": "reference",
+                "attrs": {
+                    "asset-link": "https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg",
+                    "default": true,
+                    "asset-type": "image/jpg",
+                    "display-type": "display",
+                    "type": "asset",
+                    "style": {},
+                    "redactor-attributes": {
+                        "asset_uid": "blta2aad0332073026c",
+                        "src": "https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg",
+                        "height": "auto"
+                    }
+                },
+                "uid": "d56e691f59ce4d35934c6aa9325188a2",
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            }
+        ],
+        "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blt5523ee02703e39f5/60dc421ee5e22614ef8dadfa/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.***REMOVED***.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://***REMOVED***-images.contentstack.com/v3/assets/blt8ffa7e7de8b20283/blta2aad0332073026c/60dc3bf8214cd714eebe026b/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
     }
-    
+     
 }
