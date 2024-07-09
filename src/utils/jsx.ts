@@ -178,3 +178,14 @@ function isNode(value: any){
     // || Editor.isEditor(value) // // value cannot be editor
   )
 }
+
+/**
+ * Returns string for the specified node
+ */
+export function getString(node: any): string {
+  if (isText(node)) {
+    return node.text
+  } else {
+    return node.children.map(getString).join('')
+  }
+}
