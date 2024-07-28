@@ -384,9 +384,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           let width = String(allattrs['width'])
 
           if (width.slice(width.length - 1) === '%') {
-            allattrs['width'] = String(allattrs['width'])
-          } else {
             allattrs['width'] = allattrs['width'] + '%'
+          } else {
+            allattrs['width'] = String(allattrs['width'])
           }
           // style = `width: ${allattrs['width']}; height: auto;`
         }
