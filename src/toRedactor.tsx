@@ -478,6 +478,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       if (jsonValue['type'] === "style") {
         delete attrsJson['style-text']
       }
+      if(jsonValue['type'] === 'img'){
+        attrsJson['src'] = allattrs['url']
+      }
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']
       }
