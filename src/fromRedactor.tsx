@@ -832,6 +832,9 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           uid: generateId()
         }
       }
+      if (noOfInlineElement === el.parentNode?.childNodes.length && Array.from(el.attributes).length === 0) {
+        return children
+      }
     }
 
     if (children.length === 0) {
