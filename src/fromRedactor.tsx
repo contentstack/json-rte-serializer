@@ -191,6 +191,8 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     }
     if (el.parentNode.nodeName === 'SPAN') {
       let attrs = { style: {} }
+      const metadata = {}
+
       if (el.parentNode.style?.color) {
         attrs = {
           ...attrs,
@@ -218,7 +220,20 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           }
         }
       }
-      return jsx('text', { attrs: attrs }, el.textContent)
+      if(el.parentNode.getAttribute("id")){
+        metadata['id'] = el.parentNode.getAttribute("id")
+        el.parentNode.removeAttribute("id")
+      }
+      if(el.parentNode.getAttribute("class")){
+        metadata['classname'] = el.parentNode.getAttribute("class")
+        el.parentNode.removeAttribute("class")
+      }
+
+      if(!isEmpty(attrs.style)){
+        metadata['attrs'] = attrs
+      }
+
+      return jsx('text', metadata, el.textContent)
     }
     return el.textContent
   } else if (el.nodeType !== 1) {
