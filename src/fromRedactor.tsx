@@ -819,7 +819,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       let noOfInlineElement = 0
       Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
-        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A') {
+        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || child.getAttribute('inline')) {
           noOfInlineElement += 1
         }
       })
