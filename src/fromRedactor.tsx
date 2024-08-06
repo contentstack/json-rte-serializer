@@ -164,6 +164,9 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
         } else {
           inlineElementIndex.push(index)
         }
+      } 
+      else if (child.attrs.inline) {
+        inlineElementIndex.push(index)
       } else {
         hasBlockElement = true
       }
