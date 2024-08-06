@@ -497,6 +497,9 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         ]
       )
     }
+    if(el.parentNode?.nodeName === 'FIGURE'){
+      return children
+    }
   }
 
   if (ELEMENT_TAGS[nodeName]) {
@@ -874,7 +877,7 @@ const getImageAttributes = (elementAttrs: any, childAttrs: any, extraAttrs: any)
         ...extraAttrs
       },
       "asset-caption": extraAttrs["asset-caption"],
-      "link": extraAttrs.link
+      "link": extraAttrs.link ?? extraAttrs.anchorLink
     }
   }
   if (elementAttrs?.attrs?.["redactor-attributes"]?.link) {
@@ -891,11 +894,16 @@ const getImageAttributes = (elementAttrs: any, childAttrs: any, extraAttrs: any)
 
 const getReferenceAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttrs} : any) => {
 
-  let { style } = elementAttrs.attrs;
-  
   extraAttrs['asset-caption'] = extraAttrs['caption'];
+  if(newChildren[0].attrs.width){
+    delete sizeAttrs.width
+  }
+  const style  = {}
+  if (elementAttrs?.attrs?.style?.['text-align']) {
+    style['text-align'] = elementAttrs?.attrs?.style?.['text-align']
+  }
 
-  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, position: extraAttrs.position }
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style , position: extraAttrs.position }
   extraAttrs = { ...extraAttrs, ...sizeAttrs }
 
   if (!childAttrs.position) {
@@ -905,7 +913,7 @@ const getReferenceAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttr
   const referenceAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
 
   referenceAttrs.type = "reference";
-
+  delete referenceAttrs?.attrs?.['redactor-attributes']?.['anchorlink'];
   return referenceAttrs
 }
 
