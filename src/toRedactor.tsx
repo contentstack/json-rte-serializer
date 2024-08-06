@@ -125,7 +125,7 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     }
      
     else if (extraAttrs?.displayType === "display") {
-      const anchor = jsonBlock?.["attrs"]?.["link"];
+      const anchor = jsonBlock?.["attrs"]?.["link"] ?? jsonBlock?.["attrs"]?.["anchorLink"];
 
       const caption = jsonBlock?.["attrs"]?.["asset-caption"];
       const position = jsonBlock?.["attrs"]?.["position"];
@@ -134,7 +134,9 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
       const figureStyles = {
         margin: "0",
       };
-      attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
+      if(!attrs.includes(`src="${jsonBlock?.["attrs"]?.["asset-link"]}`)){
+        attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
+      }
       let img = `<img${attrs}/>`;
 
       if (anchor) {
