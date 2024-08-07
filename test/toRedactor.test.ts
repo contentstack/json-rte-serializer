@@ -9,29 +9,25 @@ describe("Testing json to html conversion", () => {
         let jsonValue = expectedValue["2"].json
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['2'].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['2'].html)
     })
     it("table conversion", () => {
         let jsonValue = expectedValue["3"].json
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['3'].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['3'].html)
     })
     it("basic formating, block and code conversion", () => {
         let jsonValue = expectedValue["4"].json
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['4'].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['4'].html)
     })
     it("List and alignment conversion", () => {
         let jsonValue = expectedValue["5"].json
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['5'].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['5'].html)
     })
     it.each(["6", "RT-154"])("Image and iframe conversion", (index) => {
       let jsonValue = expectedValue[index].json
@@ -43,8 +39,7 @@ describe("Testing json to html conversion", () => {
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
 
-        let testResult = isEqual(htmlValue, expectedValue['7'].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['7'].html)
     })
     it("Embed entry as link", () => {
         let jsonValue = expectedValue["8"].json
@@ -52,22 +47,19 @@ describe("Testing json to html conversion", () => {
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
 
 
-        let testResult = isEqual(htmlValue, expectedValue['8'].htmlUpdated)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['8'].htmlUpdated)
     })
     it("Embedded entry as inline block", () => {
         let jsonValue = expectedValue["9"].json
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['9'].htmlUpdated)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['9'].htmlUpdated)
     })
     it("Embedded entry as block", () => {
         let jsonValue = expectedValue["10"].json
 
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue['10'].htmlValue)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue['10'].htmlValue)
     })
     it("Custom ELEMENT_TYPES",() => {
         let cases = ["15","16","18"]
@@ -76,8 +68,7 @@ describe("Testing json to html conversion", () => {
             let htmlValue = toRedactor({ type: "doc", attrs: {}, children: json },{customElementTypes:expectedValue[index].customElementTypes})
             //console.log(htmlValue)
             //console.log(expectedValue[index].html)
-            let testResult = isEqual(htmlValue, expectedValue[index].html)
-            expect(testResult).toBe(true)
+            expect(htmlValue).toBe(expectedValue[index].html)
         })
     })
     it("Custom TEXT_WRAPPER",() => {
@@ -87,8 +78,7 @@ describe("Testing json to html conversion", () => {
             let htmlValue = toRedactor({ type: "doc", attrs: {}, children: json },{customTextWrapper:expectedValue[index].customTextWrapper})
             //console.log(htmlValue)
             //console.log(expectedValue[index].html)
-            let testResult = isEqual(htmlValue, expectedValue[index].html)
-            expect(testResult).toBe(true)
+            expect(htmlValue).toBe(expectedValue[index].html)
         })
     })
     it("Conversion with allowNonStandardTags", () => {
@@ -98,12 +88,7 @@ describe("Testing json to html conversion", () => {
             console.warn = mockFunction
             let json = expectedValue[index]?.json
             let htmlValue = toRedactor({ type: "doc", attrs: {}, children: json },{allowNonStandardTypes:true,customTextWrapper:expectedValue[index].customTextWrapper})
-            let testResult = isEqual(htmlValue, expectedValue[index].html)
-            if(!testResult){
-                //console.log(htmlValue)
-                //console.log(expectedValue[index].html)
-            }
-            expect(testResult).toBe(true)
+            expect(htmlValue).toBe(expectedValue[index].html)
             expect(mockFunction).toHaveBeenCalledTimes(expectedValue[index].nonStandardTags)
 
         })
@@ -111,15 +96,13 @@ describe("Testing json to html conversion", () => {
     it('"\n" to <br/> conversion', () => {
         let jsonValue = expectedValue["'\n' to <br>"].json
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue["'\n' to <br>"].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue["'\n' to <br>"].html)
     })
 
     it("Inline classname and id", () => {
         let jsonValue = expectedValue["inline-classname-and-id"].json
         let htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
-        let testResult = isEqual(htmlValue, expectedValue["inline-classname-and-id"].html)
-        expect(testResult).toBe(true)
+        expect(htmlValue).toBe(expectedValue["inline-classname-and-id"].html)
     })
 
     describe("Nested attrs", () => {
