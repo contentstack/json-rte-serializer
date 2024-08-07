@@ -144,7 +144,7 @@ const traverseChildAndModifyChild = (element: any, attrsForChild: any) => {
   Array.from(element.children || []).map((el) => traverseChildAndModifyChild(el, attrsForChild)).flat()
   return
 }
-const traverseChildAndWarpChild = (children: Array<Object>) => {
+const traverseChildAndWarpChild = (children: Array<Object>, allowNonStandardTags: boolean = false) => {
   let inlineElementIndex: Array<number> = []
   let hasBlockElement = false
   let childrenCopy = cloneDeep(children)
@@ -165,7 +165,7 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
           inlineElementIndex.push(index)
         }
       } 
-      else if (child.attrs.inline) {
+      else if (allowNonStandardTags && child?.attrs?.inline) {
         inlineElementIndex.push(index)
       } else {
         hasBlockElement = true
@@ -282,7 +282,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   }
   let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
   children = children.filter((child: any) => child !== null)
-  children = traverseChildAndWarpChild(children)
+  children = traverseChildAndWarpChild(children, options?.allowNonStandardTags)
   if (children.length === 0) {
     children = [{ text: '' }]
   }
@@ -825,7 +825,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       let noOfInlineElement = 0
       Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
-        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || child.getAttribute('inline')) {
+        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline'))) {
           noOfInlineElement += 1
         }
       })

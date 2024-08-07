@@ -4,6 +4,7 @@ import { JSDOM } from "jsdom"
 import isEqual from "lodash.isequal"
 import omitdeep from "omit-deep-lodash"
 import expectedValue from "./expectedJson"
+import { IHtmlToJsonOptions } from "../src/types"
 
 const docWrapper = (children: any) => {
     return {
@@ -241,7 +242,7 @@ describe("Testing html to json conversion", () => {
 
     test("should not convert stringify attrs when `allowNonStandardTags` is not true", () => {
         const html = `<p><span from="Paul, Addy" to="[object Object]">Hi There!</span></p>`;
-        const json = {"attrs": {}, "children": [{"attrs": {}, "children": [{"attrs": {"redactor-attributes": {"from": "Paul, Addy", "to": "[object Object]"}, "style": {}}, "children": [{"attrs": {"style": {}}, "text": "Hi There!"}], "type": "span", "uid": "uid"}], "type": "p", "uid": "uid"}], "type": "doc", "uid": "uid"};
+        const json = {"attrs": {}, "children": [{"attrs": {}, "children": [{"attrs": {"redactor-attributes": {"from": "Paul, Addy", "to": "[object Object]"}, "style": {}}, "children": [{"text": "Hi There!"}], "type": "span", "uid": "uid"}], "type": "p", "uid": "uid"}], "type": "doc", "uid": "uid"};
   
         const dom = new JSDOM(html);
         let htmlDoc = dom.window.document.querySelector("body");
@@ -250,6 +251,38 @@ describe("Testing html to json conversion", () => {
       });
     })
 
+    describe("SPAN", () => {
+        
+        test("should properly convert inline properties id and class to json", () => {
+            let html =`<p dir="ltr">Hello <span class="class" id="id">World</span></p>`
+            const json = htmlToJson(html)
+            expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{"style":{},"redactor-attributes":{"dir":"ltr"}},"uid":"uid","children":[{"text":"Hello "},{"text":"World","id":"id","classname":"class"}]}]})
+        })
+
+        test("should skip span if other element are inline and it does not have any attributes", () => {
+            let html =`<p dir="ltr">Hello <span>World</span></p>`
+            const json = htmlToJson(html)
+            expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{"style":{},"redactor-attributes":{"dir":"ltr"}},"uid":"uid","children":[{"text":"Hello "},{"text":"World"}]}]})
+        })
+
+        test("should not skip span if other element are inline and it does have any attribute", () => {
+            let html =`<p dir="ltr">Hello <span data-test="test">World</span></p>`
+            const json = htmlToJson(html)
+            expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{"style":{},"redactor-attributes":{"dir":"ltr"}},"uid":"uid","children":[{"text":"Hello "},{"type":"span","attrs":{"style":{},"redactor-attributes":{"data-test":"test"}},"uid":"uid","children":[{"text":"World"}]}]}]})
+        })
+
+        test("should consider the non standard elements as inline if it has attribute of inline with the span tag", () => {
+            let html = `<p><unknown inline="true"></unknown>Being an absolute <span>tropical</span> stunner</p>`
+            let jsonValue = htmlToJson(html, { allowNonStandardTags: true })
+            expect(jsonValue).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"type":"unknown","attrs":{"inline":"true"},"children":[{"text":""}]},{"text":"Being an absolute "},{"text":"tropical"},{"text":" stunner"}]}]            })
+        })
+    })
+
+    test("should consider the non standard elements as inline if it has attribute of inline", () => {
+        let html = `<p><unknown inline="true"></unknown>Being an absolute <a href="https://chess.com">tropical</a> stunner</p>`
+        let jsonValue = htmlToJson(html, { allowNonStandardTags: true })
+        expect(jsonValue).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"type":"unknown","attrs":{"inline":"true"},"children":[{"text":""}]},{"text":"Being an absolute "},{"type":"a","attrs":{"url":"https://chess.com","style":{},"redactor-attributes":{"href":"https://chess.com"}},"uid":"uid","children":[{"text":"tropical"}]},{"text":" stunner"}]}]        })
+    })
 })
 
 
@@ -327,7 +360,7 @@ describe("CS-41001", () =>{
       })
 })
 
-function htmlToJson (html, options) {
+function htmlToJson (html: string, options: IHtmlToJsonOptions) {
     const dom = new JSDOM(html);
     let htmlDoc = dom.window.document.querySelector("body");
    return fromRedactor(htmlDoc, options);
