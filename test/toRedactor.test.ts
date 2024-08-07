@@ -222,8 +222,15 @@ describe("Testing json to html conversion", () => {
       let jsonValue = expectedValue["fix_EB-745"].expectedJson
 
       let htmlValue = toRedactor(jsonValue)
-      let testResult = isEqual(htmlValue, expectedValue["fix_EB-745"].html)
-      expect(testResult).toBe(true)
+      expect(htmlValue).toBe(expectedValue["fix_EB-745"].html)
     })
+
+    test("RT-253 - should convert to proper HTML image code", () => {
+      const json = {"type":"doc","attrs":{},"children":[{"type":"img","attrs":{"url":"***REMOVED***200","width":100},"children":[{"text":""}]}],"_version":3      }
+      const html = toRedactor(json);
+      console.log(html)
+      expect(html).toBe('<img width="100" src="***REMOVED***200"/>');
+    });
     
 })
+
