@@ -144,7 +144,7 @@ const traverseChildAndModifyChild = (element: any, attrsForChild: any) => {
   Array.from(element.children || []).map((el) => traverseChildAndModifyChild(el, attrsForChild)).flat()
   return
 }
-const traverseChildAndWarpChild = (children: Array<Object>) => {
+const traverseChildAndWarpChild = (children: Array<Object>, allowNonStandardTags: boolean = false) => {
   let inlineElementIndex: Array<number> = []
   let hasBlockElement = false
   let childrenCopy = cloneDeep(children)
@@ -164,6 +164,9 @@ const traverseChildAndWarpChild = (children: Array<Object>) => {
         } else {
           inlineElementIndex.push(index)
         }
+      } 
+      else if (allowNonStandardTags && child?.attrs?.inline) {
+        inlineElementIndex.push(index)
       } else {
         hasBlockElement = true
       }
@@ -191,6 +194,8 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     }
     if (el.parentNode.nodeName === 'SPAN') {
       let attrs = { style: {} }
+      const metadata = {}
+
       if (el.parentNode.style?.color) {
         attrs = {
           ...attrs,
@@ -218,7 +223,20 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           }
         }
       }
-      return jsx('text', { attrs: attrs }, el.textContent)
+      if(el.parentNode.getAttribute("id")){
+        metadata['id'] = el.parentNode.getAttribute("id")
+        el.parentNode.removeAttribute("id")
+      }
+      if(el.parentNode.getAttribute("class")){
+        metadata['classname'] = el.parentNode.getAttribute("class")
+        el.parentNode.removeAttribute("class")
+      }
+
+      if(!isEmpty(attrs.style)){
+        metadata['attrs'] = attrs
+      }
+
+      return jsx('text', metadata, el.textContent)
     }
     return el.textContent
   } else if (el.nodeType !== 1) {
@@ -264,7 +282,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   }
   let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
   children = children.filter((child: any) => child !== null)
-  children = traverseChildAndWarpChild(children)
+  children = traverseChildAndWarpChild(children, options?.allowNonStandardTags)
   if (children.length === 0) {
     children = [{ text: '' }]
   }
@@ -481,6 +499,9 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           }
         ]
       )
+    }
+    if(el.parentNode?.nodeName === 'FIGURE'){
+      return children
     }
   }
 
@@ -804,7 +825,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       let noOfInlineElement = 0
       Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
-        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A') {
+        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline'))) {
           noOfInlineElement += 1
         }
       })
@@ -816,6 +837,9 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           },
           uid: generateId()
         }
+      }
+      if (noOfInlineElement === el.parentNode?.childNodes.length && Array.from(el.attributes).length === 0) {
+        return children
       }
     }
 
@@ -856,7 +880,7 @@ const getImageAttributes = (elementAttrs: any, childAttrs: any, extraAttrs: any)
         ...extraAttrs
       },
       "asset-caption": extraAttrs["asset-caption"],
-      "link": extraAttrs.link
+      "link": extraAttrs.link ?? extraAttrs.anchorLink
     }
   }
   if (elementAttrs?.attrs?.["redactor-attributes"]?.link) {
@@ -873,11 +897,16 @@ const getImageAttributes = (elementAttrs: any, childAttrs: any, extraAttrs: any)
 
 const getReferenceAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttrs} : any) => {
 
-  let { style } = elementAttrs.attrs;
-  
   extraAttrs['asset-caption'] = extraAttrs['caption'];
+  if(newChildren[0].attrs.width){
+    delete sizeAttrs.width
+  }
+  const style  = {}
+  if (elementAttrs?.attrs?.style?.['text-align']) {
+    style['text-align'] = elementAttrs?.attrs?.style?.['text-align']
+  }
 
-  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style['text-align'] }, position: extraAttrs.position }
+  const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style , position: extraAttrs.position }
   extraAttrs = { ...extraAttrs, ...sizeAttrs }
 
   if (!childAttrs.position) {
@@ -887,7 +916,7 @@ const getReferenceAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAttr
   const referenceAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
 
   referenceAttrs.type = "reference";
-
+  delete referenceAttrs?.attrs?.['redactor-attributes']?.['anchorlink'];
   return referenceAttrs
 }
 
