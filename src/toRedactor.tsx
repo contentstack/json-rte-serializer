@@ -125,7 +125,7 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     }
      
     else if (extraAttrs?.displayType === "display") {
-      const anchor = jsonBlock?.["attrs"]?.["link"];
+      const anchor = jsonBlock?.["attrs"]?.["link"] ?? jsonBlock?.["attrs"]?.["anchorLink"];
 
       const caption = jsonBlock?.["attrs"]?.["asset-caption"];
       const position = jsonBlock?.["attrs"]?.["position"];
@@ -134,7 +134,9 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
       const figureStyles = {
         margin: "0",
       };
-      attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
+      if(!attrs.includes(`src="${jsonBlock?.["attrs"]?.["asset-link"]}`)){
+        attrs = ` src="${jsonBlock?.["attrs"]?.["asset-link"]}"` + attrs;
+      }
       let img = `<img${attrs}/>`;
 
       if (anchor) {
@@ -384,9 +386,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           let width = String(allattrs['width'])
 
           if (width.slice(width.length - 1) === '%') {
-            allattrs['width'] = String(allattrs['width'])
-          } else {
             allattrs['width'] = allattrs['width'] + '%'
+          } else {
+            allattrs['width'] = String(allattrs['width'])
           }
           // style = `width: ${allattrs['width']}; height: auto;`
         }
@@ -477,6 +479,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       if (jsonValue['type'] === "style") {
         delete attrsJson['style-text']
+      }
+      if(jsonValue['type'] === 'img'){
+        attrsJson['src'] = allattrs['url']
       }
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']
