@@ -437,7 +437,11 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         }
       }
       elementAttrs.attrs["redactor-attributes"] = redactor
-      return jsx('element', { attrs: { ...elementAttrs?.attrs, type, "asset-caption": caption, "link": link, "asset-alt": alt, target, position, "asset-link": fileLink, "asset-uid": uid, "display-type": displayType, "asset-name": fileName, "asset-type": contentType, "content-type-uid": contentTypeUid }, type: "reference", uid: generateId() }, children)
+      const assetAttrs = { ...elementAttrs?.attrs, type, "asset-caption": caption, "link": link, "asset-alt": alt, target, position, "asset-link": fileLink, "asset-uid": uid, "display-type": displayType, "asset-name": fileName, "asset-type": contentType, "content-type-uid": contentTypeUid }
+      if(assetAttrs.target === "_self"){
+        delete assetAttrs.target
+      }
+      return jsx('element', { attrs: assetAttrs, type: "reference", uid: generateId() }, children)
     }
   }
   if (nodeName === 'FIGCAPTION') {
