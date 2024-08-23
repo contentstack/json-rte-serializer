@@ -14,7 +14,7 @@ const docWrapper = (children: any) => {
     }
 }
 const compareValue = (json1,json2) => {
-    return isEqual(JSON.stringify(omitdeep(json1, "uid")), JSON.stringify(omitdeep(docWrapper(json2), "uid")))
+    return expect(JSON.stringify(omitdeep(json1, "uid"))).toEqual(JSON.stringify(omitdeep(docWrapper(json2), "uid")));
 }
 
 jest.mock('uuid', () => ({ v4: () => 'uid' }));
@@ -24,8 +24,8 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), docWrapper([{ "attrs": {}, "children": [{ "text": "This is test" }], "type": "p" }]))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(docWrapper([{ "attrs": {}, "children": [{ "text": "This is test" }], "type": "p" }]));
+
     })
 
     it("heading conversion", () => {
@@ -33,40 +33,38 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[2].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[2].json), "uid"));
+
     })
     it("table conversion", () => {
         let html = expectedValue[3].html
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[3].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[3].json), "uid"));
+
     })
     it("basic formating, block and code conversion", () => {
         let html = expectedValue[4].html
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[4].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[4].json), "uid"));
+
     })
     it("List and alignment conversion", () => {
         let html = expectedValue[5].html
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[5].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[5].json), "uid"));
     })
     it("Link ,divider and property conversion", () => {
         let html = expectedValue[7].html
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[7].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[7].json), "uid"));
     })
 
     it("Embedded entry as link", () => {
@@ -74,16 +72,14 @@ describe("Testing html to json conversion", () => {
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(JSON.stringify(omitdeep(jsonValue, "uid"), null, 2), JSON.stringify(omitdeep(docWrapper(expectedValue[8].json), "uid"), null, 2))
-        expect(testResult).toBe(true)
+        expect(JSON.stringify(omitdeep(jsonValue, "uid"), null, 2)).toStrictEqual(JSON.stringify(omitdeep(docWrapper(expectedValue[8].json), "uid"), null, 2));
     })
     it("Embedded entry as inline block", () => {
         let html = expectedValue[9].html
         const dom = new JSDOM(html)
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[9].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[9].json), "uid"));
     })
 
     it("Embedded entry as block", () => {
@@ -92,8 +88,7 @@ describe("Testing html to json conversion", () => {
         let htmlDoc = dom.window.document.querySelector('body')
 
         let jsonValue = fromRedactor(htmlDoc)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[10].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[10].json), "uid"));
     })
 
     it("Basic Scenarios", () => {
@@ -104,12 +99,7 @@ describe("Testing html to json conversion", () => {
             let htmlDoc = dom.window.document.querySelector('body')
             let jsonValue = fromRedactor(htmlDoc)
             //console.log(JSON.stringify(omitdeep(jsonValue.children, "uid"), null, 2))
-            let testResult = compareValue(jsonValue,expectedValue[index].json)
-            if(!testResult){
-                //console.log(JSON.stringify(omitdeep(jsonValue, "uid")))
-                //console.log(JSON.stringify(omitdeep(expectedValue[index].json, "uid")))
-            }
-            expect(testResult).toBe(true)
+            compareValue(jsonValue,expectedValue[index].json)          
         })
     })
     it("Custom ELEMENT_TAGS",()=>{
@@ -120,8 +110,7 @@ describe("Testing html to json conversion", () => {
             let htmlDoc = dom.window.document.querySelector('body')
             let jsonValue = fromRedactor(htmlDoc,{customElementTags:expectedValue[index].customElementTags})
             //console.log(JSON.stringify(omitdeep(jsonValue.children, "uid"), null, 2))
-            let testResult = compareValue(jsonValue,expectedValue[index].json)
-            expect(testResult).toBe(true)
+             compareValue(jsonValue,expectedValue[index].json)
         })
     })
     it("Custom TEXT_TAGS",()=>{
@@ -132,8 +121,7 @@ describe("Testing html to json conversion", () => {
             let htmlDoc = dom.window.document.querySelector('body')
             let jsonValue = fromRedactor(htmlDoc,{customTextTags:expectedValue[index].customTextTags})
             //console.log(JSON.stringify(omitdeep(jsonValue.children, "uid"), null, 2))
-            let testResult = compareValue(jsonValue,expectedValue[index].json)
-            expect(testResult).toBe(true)
+            compareValue(jsonValue,expectedValue[index].json)
         })
     })
     it("Conversion with allowNonStandardTags", () => {
@@ -145,12 +133,7 @@ describe("Testing html to json conversion", () => {
             const dom = new JSDOM(html)
             let htmlDoc = dom.window.document.querySelector('body')
             let jsonValue = fromRedactor(htmlDoc,{allowNonStandardTags:true,customTextTags:expectedValue[index].customTextTags})
-            let testResult = compareValue(jsonValue,expectedValue[index].json)
-            if(!testResult){
-                //console.log(JSON.stringify(omitdeep(jsonValue, "uid")))
-                //console.log(JSON.stringify(omitdeep(expectedValue[index].json, "uid")))
-            }
-            expect(testResult).toBe(true)
+            compareValue(jsonValue,expectedValue[index].json)
             expect(mockFunction).toHaveBeenCalledTimes(expectedValue[index].nonStandardTags)
         })
     })
@@ -372,14 +355,9 @@ describe("CS-41001", () =>{
       })
 })
 
-
-
-
-
 function htmlToJson (html: string, options: IHtmlToJsonOptions) {
     const dom = new JSDOM(html);
     let htmlDoc = dom.window.document.querySelector("body");
    return fromRedactor(htmlDoc, options);
-
 }
 

@@ -1346,7 +1346,6 @@ export default {
                         "sys-style-type": "display"
                     },
                     "type": "asset",
-                    "target": "_self",
                     "asset-link": "https://images.contentstack.io/v3/assets/bltbdb397c7cc18a214/blt9fedd0336c2f7f0d/61fe9fb699c8a84a577b9f40/crop_area.jpeg",
                     "asset-uid": "blt9fedd0336c2f7f0d",
                     "display-type": "display",
