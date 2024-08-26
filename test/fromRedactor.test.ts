@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { fromRedactor, getNestedValueIfAvailable } from "../src/fromRedactor"
+import { ELEMENT_TAGS, fromRedactor, getNestedValueIfAvailable } from "../src/fromRedactor"
 import { JSDOM } from "jsdom"
 import isEqual from "lodash.isequal"
 import omitdeep from "omit-deep-lodash"
@@ -295,6 +295,16 @@ describe("Testing html to json conversion", () => {
         const json = htmlToJson(html)
         expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"reference","attrs":{"style":{"text-align":"right"},"redactor-attributes":{"src":"https://picsum.photos/200","height":"141","alt":"image_(9).png","caption":"ss","type":"asset","asset-alt":"image_(9).png","max-height":"141","max-width":"148","sys-style-type":"display","position":"right","captionAttrs":{"style":"text-align:center"},"anchorLink":"ss.com","target":true,"asset-caption":"ss"},"class-name":"embedded-asset","width":148,"type":"asset","asset-caption":"ss","link":"ss.com","asset-alt":"image_(9).png","target":"_blank","position":"right","asset-link":"https://picsum.photos/200","asset-uid":"blt137d845621ef8168","display-type":"display","asset-name":"image_(9).png","asset-type":"image/png","content-type-uid":"sys_assets"},"uid":"uid","children":[{"text":""}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]}]        })
     })
+    test("should convert asset to reference with non standard tags", () => {
+          const html  = `<figure style="margin: 0; text-align: right">
+          <div style="display: inline-block"><a href="ss.com" target="_blank"><img src="https://picsum.photos/200" height="141" alt="image_(9).png" caption="ss" anchorLink="ss.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="image_(9).png" width="148" max-height="141" max-width="148" style="max-height: 141px; height: 141px; text-align: right; max-width: 148px; width: auto" data-sys-asset-filelink="https://picsum.photos/200" data-sys-asset-uid="blt137d845621ef8168" data-sys-asset-filename="image_(9).png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="ss" data-sys-asset-alt="image_(9).png" data-sys-asset-link="ss.com" data-sys-asset-position="right" data-sys-asset-isnewtab="true" sys-style-type="display" /></a>
+            <figcaption style="text-align:center">ss</figcaption>
+          </div>
+        </figure>
+        <p></p>`
+        const json = htmlToJson(html, { allowNonStandardTags: true })
+        expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"reference","attrs":{"style":{"text-align":"right"},"redactor-attributes":{"src":"https://picsum.photos/200","height":"141","alt":"image_(9).png","caption":"ss","type":"asset","asset-alt":"image_(9).png","max-height":"141","max-width":"148","sys-style-type":"display","position":"right","captionAttrs":{"style":"text-align:center"},"anchorLink":"ss.com","target":true,"asset-caption":"ss"},"class-name":"embedded-asset","width":148,"type":"asset","asset-caption":"ss","link":"ss.com","asset-alt":"image_(9).png","target":"_blank","position":"right","asset-link":"https://picsum.photos/200","asset-uid":"blt137d845621ef8168","display-type":"display","asset-name":"image_(9).png","asset-type":"image/png","content-type-uid":"sys_assets"},"uid":"uid","children":[{"text":""}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]}]        })
+    })
 })
 
 
@@ -372,9 +382,12 @@ describe("CS-41001", () =>{
       })
 })
 
-
-
-
+describe("ELEMENT_TAGS", () => {
+    test("should have FIGCAPTION as a standard element tag", () => {
+        const standardElementTags = Object.keys(ELEMENT_TAGS);
+        expect(standardElementTags).toContain("FIGCAPTION");
+    })
+})
 
 function htmlToJson (html: string, options: IHtmlToJsonOptions) {
     const dom = new JSDOM(html);
@@ -382,4 +395,3 @@ function htmlToJson (html: string, options: IHtmlToJsonOptions) {
    return fromRedactor(htmlDoc, options);
 
 }
-
