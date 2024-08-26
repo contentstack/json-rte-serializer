@@ -15,7 +15,7 @@ const isInline = ['span', 'a', 'inlineCode', 'reference']
 const isVoid = ['img', 'embed']
 
 
-const ELEMENT_TAGS: IHtmlToJsonElementTags = {
+export const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   A: (el: HTMLElement) => {
     const attrs: Record<string, string> = {}
     const target = el.getAttribute('target');
@@ -98,7 +98,8 @@ const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   SCRIPT: (el: HTMLElement) => {
     return { type: 'script', attrs: {} }
   },
-  HR: () => ({ type: 'hr', attrs: {} })
+  HR: () => ({ type: 'hr', attrs: {} }),
+  FIGCAPTION: () => ({ type: 'figcaption', attrs: {} }),
 }
 
 const TEXT_TAGS: IHtmlToJsonTextTags = {
