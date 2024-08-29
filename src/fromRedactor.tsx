@@ -49,7 +49,7 @@ export const ELEMENT_TAGS: IHtmlToJsonElementTags = {
         const assetName = splittedUrl[splittedUrl?.length - 1]
         return { type: 'reference', attrs: { "asset-name": assetName,"content-type-uid" : "sys_assets", "asset-link": el.getAttribute('src'), "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset", "asset-uid": assetUid } }
     }
-    return { type: 'img', attrs: { url: el.getAttribute('src') } }
+    return { type: 'img', attrs: { url: el.getAttribute('src'), width: el.getAttribute('width') } }
   },
   LI: () => ({ type: 'li', attrs: {} }),
   OL: () => ({ type: 'ol', attrs: {} }),
@@ -631,11 +631,12 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
         const { href, target } = newChildren[0].attrs?.["redactor-attributes"]
         extraAttrs['anchorLink'] = href;
         if (target && target !== '') {
-            extraAttrs['target'] = true;
+            extraAttrs['target'] = target;
         }
         const imageAttrs = newChildren[0].children;
 
         if(imageAttrs[0].type === 'img'){
+          sizeAttrs.width = imageAttrs[0].attrs.width
         elementAttrs = getFinalImageAttributes({elementAttrs, newChildren : imageAttrs, extraAttrs, sizeAttrs})
 
         }
@@ -674,6 +675,10 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       if (elementAttrs?.attrs?.["redactor-attributes"]?.inline) {
         elementAttrs.attrs.inline = Boolean(elementAttrs?.attrs?.["redactor-attributes"]?.inline)
+      }
+      if(elementAttrs.attrs.width){
+        elementAttrs.attrs.style.width = `${elementAttrs.attrs.width}px`
+        elementAttrs.attrs.style['max-width'] = `${elementAttrs.attrs.width}px`
       }
       return jsx('element', elementAttrs, [{ text: '' }])
     }
@@ -933,6 +938,13 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
       sizeAttrs.width = newChildren[0].attrs.width.toString();
   }
 
+  if(!isNaN(parseInt(sizeAttrs.width))){
+    sizeAttrs.style = {
+      width: `${sizeAttrs.width}px`,
+      "max-width": `${sizeAttrs.width}px`
+    }
+  }
+
   const childAttrs = { ...newChildren[0].attrs, ...sizeAttrs, style: { 'text-align': style?.['text-align'] }, caption: extraAttrs['caption'] }
   extraAttrs = { ...extraAttrs, ...sizeAttrs }
 
@@ -940,7 +952,13 @@ const getFinalImageAttributes = ({elementAttrs, newChildren, extraAttrs, sizeAtt
     delete childAttrs.caption
   }
 
-  const imageAttrs = getImageAttributes(elementAttrs, childAttrs, extraAttrs);
+  const imageAttrs = getImageAttributes(elementAttrs, {... childAttrs, ...extraAttrs}, extraAttrs);
+  if(imageAttrs.attrs.link){
+    imageAttrs.attrs.anchorLink = imageAttrs.attrs.link;
+    delete imageAttrs.attrs.link;
+  }
+  delete imageAttrs?.attrs?.['redactor-attributes']?.['anchorlink'];
+  delete imageAttrs?.attrs?.['redactor-attributes']?.['style'];
 
   return imageAttrs
 }

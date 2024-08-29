@@ -482,6 +482,14 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       if(jsonValue['type'] === 'img'){
         attrsJson['src'] = allattrs['url']
+
+        if(allattrs['caption']) figureStyles.caption = allattrs['caption']
+        if(allattrs['position']) figureStyles.position = allattrs['position']
+        if(allattrs['anchorLink']) figureStyles.anchorLink = `href="${allattrs['anchorLink']}"`
+        if(allattrs['target']){
+          figureStyles.anchorLink += ` target="${allattrs['target']}"`
+        }
+        figureStyles.fieldsEdited.push(figureStyles.caption)
       }
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']
