@@ -228,13 +228,19 @@ describe("Testing json to html conversion", () => {
     test("RT-253 - should convert to proper HTML image code", () => {
       const json = {"type":"doc","attrs":{},"children":[{"type":"img","attrs":{"url":"https://picsum.photos/200","width":100},"children":[{"text":""}]}],"_version":3      }
       const html = toRedactor(json);
-      expect(html).toBe('<img width="100" src="https://picsum.photos/200"/>');
+      expect(html).toBe('<img width="100" src="https://picsum.photos/200" />');
     });
     
     test("RT-264 - reference asset should have proper unit in the converted image", () => {
       const json = {"type":"doc","attrs":{},"uid":"6a547ebccbd74c0c9a521ee95acfb223","children":[{"uid":"942be31c040145b6a7541ec4f73754c5","type":"reference","attrs":{"display-type":"display","asset-uid":"bltcbce74d3891aaa9d","content-type-uid":"sys_assets","asset-link":"https://picsum.photos/200","asset-name":"MATHERAN.jpg","asset-type":"image/jpeg","type":"asset","class-name":"embedded-asset","width":"192","style":{"max-height":"144px","height":"144px","text-align":"right","max-width":"192px","width":"auto"},"redactor-attributes":{"height":"144","position":"right"},"max-height":"144","height":"144","position":"right","max-width":"192"},"children":[{"text":""}]}],"_version":1    }
       const html = toRedactor(json);
       expect(html).toBe(`<figure style="margin: 0; text-align: right"><img src="https://picsum.photos/200" height="144" class="embedded-asset" content-type-uid="sys_assets" type="asset" width="192" max-height="144" max-width="192" style="max-height: 144px; height: 144px; text-align: right; max-width: 192px; width: auto" data-sys-asset-filelink="https://picsum.photos/200" data-sys-asset-uid="bltcbce74d3891aaa9d" data-sys-asset-filename="MATHERAN.jpg" data-sys-asset-contenttype="image/jpeg" data-sys-asset-position="right" sys-style-type="display"/></figure>`);
+    })
+
+    test("RT-292", () => {
+      const json = {"type":"doc","uid":"41870a48806348eb866c1944d37d3a5d","attrs":{},"children":[{"type":"img","attrs":{"url":"https://picsum.photos/536/354","style":{},"redactor-attributes":{"position":"none","caption":"caption","inline":"true","width":"243","dirty":"true","max-width":"243","src":"https://picsum.photos/536/354","alt":"alt","anchorLink":"link","target":true},"width":"217","inline":"true","caption":"caption","alt":"alt","anchorLink":"link","target":"_blank"},"uid":"bedc4931f5aa4fd59fd6411665f931e2","children":[{"text":""}]}]    }
+      const html = toRedactor(json);
+      expect(html).toBe(`<figure><a href="link" target="_blank"><img position="none" caption="caption" inline="true" width="217" dirty="true" max-width="243" src="https://picsum.photos/536/354" alt="alt" anchorLink="link" target="_blank" style="width: 217; height: auto;"/></a><figcaption>caption</figcaption></figure>`)
     })
 })
 
