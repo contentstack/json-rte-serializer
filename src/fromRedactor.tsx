@@ -161,7 +161,7 @@ const traverseChildAndWarpChild = (children: Array<Object>, allowNonStandardTags
     if (child.hasOwnProperty('type')) {
       if (isInline.includes(child.type)) {
         if (child.type === "reference") {
-          if (child.attrs && (child.attrs['display-type'] === "inline" || child.attrs['display-type'] === "link")) {
+          if (child.attrs && (child.attrs['display-type'] === "inline" || child.attrs['display-type'] === "link" || child.attrs['inline'] )) {
             inlineElementIndex.push(index)
           } else {
             hasBlockElement = true
@@ -445,6 +445,10 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       const assetAttrs = { ...elementAttrs?.attrs, type, "asset-caption": caption, "link": link, "asset-alt": alt, target, position, "asset-link": fileLink, "asset-uid": uid, "display-type": displayType, "asset-name": fileName, "asset-type": contentType, "content-type-uid": contentTypeUid }
       if(assetAttrs.target === "_self"){
         delete assetAttrs.target
+      }
+      if(redactor.inline){
+        assetAttrs.inline = true
+        delete redactor.inline
       }
       return jsx('element', { attrs: assetAttrs, type: "reference", uid: generateId() }, children)
     }
@@ -866,6 +870,12 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       if (noOfInlineElement === el.parentNode?.childNodes.length && Array.from(el.attributes).length === 0) {
         return children
+      }
+    }
+
+    if(nodeName === "DIV"){
+      if(el.style?.overflow === 'hidden' && children.find((child: any) => child.type === 'reference')){
+        elementAttrs = { ...elementAttrs,  type: 'p', attrs: {} }
       }
     }
 
