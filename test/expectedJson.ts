@@ -892,7 +892,7 @@ export default {
         "json": [{"type":"p","attrs":{},"uid":"e39e29ed819f49fdb1504b17cf6fe1ff","children":[{"text":""}]},{"type":"reference","attrs":{"asset-name":null,"content-type-uid":"sys_assets","asset-link":null,"asset-type":"image/png","display-type":"display","type":"asset","asset-uid":"bltecea58c1a7fa27f4","style":{},"redactor-attributes":{"asset_uid":"bltecea58c1a7fa27f4","height":"auto"}},"uid":"b87802e2367148e29a2c4ba81c2182ec","children":[{"text":""}]}]
     },
     "14": {
-        "html": "<p>This is <strong>Bold, </strong><em>Italic, </em><u>underline,</u> <del>Strikethrough</del>, <span data-type='inlineCode'>inline-code</span> , 2<sup>x</sup> , 2<sub>x</sub></p><h1>H1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6><blockquote>Block quote</blockquote><p></p><pre>Block Code</pre><p style=\"text-align: center;\">center</p><p style=\"text-align: right;\">Right</p><p style=\"text-align: justify;\">Justify</p><ol><li style=\"text-align: justify;\">order list</li><li style=\"text-align: justify;\">2</li></ol><ul><li>1</li><li>2</li></ul><p></p><iframe src=\"https://www.***REMOVED***.com/embed/v55JVEJg7i4\" width=\"88\" height=\"300\" style=\"width: 88%; height: 300px;\"></iframe><p></p><table><thead><tr><th><p>1</p></th><th><p>2</p></th></tr></thead><tbody><tr><td><p>3</p></td><td><p>4</p></td></tr><tr><td><p>5</p></td><td><p>6</p></td></tr></tbody></table><p></p><figure type=\"asset\" sys-style-type=\"display\" class=\"embedded-asset\" content-type-uid=\"sys_assets\" data-sys-asset-filelink=\"https://images.contentstack.io/v3/assets/bltbdb397c7cc18a214/blt9fedd0336c2f7f0d/61fe9fb699c8a84a577b9f40/crop_area.jpeg\" data-sys-asset-uid=\"blt9fedd0336c2f7f0d\" data-sys-asset-filename=\"crop_area.jpeg\" data-sys-asset-contenttype=\"image/jpeg\"></figure><p></p><hr/>",
+        "html": "<p>This is <strong>Bold, </strong><em>Italic, </em><u>underline,</u> <del>Strikethrough</del>, <span data-type='inlineCode'>inline-code</span> , 2<sup>x</sup> , 2<sub>x</sub></p><h1>H1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6><blockquote>Block quote</blockquote><p></p><pre>Block Code</pre><p style=\"text-align: center;\">center</p><p style=\"text-align: right;\">Right</p><p style=\"text-align: justify;\">Justify</p><ol><li style=\"text-align: justify;\">order list</li><li style=\"text-align: justify;\">2</li></ol><ul><li>1</li><li>2</li></ul><p></p><iframe src=\"https://www.***REMOVED***.com/embed/v55JVEJg7i4\" width=\"88\" height=\"300\" style=\"width: 88%; height: 300px;\"></iframe><p></p><table><thead><tr><th><p>1</p></th><th><p>2</p></th></tr></thead><tbody><tr><td><p>3</p></td><td><p>4</p></td></tr><tr><td><p>5</p></td><td><p>6</p></td></tr></tbody></table><p></p><figure type=\"asset\" sys-style-type=\"display\" class=\"embedded-asset\" content-type-uid=\"sys_assets\" data-sys-asset-filelink=\"***REMOVED***200/300\" data-sys-asset-uid=\"blt9fedd0336c2f7f0d\" data-sys-asset-filename=\"crop_area.jpeg\" data-sys-asset-contenttype=\"image/jpeg\"></figure><p></p><hr/>",
         "json": [
             {
                 "type": "p",
@@ -1346,7 +1346,7 @@ export default {
                         "sys-style-type": "display"
                     },
                     "type": "asset",
-                    "asset-link": "https://images.contentstack.io/v3/assets/bltbdb397c7cc18a214/blt9fedd0336c2f7f0d/61fe9fb699c8a84a577b9f40/crop_area.jpeg",
+                    "asset-link": "***REMOVED***200/300",
                     "asset-uid": "blt9fedd0336c2f7f0d",
                     "display-type": "display",
                     "asset-name": "crop_area.jpeg",
@@ -1629,78 +1629,78 @@ export default {
         "nonStandardTags": 0
     },
     "image-to-reference": {
-        "html": `<img asset_uid="bltfea8157ddfb8e776" src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" height="auto" />`,
-        "json": {"attrs": {}, "children": [{"attrs": {"asset-link": "https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg", "asset-name": "landscape-3.jpg", "asset-type": "image/jpg", "asset-uid": "bltfea8157ddfb8e776", "content-type-uid": "sys_assets", "display-type": "display", "redactor-attributes": {"asset_uid": "bltfea8157ddfb8e776", "height": "auto", "src": "https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg"}, "style": {}, "type": "asset"}, "children": [{"text": ""}], "type": "reference", "uid": "640c377d18dd4613a448734c019dcd0a"}], "type": "doc", "uid": "5b5269ef0d65476d9c3ef300676530b2"},
+        "html": `<img asset_uid="bltfea8157ddfb8e776" src="/landscape-3.jpg" height="auto" />`,
+        "json": {"attrs": {}, "children": [{"attrs": {"asset-link": "/landscape-3.jpg", "asset-name": "landscape-3.jpg", "asset-type": "image/jpg", "asset-uid": "bltfea8157ddfb8e776", "content-type-uid": "sys_assets", "display-type": "display", "redactor-attributes": {"asset_uid": "bltfea8157ddfb8e776", "height": "auto", "src": "/landscape-3.jpg"}, "style": {}, "type": "asset"}, "children": [{"text": ""}], "type": "reference", "uid": "640c377d18dd4613a448734c019dcd0a"}], "type": "doc", "uid": "5b5269ef0d65476d9c3ef300676530b2"},
         
     },
     "image-to-image":{
-        "html": `<img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" height="auto" />`,
-        "json": {"type":"doc","uid":"519ef5a2f4b844239e176033a5b03fff","attrs":{},"children":[{"type":"img","attrs":{"url":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","style":{},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","height":"auto"}},"uid":"7afdc063abad4612948f660ae0c98738","children":[{"text":""}]}]}
+        "html": `<img src="/landscape-3.jpg" height="auto" />`,
+        "json": {"type":"doc","uid":"519ef5a2f4b844239e176033a5b03fff","attrs":{},"children":[{"type":"img","attrs":{"url":"/landscape-3.jpg","style":{},"redactor-attributes":{"src":"/landscape-3.jpg","height":"auto"}},"uid":"7afdc063abad4612948f660ae0c98738","children":[{"text":""}]}]}
     },
     "reference-caption": {
         "html": 
         `<p></p>
-        <figure style="float: none;width: auto;max-width:auto;"><img asset_uid="bltfea8157ddfb8e776" src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" />
+        <figure style="float: none;width: auto;max-width:auto;"><img asset_uid="bltfea8157ddfb8e776" src="/landscape-3.jpg" />
           <figcaption>Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"38f94c35f7ab4709a1d21daf867d7676","attrs":{},"children":[{"type":"p","attrs":{},"uid":"40ce549d9e5a40b780f741d498fcea2d","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"none","captionAttrs":{},"caption":"Landscape","asset-caption":"Landscape","width":"auto","max-width":"auto"},"asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":"auto","max-width":"auto","position":"none","asset-caption":"Landscape"},"uid":"fe81be61294b4aceba412002b5c93b57","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"38f94c35f7ab4709a1d21daf867d7676","attrs":{},"children":[{"type":"p","attrs":{},"uid":"40ce549d9e5a40b780f741d498fcea2d","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"/landscape-3.jpg","position":"none","captionAttrs":{},"caption":"Landscape","asset-caption":"Landscape","width":"auto","max-width":"auto"},"asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":"auto","max-width":"auto","position":"none","asset-caption":"Landscape"},"uid":"fe81be61294b4aceba412002b5c93b57","children":[{"text":""}]}]}
         
     },
     "image-caption": {
         "html": 
         `<p></p>
-        <figure style="float: none;width: autopx;max-width:auto;"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" />
+        <figure style="float: none;width: autopx;max-width:auto;"><img src="/landscape-3.jpg" />
           <figcaption>Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"1ed9b08a9f7546f39bbd163ca4664b6f","attrs":{},"children":[{"type":"p","attrs":{},"uid":"781340d798224492bab7b064c2295abe","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"none","captionAttrs":{},"caption":"Landscape","width":"auto","max-width":"auto"},"url":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","width":"auto","max-width":"auto","caption":"Landscape"},"uid":"4db6444ff9d7447d875b5ca72490e6a3","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"1ed9b08a9f7546f39bbd163ca4664b6f","attrs":{},"children":[{"type":"p","attrs":{},"uid":"781340d798224492bab7b064c2295abe","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"src":"/landscape-3.jpg","position":"none","captionAttrs":{},"caption":"Landscape","width":"auto","max-width":"auto"},"url":"/landscape-3.jpg","width":"auto","max-width":"auto","caption":"Landscape"},"uid":"4db6444ff9d7447d875b5ca72490e6a3","children":[{"text":""}]}]}
     },
     "image-caption-width": {
         "html": 
         `<p></p>
-        <figure style="float: none;width: 295px;max-width:auto;"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" />
+        <figure style="float: none;width: 295px;max-width:auto;"><img src="/landscape-3.jpg" />
             <figcaption style="text-align: center;">Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"c0b6dcd5ff8d4d9998b6579caf4e6ba8","attrs":{},"children":[{"type":"p","attrs":{},"uid":"18a1761f71e94b14a603047c4a6e74a7","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"none","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","width":295,"max-width":"auto"},"url":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","width":295,"max-width":"auto","caption":"Landscape"},"uid":"13ccb1fe8e504e4a9a8917f900075d8b","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"c0b6dcd5ff8d4d9998b6579caf4e6ba8","attrs":{},"children":[{"type":"p","attrs":{},"uid":"18a1761f71e94b14a603047c4a6e74a7","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"src":"/landscape-3.jpg","position":"none","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","width":295,"max-width":"auto"},"url":"/landscape-3.jpg","width":295,"max-width":"auto","caption":"Landscape"},"uid":"13ccb1fe8e504e4a9a8917f900075d8b","children":[{"text":""}]}]}
     },
     "reference-caption-width": {
         "html": 
         `<p></p>
-        <figure style="float: none;width: 298px;max-width:auto;"><img asset_uid="bltfea8157ddfb8e776" src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" />
+        <figure style="float: none;width: 298px;max-width:auto;"><img asset_uid="bltfea8157ddfb8e776" src="/landscape-3.jpg" />
             <figcaption style="text-align: center;">Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"0c10195ed57a4158b6bd2d77caf5d114","attrs":{},"children":[{"type":"p","attrs":{},"uid":"19618972c45a4dde958f20900364a390","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"none","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","asset-caption":"Landscape","width":298,"max-width":"auto"},"asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":298,"max-width":"auto","position":"none","asset-caption":"Landscape"},"uid":"e947c5963d3e48548dc6d0273a9b5166","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"0c10195ed57a4158b6bd2d77caf5d114","attrs":{},"children":[{"type":"p","attrs":{},"uid":"19618972c45a4dde958f20900364a390","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"none"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"/landscape-3.jpg","position":"none","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","asset-caption":"Landscape","width":298,"max-width":"auto"},"asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":298,"max-width":"auto","position":"none","asset-caption":"Landscape"},"uid":"e947c5963d3e48548dc6d0273a9b5166","children":[{"text":""}]}]}
     },
     "image-caption-position": {
         "html": 
         `<p></p>
-        <figure style="margin: auto; text-align: center;width: 295px;"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" />
+        <figure style="margin: auto; text-align: center;width: 295px;"><img src="/landscape-3.jpg" />
             <figcaption style="text-align: center;" style="text-align: center;">Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"f0151eff09864e0da93bd200136696d8","attrs":{},"children":[{"type":"p","attrs":{},"uid":"a33831e032bb467eb9239e22a3d40c1f","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","width":295},"url":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","width":295,"caption":"Landscape"},"uid":"81da4a3879e94a0ea05dce4947a31a27","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"f0151eff09864e0da93bd200136696d8","attrs":{},"children":[{"type":"p","attrs":{},"uid":"a33831e032bb467eb9239e22a3d40c1f","children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"src":"/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","width":295},"url":"/landscape-3.jpg","width":295,"caption":"Landscape"},"uid":"81da4a3879e94a0ea05dce4947a31a27","children":[{"text":""}]}]}
     },
     "reference-caption-position": {
         "html": 
         `<p></p>
-        <figure style="margin: auto; text-align: center;width: 298px;"><img asset_uid="bltfea8157ddfb8e776" src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" />
+        <figure style="margin: auto; text-align: center;width: 298px;"><img asset_uid="bltfea8157ddfb8e776" src="/landscape-3.jpg" />
             <figcaption style="text-align: center;" style="text-align: center;">Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"52ae03d354a14e35b9320245ca608620","attrs":{},"children":[{"type":"p","attrs":{},"uid":"3a36a8d2de9e4a3cab85caa6eb4ec36e","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","asset-caption":"Landscape","width":298},"asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":298,"position":"center","asset-caption":"Landscape"},"uid":"b9a4e61bddde493e85c537a8daa5cc62","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"52ae03d354a14e35b9320245ca608620","attrs":{},"children":[{"type":"p","attrs":{},"uid":"3a36a8d2de9e4a3cab85caa6eb4ec36e","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","asset-caption":"Landscape","width":298},"asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":298,"position":"center","asset-caption":"Landscape"},"uid":"b9a4e61bddde493e85c537a8daa5cc62","children":[{"text":""}]}]}
     },
     "anchor-image-width-position-caption": {
         "html": 
         `<p></p>
-        <figure style="margin: auto; text-align: center;width: 204px;"><a href="https://app.contentstack.com/"><img asset_uid="bltfea8157ddfb8e776" src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" /></a>
+        <figure style="margin: auto; text-align: center;width: 204px;"><a href="https://app.contentstack.com/"><img asset_uid="bltfea8157ddfb8e776" src="/landscape-3.jpg" /></a>
           <figcaption style="text-align: center;" style="text-align: center;">Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","uid":"d712f7746e984559bbf591d689ef69f6","attrs":{},"children":[{"type":"p","attrs":{},"uid":"79d6defd99624ecc8302db0479330d72","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","anchorLink":"https://app.contentstack.com/","asset-caption":"Landscape","width":204},"link": "https://app.contentstack.com/","asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":204,"position":"center","asset-caption":"Landscape"},"uid":"abc8e6a7f2974ad2a876356a6f4ae0fb","children":[{"text":""}]}]}
+        "json": {"type":"doc","uid":"d712f7746e984559bbf591d689ef69f6","attrs":{},"children":[{"type":"p","attrs":{},"uid":"79d6defd99624ecc8302db0479330d72","children":[{"text":""}]},{"type":"reference","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"asset_uid":"bltfea8157ddfb8e776","src":"/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","anchorLink":"https://app.contentstack.com/","asset-caption":"Landscape","width":204},"link": "https://app.contentstack.com/","asset-name":"landscape-3.jpg","content-type-uid":"sys_assets","asset-link":"/landscape-3.jpg","asset-type":"image/jpg","display-type":"display","type":"asset","asset-uid":"bltfea8157ddfb8e776","width":204,"position":"center","asset-caption":"Landscape"},"uid":"abc8e6a7f2974ad2a876356a6f4ae0fb","children":[{"text":""}]}]}
     },
     "anchor-reference-width-position-caption": {
         "html": 
         `<p></p>
-        <figure style="margin: auto; text-align: center;width: 204px;"><a href="https://app.contentstack.com/"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg" /></a>
+        <figure style="margin: auto; text-align: center;width: 204px;"><a href="https://app.contentstack.com/"><img src="***REMOVED***200/300" /></a>
           <figcaption style="text-align: center;" style="text-align: center;">Landscape</figcaption>
         </figure>`,
-        "json": {"type":"doc","attrs":{},"children":[{"type":"p","attrs":{},"children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"src":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","width":204},"url":"https://images.contentstack.io/v3/assets/***REMOVED***/bltfea8157ddfb8e776/6329f1106a7f7364973c028c/landscape-3.jpg","anchorLink":"https://app.contentstack.com/","width":204,"caption":"Landscape"},"children":[{"text":""}]}]}
+        "json": {"type":"doc","attrs":{},"children":[{"type":"p","attrs":{},"children":[{"text":""}]},{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"src":"***REMOVED***200/300","position":"center","captionAttrs":{"style":"text-align: center;"},"caption":"Landscape","width":204},"url":"***REMOVED***200/300","anchorLink":"https://app.contentstack.com/","width":204,"caption":"Landscape"},"children":[{"text":""}]}]}
     },
     "'\n' to <br>": {
         "html": '<p>This is test for break element<br/>This is text on the next line.</p>',

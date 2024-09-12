@@ -9,7 +9,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -23,7 +23,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" sys-style-type="display"/></figure>`,
+    expectedHtml: `<figure style="margin: 0"><img src="***REMOVED***200/300" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" sys-style-type="display"/></figure>`,
   },
   alt: {
     value: getDoc([
@@ -35,7 +35,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -55,7 +55,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-alt="I am BATMAN" data-sys-asset-position="none" sys-style-type="display"/></figure>`,
+    expectedHtml: `<figure style="margin: 0"><img src="***REMOVED***200/300" alt="I am BATMAN" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-alt="I am BATMAN" data-sys-asset-position="none" sys-style-type="display"/></figure>`,
   },
   caption: {
     value: getDoc([
@@ -67,7 +67,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -87,7 +87,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0"><div style="display: inline-block"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" caption="BATMAN" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-position="none" sys-style-type="display"/><figcaption style="text-align:center">BATMAN</figcaption></div></figure>`,
+    expectedHtml: `<figure style="margin: 0"><div style="display: inline-block"><img src="***REMOVED***200/300" caption="BATMAN" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-position="none" sys-style-type="display"/><figcaption style="text-align:center">BATMAN</figcaption></div></figure>`,
   },
   alignment: {
     value: getDoc([
@@ -99,7 +99,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -129,7 +129,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -158,7 +158,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -178,7 +178,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0; text-align: left"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="left" sys-style-type="display"/></figure><figure style="margin: 0; text-align: right"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="right" sys-style-type="display"/></figure><figure style="margin: 0; text-align: center"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: center; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="center" sys-style-type="display"/></figure>`,
+    expectedHtml: `<figure style="margin: 0; text-align: left"><img src="***REMOVED***200/300" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="left" sys-style-type="display"/></figure><figure style="margin: 0; text-align: right"><img src="***REMOVED***200/300" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="right" sys-style-type="display"/></figure><figure style="margin: 0; text-align: center"><img src="***REMOVED***200/300" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: center; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="center" sys-style-type="display"/></figure>`,
   },
   anchor: {
     value: getDoc([
@@ -190,7 +190,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -211,7 +211,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0"><a href="https://www.batman.com"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" dir="ltr" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" sys-style-type="display"/></a></figure>`,
+    expectedHtml: `<figure style="margin: 0"><a href="https://www.batman.com"><img src="***REMOVED***200/300" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" dir="ltr" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" sys-style-type="display"/></a></figure>`,
   },
   "anchor-target": {
     value: getDoc([
@@ -223,7 +223,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -245,7 +245,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" data-sys-asset-isnewtab="true" sys-style-type="display"/></a></figure>`,
+    expectedHtml: `<figure style="margin: 0"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" data-sys-asset-isnewtab="true" sys-style-type="display"/></a></figure>`,
   },
   "anchor-alignment-target-alt-caption": {
     value: getDoc([
@@ -257,7 +257,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -290,7 +290,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -327,7 +327,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -364,7 +364,7 @@ export const imageAssetData = {
           "asset-uid": "bltb87e0bd5764c421e",
           "content-type-uid": "sys_assets",
           "asset-link":
-            "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+            "***REMOVED***200/300",
           "asset-name": "batman.png",
           "asset-type": "image/png",
           type: "asset",
@@ -394,7 +394,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<figure style="margin: 0"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure><figure style="margin: 0; text-align: left"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="left" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure><figure style="margin: 0; text-align: center"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: center; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="center" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure><figure style="margin: 0; text-align: right"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="right" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>`,
+    expectedHtml: `<figure style="margin: 0"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure><figure style="margin: 0; text-align: left"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="left" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure><figure style="margin: 0; text-align: center"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: center; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="center" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure><figure style="margin: 0; text-align: right"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="right" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>`,
   },
   "inline-base": {
     value: getDoc([
@@ -418,7 +418,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -443,7 +443,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<p dir="ltr">I am<img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="none" sys-style-type="display"/>batman</p>`,
+    expectedHtml: `<p dir="ltr">I am<img src="***REMOVED***200/300" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="none" sys-style-type="display"/>batman</p>`,
   },
   "inline-alt": {
     value: getDoc([
@@ -467,7 +467,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -494,7 +494,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<p dir="ltr">I am<img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-alt="I am BATMAN" data-sys-asset-position="none" sys-style-type="display"/>batman</p>`,
+    expectedHtml: `<p dir="ltr">I am<img src="***REMOVED***200/300" alt="I am BATMAN" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-alt="I am BATMAN" data-sys-asset-position="none" sys-style-type="display"/>batman</p>`,
   },
   "inline-caption": {
     value: getDoc([
@@ -518,7 +518,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -545,7 +545,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span>I am <figure style="margin: 0; display: inline-block"><div style="display: inline-block"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" caption="BATMAN" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-position="none" sys-style-type="display"/><figcaption style="text-align:center">BATMAN</figcaption></div></figure>Batman</span></div>`,
+    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span>I am <figure style="margin: 0; display: inline-block"><div style="display: inline-block"><img src="***REMOVED***200/300" caption="BATMAN" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-position="none" sys-style-type="display"/><figcaption style="text-align:center">BATMAN</figcaption></div></figure>Batman</span></div>`,
   },
   "inline-alignment": {
     value: getDoc([
@@ -569,7 +569,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -618,7 +618,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -647,7 +647,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: left"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" dir="ltr" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="left" sys-style-type="display"/></figure>I am batman</span></div><div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: right"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="right" sys-style-type="display"/></figure>I am batman</span></div>`,
+    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: left"><img src="***REMOVED***200/300" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" dir="ltr" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="left" sys-style-type="display"/></figure>I am batman</span></div><div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: right"><img src="***REMOVED***200/300" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-position="right" sys-style-type="display"/></figure>I am batman</span></div>`,
   },
   "inline-anchor": {
     value: getDoc([
@@ -671,7 +671,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -699,7 +699,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<p dir="ltr">I am<a href="https://www.batman.com"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" dir="ltr" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" sys-style-type="display"/></a> batman</p>`,
+    expectedHtml: `<p dir="ltr">I am<a href="https://www.batman.com"><img src="***REMOVED***200/300" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" dir="ltr" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" sys-style-type="display"/></a> batman</p>`,
   },
   "inline-anchor-target": {
     value: getDoc([
@@ -723,7 +723,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -756,7 +756,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span>I am<figure style="margin: 0; display: inline-block"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>batman</span></div>`,
+    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span>I am<figure style="margin: 0; display: inline-block"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="none" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>batman</span></div>`,
   },
   "inline-anchor-alignment-target-alt-caption": {
     value: getDoc([
@@ -780,7 +780,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -836,7 +836,7 @@ export const imageAssetData = {
               "asset-uid": "bltb87e0bd5764c421e",
               "content-type-uid": "sys_assets",
               "asset-link":
-                "https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png",
+                "***REMOVED***200/300",
               "asset-name": "batman.png",
               "asset-type": "image/png",
               type: "asset",
@@ -873,7 +873,7 @@ export const imageAssetData = {
         ],
       },
     ]),
-    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: left"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="left" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>I am batman</span></div><div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: right"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="https://images.contentstack.io/v3/assets/***REMOVED***/bltb87e0bd5764c421e/64abd49b7b26dfaeede17525/batman.png" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="right" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>I am batman</span></div>`,
+    expectedHtml: `<div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: left"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: left; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="left" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>I am batman</span></div><div dir="ltr" style="overflow: hidden"><span><figure style="margin: 0; float: right"><div style="display: inline-block"><a href="https://www.batman.com" target="_blank"><img src="***REMOVED***200/300" alt="I am BATMAN" caption="BATMAN" anchorLink="https://www.batman.com" inline="true" class="embedded-asset" content-type-uid="sys_assets" type="asset" asset-alt="I am BATMAN" style="text-align: right; max-width: undefinedpx; width: auto" data-sys-asset-filelink="***REMOVED***200/300" data-sys-asset-uid="bltb87e0bd5764c421e" data-sys-asset-filename="batman.png" data-sys-asset-contenttype="image/png" data-sys-asset-caption="BATMAN" data-sys-asset-alt="I am BATMAN" data-sys-asset-link="https://www.batman.com" data-sys-asset-position="right" data-sys-asset-isnewtab="true" sys-style-type="display"/></a><figcaption style="text-align:center">BATMAN</figcaption></div></figure>I am batman</span></div>`,
   },
 };
 
