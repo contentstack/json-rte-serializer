@@ -354,7 +354,7 @@ Some Paragraph and adding a [link](www.google.com) in the middle.`
                             "asset-uid": "blt6a5e908abbd88573",
                             "content-type-uid": "sys_assets",
                             "target": "_self",
-                            "href": "https://images.contentstack.io/v3/assets/blt2cf669e5016d5e07/blt6a5e908abbd88573/65a8bd5e14eace2183a5abcc/Phillip-Island-Penguin-Parade-10.jpeg"
+                            "href": "https://picsum.photos/200/300"
                         },
                         "children": [
                             {
@@ -371,7 +371,7 @@ Some Paragraph and adding a [link](www.google.com) in the middle.`
     }],
     "markdown": `
     
-Also adding an asset as a link here. Here are the [Penguins.](https://images.contentstack.io/v3/assets/blt2cf669e5016d5e07/blt6a5e908abbd88573/65a8bd5e14eace2183a5abcc/Phillip-Island-Penguin-Parade-10.jpeg) Enjoy!`
+Also adding an asset as a link here. Here are the [Penguins.](https://picsum.photos/200/300) Enjoy!`
 },
 {
     "title": "Ordered List Conversion",
