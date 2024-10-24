@@ -242,5 +242,11 @@ describe("Testing json to html conversion", () => {
       const html = toRedactor(json);
       expect(html).toBe(`<figure><a href="link" target="_blank"><img position="none" caption="caption" inline="true" width="217" dirty="true" max-width="243" src="https://picsum.photos/536/354" alt="alt" anchorLink="link" target="_blank" style="width: 217; height: auto;"/></a><figcaption>caption</figcaption></figure>`)
     })
+
+    test("should have proper HTML for social-embeds", () => {
+      const json = {"type":"doc","attrs":{},"uid":"18396bf67f1f4b0a9da57643ac0542ca","children":[{"uid":"45a850acbeb949db86afe415625ad1ce","type":"social-embeds","attrs":{"src":"https://www.youtube.com/embed/VD6xJq8NguY","width":560,"height":320},"children":[{"text":""}]}],"_version":1    }
+      const html = toRedactor(json);
+      expect(html).toBe(`<iframe src="https://www.youtube.com/embed/VD6xJq8NguY" width="560" height="320"></iframe>`);
+    })
 })
 
