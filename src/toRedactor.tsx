@@ -185,6 +185,9 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   },
   script: (attrs: any, child: any) => {
     return `<script ${attrs}>${child}</script>`
+  },
+  "social-embeds": (attrs: any, child: any) => {
+    return `<iframe${attrs} data-type="social-embeds" ></iframe>`
   }
 }
 const TEXT_WRAPPERS: IJsonToHtmlTextTags = {
