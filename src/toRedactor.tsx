@@ -225,13 +225,13 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
     }
     if(jsonValue['classname'] || jsonValue['id']){
       if(jsonValue['classname'] && jsonValue['id']){
-        text = `<span class=${jsonValue['classname']} id=${jsonValue['id']}>${text}</span>`
+        text = `<span class="${jsonValue['classname']}" id="${jsonValue['id']}">${text}</span>`
       }
       else if(jsonValue['classname'] && !jsonValue['id']){
-        text = `<span class=${jsonValue['classname']}>${text}</span>`
+        text = `<span class="${jsonValue['classname']}">${text}</span>`
       }
       else if(jsonValue['id'] && !jsonValue['classname']){
-        text = `<span id=${jsonValue['id']}>${text}</span>`
+        text = `<span id="${jsonValue['id']}">${text}</span>`
       }
     }
     if (jsonValue.text.includes('\n') && !jsonValue['break']) {
