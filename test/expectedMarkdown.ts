@@ -258,7 +258,7 @@ This is a paragraph with \`inline code\`.`
                     "display-type": "display",
                     "asset-uid": "blt3108327519cf8663",
                     "content-type-uid": "sys_assets",
-                    "asset-link": "https://images.contentstack.io/v3/assets/***REMOVED***/blt3108327519cf8663/65a8be2d14eace6980a5abd6/test-base-64.jpeg",
+                    "asset-link": "./image.jpeg",
                     "asset-name": "test-base-64.jpeg",
                     "asset-type": "image/jpeg",
                     "type": "asset",
@@ -290,7 +290,7 @@ This is a paragraph with \`inline code\`.`
 
       
 ![test-base-64.jpeg]
-(https://images.contentstack.io/v3/assets/***REMOVED***/blt3108327519cf8663/65a8be2d14eace6980a5abd6/test-base-64.jpeg)`
+(./image.jpeg)`
 }, 
 {
     "title": "Anchor Link Conversion",

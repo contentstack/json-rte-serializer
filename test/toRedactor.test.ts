@@ -246,7 +246,7 @@ describe("Testing json to html conversion", () => {
     test("should have proper HTML for social-embeds", () => {
       const json = {"type":"doc","attrs":{},"uid":"18396bf67f1f4b0a9da57643ac0542ca","children":[{"uid":"45a850acbeb949db86afe415625ad1ce","type":"social-embeds","attrs":{"src":"***REMOVED***","width":560,"height":320},"children":[{"text":""}]}],"_version":1    }
       const html = toRedactor(json);
-      expect(html).toBe(`<iframe src="***REMOVED***" width="560" height="320"></iframe>`);
+      expect(html).toBe(`<iframe src="***REMOVED***" width="560" height="320" data-type="social-embeds" ></iframe>`);
     })
 })
 
