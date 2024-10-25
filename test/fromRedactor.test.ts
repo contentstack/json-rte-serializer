@@ -311,9 +311,9 @@ describe("Testing html to json conversion", () => {
         expect(json).toEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"p","attrs":{},"uid":"uid","children":[{"type":"reference","attrs":{"style":{"text-align":"right"},"redactor-attributes":{"src":"http://localhost:8001/v3/assets/blt77b66f7ca0622ce9/bltc1b32227100685b6/66c81798d5c529eebeabd447/image_(7).png","height":"86","alt":"image (7).png","type":"asset","asset-alt":"image (7).png","max-height":"86","max-width":"168","sys-style-type":"display","position":"right"},"class-name":"embedded-asset","width":168,"type":"asset","asset-alt":"image (7).png","position":"right","asset-link":"http://localhost:8001/v3/assets/blt77b66f7ca0622ce9/bltc1b32227100685b6/66c81798d5c529eebeabd447/image_(7).png","asset-uid":"bltc1b32227100685b6","display-type":"display","asset-name":"image (7).png","asset-type":"image/png","content-type-uid":"sys_assets","inline":true},"uid":"uid","children":[{"text":""}]},{"text":"dasdasdasdasdasdasddaasdasdasdas"},{"text":"\n","break":false,"separaterId":"uid"},{"text":"Hello"},{"text":"\n","break":false,"separaterId":"uid"},{"text":"World"}]}]})
     })
     test("should convert social embed to proper social embed json", () => {
-        let html = `<iframe src="https://www.youtube.com/embed/VD6xJq8NguY" data-type="social-embeds"></iframe>`
+        let html = `<iframe src="https://www.youtube.com/embed/3V-Sq7_uHXQ" data-type="social-embeds"></iframe>`
         const json = htmlToJson(html)
-        expect(json).toEqual({ type: "doc", attrs: {}, uid: "uid", children:[{ type: "social-embeds", uid: 'uid', attrs: { src: "https://www.youtube.com/embed/VD6xJq8NguY" }, children: [{ text: ""}] }]})
+        expect(json).toEqual({ type: "doc", attrs: {}, uid: "uid", children:[{ type: "social-embeds", uid: 'uid', attrs: { src: "https://www.youtube.com/embed/3V-Sq7_uHXQ" }, children: [{ text: ""}] }]})
     })
 })
 
