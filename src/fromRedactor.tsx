@@ -60,7 +60,15 @@ export const ELEMENT_TAGS: IHtmlToJsonElementTags = {
   P: () => ({ type: 'p', attrs: {} }),
   PRE: () => ({ type: 'code', attrs: {} }),
   UL: () => ({ type: 'ul', attrs: {} }),
-  IFRAME: (el: HTMLElement) => ({ type: 'embed', attrs: { src: el.getAttribute('src') } }),
+  IFRAME: (el: HTMLElement) => {
+    if(el.getAttribute('data-type') === "social-embeds") {
+      const src = el.getAttribute('src')
+      el.removeAttribute('data-type')
+      el.removeAttribute('src')
+      return { type: 'social-embeds', attrs: { src } }
+    }
+    return { type: 'embed', attrs: { src: el.getAttribute('src') } }
+  },
   TABLE: (el: HTMLElement) => ({ type: 'table', attrs: {} }),
   THEAD: (el: HTMLElement) => ({ type: 'thead', attrs: {} }),
   TBODY: (el: HTMLElement) => ({ type: 'tbody', attrs: {} }),
