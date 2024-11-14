@@ -863,7 +863,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       let noOfInlineElement = 0
       Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
-        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline'))) {
+        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline')) || child.nodeName in TEXT_TAGS) {
           noOfInlineElement += 1
         }
       })
@@ -1084,4 +1084,26 @@ function getTbodyChildren  (rows: any[]) {
 
   }, [])
   return newTbodyChildren
+}
+
+export function replaceNonSemanticTags (el: HTMLElement) {
+  const nonSematicTagMap = {
+    b: 'strong',
+    i: 'em'
+  } as Record<string, string>
+
+  const nodes = el.querySelectorAll(Object.keys(nonSematicTagMap).join(','))
+
+  nodes.forEach((node) => {
+    const nodeName = node.nodeName.toLowerCase()
+    if(!(nodeName in nonSematicTagMap)) return
+
+    const strong = el.ownerDocument.createElement(nonSematicTagMap[nodeName])
+    strong.innerHTML = node.innerHTML
+    Array.from(node.attributes).forEach((attr) => {
+      if(attr.nodeValue)
+      strong.setAttribute(attr.nodeName, attr.nodeValue)
+    })
+    node.replaceWith(strong)
+  })
 }
