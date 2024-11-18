@@ -315,6 +315,19 @@ describe("Testing html to json conversion", () => {
         const json = htmlToJson(html)
         expect(json).toEqual({ type: "doc", attrs: {}, uid: "uid", children:[{ type: "social-embeds", uid: 'uid', attrs: { src: "https://www.***REMOVED***.com/embed/3V-Sq7_uHXQ" }, children: [{ text: ""}] }]})
     })
+
+    test("should replace all instances of <b> and <i> proper json marks", () => {
+        const html = `<p><b>Hello</b><i>Test2</i><b>World</b></p>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello","attrs":{"style":{}},"bold":true},{"text":"Test2","attrs":{"style":{}},"italic":true},{"text":"World","attrs":{"style":{}},"bold":true}]}]})
+    })
+
+    test("should not add fragment for html containing a text tag and span tag", () => {
+        const html = `<p><strong>Hello</strong><span> Hii</span></p>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello","attrs":{"style":{}},"bold":true},{"text":" Hii"}]}]})
+    
+    })
 })
 
 
