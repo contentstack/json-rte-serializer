@@ -121,6 +121,7 @@ const TEXT_TAGS: IHtmlToJsonTextTags = {
   I: () => ({ italic: true }),
   S: () => ({ strikethrough: true }),
   STRONG: () => ({ bold: true }),
+  B: () => ({ bold: true }),
   U: () => ({ underline: true }),
   SUP: () => ({ superscript: true }),
   SUB: () => ({ subscript: true })
@@ -1084,26 +1085,4 @@ function getTbodyChildren  (rows: any[]) {
 
   }, [])
   return newTbodyChildren
-}
-
-export function replaceNonSemanticTags (el: HTMLElement) {
-  const nonSematicTagMap = {
-    b: 'strong',
-    i: 'em'
-  } as Record<string, string>
-
-  const nodes = el.querySelectorAll(Object.keys(nonSematicTagMap).join(','))
-
-  nodes.forEach((node) => {
-    const nodeName = node.nodeName.toLowerCase()
-    if(!(nodeName in nonSematicTagMap)) return
-
-    const strong = el.ownerDocument.createElement(nonSematicTagMap[nodeName])
-    strong.innerHTML = node.innerHTML
-    Array.from(node.attributes).forEach((attr) => {
-      if(attr.nodeValue)
-      strong.setAttribute(attr.nodeName, attr.nodeValue)
-    })
-    node.replaceWith(strong)
-  })
 }
