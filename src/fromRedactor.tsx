@@ -121,6 +121,7 @@ const TEXT_TAGS: IHtmlToJsonTextTags = {
   I: () => ({ italic: true }),
   S: () => ({ strikethrough: true }),
   STRONG: () => ({ bold: true }),
+  B: () => ({ bold: true }),
   U: () => ({ underline: true }),
   SUP: () => ({ superscript: true }),
   SUB: () => ({ subscript: true })
@@ -863,7 +864,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       let noOfInlineElement = 0
       Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
-        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline'))) {
+        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline')) || child.nodeName in TEXT_TAGS) {
           noOfInlineElement += 1
         }
       })
