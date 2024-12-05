@@ -379,6 +379,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       if (attrsJson['width']) {
         let width = attrsJson['width']
+        if(typeof width === 'number'){
+          width = width.toString()
+        }
         if (width.slice(width.length - 1) === '%') {
           style = `width: ${allattrs['width'] + '%'}; height: ${attrsJson['height'] ? attrsJson['height'] : 'auto'};`
         } else {
