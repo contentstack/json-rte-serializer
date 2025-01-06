@@ -1,6 +1,6 @@
 import {IJsonToMarkdownElementTags, IJsonToMarkdownTextTags} from './types'
-import {cloneDeep} from 'lodash'
-import {Node} from 'slate'
+import cloneDeep from "lodash/cloneDeep"
+import { getString } from './utils/jsx'
 
 let listTypes = ['ol', 'ul']
 const elementsToAvoidWithinMarkdownTable = ['ol', 'ul', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'reference', 'img', 'fragment']
@@ -231,7 +231,7 @@ export const jsonToMarkdownSerializer = (jsonValue: any): string => {
     }
     if(jsonValue['type'] === 'td' || jsonValue['type'] === 'th') {
       let NonAllowedTableChild = Array.from(jsonValue['children']).find((child: any) => elementsToAvoidWithinMarkdownTable.includes(child.type))
-      if(NonAllowedTableChild) children = Node.string(jsonValue)
+      if(NonAllowedTableChild) children = getString(jsonValue)
     }
     return ELEMENT_TYPES[jsonValue['type']](jsonValue['attrs'], children)
   }  
