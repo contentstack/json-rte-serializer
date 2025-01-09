@@ -2002,9 +2002,9 @@ export default {
     },
     "RT-360":{  
         "html": [
-            `<iframe src="https://www.youtube.com/embed/VD6xJq8NguY" width="560" height="320" data-type="social-embeds" ></iframe>`,
-            `<iframe src=" " width="560" height="320" data-type="social-embeds" ></iframe>`,
-            '<iframe src=" " width="560" height="320" data-type="social-embeds" ></iframe>',
+            `<iframe src="https://www.youtube.com/watch?v=Gw7EqoOYC9A" width="560" height="320" data-type="social-embeds" ></iframe>`,
+            `<iframe width="560" height="320" data-type="social-embeds" ></iframe>`,
+            '<iframe width="560" height="320" data-type="social-embeds" ></iframe>',
         ],
         "json": 
         [
@@ -2017,7 +2017,7 @@ export default {
                         "uid": "45a850acbeb949db86afe415625ad1ce",
                         "type": "social-embeds",
                         "attrs": {
-                            "src": "https://www.youtube.com/embed/VD6xJq8NguY\"></iframe><script>alert(document.cookie)</script><iframe ",
+                            "src": "https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe><script>alert(document.cookie)</script><iframe ",
                             "width": 560,
                             "height": 320
                         },
@@ -2061,7 +2061,7 @@ export default {
                     "uid": "45a850acbeb949db86afe415625ad1ce",
                     "type": "social-embeds",
                     "attrs": {
-                      "src": "www.youtube.com/embed/VD6xJq8NguY",
+                      "src": "www.youtube.com/watch?v=Gw7EqoOYC9A",
                       "width": 560,
                       "height": 320
                     },

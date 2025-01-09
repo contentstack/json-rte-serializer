@@ -494,15 +494,19 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         }
         figureStyles.fieldsEdited.push(figureStyles.caption)
       }
-      if (jsonValue['type'] === 'social-embeds') {
-        const sanitizedHTML = DOMPurify.sanitize(allattrs['src'])
-        const urlMatch:any = sanitizedHTML.match(/https?:\/\/[^\s"'>]+/);
-        if (urlMatch && urlMatch[0] !== 'undefined') {
-        attrsJson['src'] = decodeURIComponent(urlMatch[0])
-        } else{
-          attrsJson['src'] = " "
-        }
-      }
+    
+      if (!options?.skipURLSanitization && jsonValue['type'] === 'social-embeds') {
+        const sanitizedHTML = DOMPurify.sanitize(allattrs['src']);
+  
+        const urlMatch = sanitizedHTML.match(/https?:\/\/[^\s"'<>()]+/);
+    
+        if (urlMatch) {
+            attrsJson['src'] = decodeURIComponent(urlMatch[0]);
+        } else {
+            delete attrsJson['src'];
+        } 
+    }
+    
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']
       }
