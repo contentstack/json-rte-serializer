@@ -495,7 +495,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         figureStyles.fieldsEdited.push(figureStyles.caption)
       }
     
-      if (!options?.skipURLSanitization && jsonValue['type'] === 'social-embeds') {
+      if (!options?.skipURLSanitization && (jsonValue['type'] === 'social-embeds' || jsonValue['type'] === 'embed')) {
         const sanitizedHTML = DOMPurify.sanitize(allattrs['src']);
   
         const urlMatch = sanitizedHTML.match(/https?:\/\/[^\s"'<>()]+/);

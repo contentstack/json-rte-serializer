@@ -2002,9 +2002,9 @@ export default {
     },
     "RT-360":{  
         "html": [
-            `<iframe src="https://www.youtube.com/watch?v=Gw7EqoOYC9A" width="560" height="320" data-type="social-embeds" ></iframe>`,
-            `<iframe width="560" height="320" data-type="social-embeds" ></iframe>`,
-            '<iframe width="560" height="320" data-type="social-embeds" ></iframe>',
+            `<iframe src="https://www.youtube.com/watch?v=Gw7EqoOYC9A" width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe>`,
+            `<iframe width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\"></iframe>`,
+            '<iframe width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\"></iframe>',
         ],
         "json": 
         [
@@ -2024,6 +2024,24 @@ export default {
                         "children": [
                             {
                                 "text": ""
+                            }
+                        ]
+                    },
+                    {
+                        "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                        "type": "doc",
+                        "_version": 11,
+                        "attrs": {},
+                        "children": [
+                            {
+                                "uid": "87fed1cc68ce435caa0f71d17788c618",
+                                "type": "embed",
+                                "attrs": {
+                                    "src": "https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe><script>alert(document.cookie)</script><iframe ",
+                                    "redactor-attributes": {
+                                        "allowfullscreen": true
+                                    }
+                                }
                             }
                         ]
                     }
@@ -2048,7 +2066,25 @@ export default {
                         "text": ""
                       }
                     ]
-                  }
+                  },
+                  {
+                    "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                    "type": "doc",
+                    "_version": 11,
+                    "attrs": {},
+                    "children": [
+                        {
+                            "uid": "87fed1cc68ce435caa0f71d17788c618",
+                            "type": "embed",
+                            "attrs": {
+                                "src": null,
+                                "redactor-attributes": {
+                                    "allowfullscreen": true
+                                }
+                            }
+                        }
+                    ]
+                }
                 ],
                 "_version": 1
             },
@@ -2070,7 +2106,25 @@ export default {
                         "text": ""
                       }
                     ]
-                  }
+                  },
+                  {
+                    "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                    "type": "doc",
+                    "_version": 11,
+                    "attrs": {},
+                    "children": [
+                        {
+                            "uid": "87fed1cc68ce435caa0f71d17788c618",
+                            "type": "embed",
+                            "attrs": {
+                                "src": "www.youtube.com/embed/VD6xJq8NguY",
+                                "redactor-attributes": {
+                                    "allowfullscreen": true
+                                }
+                            }
+                        }
+                    ]
+                }
                 ],
                 "_version": 1
             }
