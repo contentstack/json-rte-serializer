@@ -1999,6 +1999,83 @@ export default {
             }
         ],
         "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://images.com/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.***REMOVED***.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://images.com/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
+    },
+    "RT-360":{  
+        "html": [
+            `<iframe src="https://www.youtube.com/embed/VD6xJq8NguY" width="560" height="320" data-type="social-embeds" ></iframe>`,
+            `<iframe src=" " width="560" height="320" data-type="social-embeds" ></iframe>`,
+            '<iframe src=" " width="560" height="320" data-type="social-embeds" ></iframe>',
+        ],
+        "json": 
+        [
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                    {
+                        "uid": "45a850acbeb949db86afe415625ad1ce",
+                        "type": "social-embeds",
+                        "attrs": {
+                            "src": "https://www.youtube.com/embed/VD6xJq8NguY\"></iframe><script>alert(document.cookie)</script><iframe ",
+                            "width": 560,
+                            "height": 320
+                        },
+                        "children": [
+                            {
+                                "text": ""
+                            }
+                        ]
+                    }
+                ],
+                "_version": 1
+            },
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                  {
+                    "uid": "45a850acbeb949db86afe415625ad1ce",
+                    "type": "social-embeds",
+                    "attrs": {
+                      "src": null, 
+                      "width": 560,
+                      "height": 320
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  }
+                ],
+                "_version": 1
+            },
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                  {
+                    "uid": "45a850acbeb949db86afe415625ad1ce",
+                    "type": "social-embeds",
+                    "attrs": {
+                      "src": "www.youtube.com/embed/VD6xJq8NguY",
+                      "width": 560,
+                      "height": 320
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  }
+                ],
+                "_version": 1
+            }
+        ]    
+        
     }
      
 }
