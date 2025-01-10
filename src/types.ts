@@ -20,4 +20,5 @@ export interface IJsonToHtmlOptions {
     customElementTypes?: IJsonToHtmlElementTags,
     customTextWrapper?: IJsonToHtmlTextTags,
     allowNonStandardTypes?: boolean,
+    skipURLSanitization?:boolean
 }

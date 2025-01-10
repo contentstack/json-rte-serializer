@@ -248,5 +248,25 @@ describe("Testing json to html conversion", () => {
       const html = toRedactor(json);
       expect(html).toBe(`<iframe src="https://www.***REMOVED***.com/embed/3V-Sq7_uHXQ" width="560" height="320" data-type="social-embeds" ></iframe>`);
     })
+
+    describe("RT-360", () =>{
+      it("should remove script and/or other tags from src links in HTML for social-embeds", () => {
+        const json = expectedValue["RT-360"].json[0]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[0]);
+      })
+
+      it("should handle undefined or null cases",()=>{
+        const json = expectedValue["RT-360"].json[1]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[1]);
+      })
+
+      it("should handle src without protocol",()=>{
+        const json = expectedValue["RT-360"].json[2]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[2]);
+      })
+    })
 })
 

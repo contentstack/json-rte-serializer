@@ -161,6 +161,7 @@ On the other hand, the `customTextWrapper` parser function provides the followin
 -   `child`: The HTML string that specifies the child element
 -   `value`: The value passed against the child element
 
+
 You can use the following customized JSON RTE Serializer code to convert your JSON RTE field data into HTML format.
 
 ```javascript
@@ -230,6 +231,60 @@ The resulting HTML data will look as follows:
 ```HTML
 <p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p><p>This <color data-color="red">is</color> text.</p>
 ```
+<br>
+<br>
+
+##### <p>You can pass the option `skipURLSanitization` as true to bypass the validation checks and sanitization for the src URLs of JSON element types - social embed and embed.</p>
+<div>By default, this option is set to false.</div>
+
+#### Examples:
+
+ 1. For the following JSON, with src url containing script tags
+ ```JSON 
+    {
+        "type": "doc",
+        "attrs": {},
+        "children": [
+            {
+                "type": "social-embeds",
+                "attrs": {
+                    "src": "https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe><script>alert(document.cookie)</script><iframe ",
+                    "width": 560,
+                    "height": 320
+                },
+            }
+        ]
+  }
+```
+The resulting HTML:
+```HTML
+<iframe src="https://www.youtube.com/watch?v=Gw7EqoOYC9A" width="560" height="320" data-type="social-embeds" ></iframe>
+```    
+
+2. For any JSON containing src urls violating expected protocols, the src attribute will be removed when converted to HTML
+
+ ```JSON  
+  {
+      "type": "doc",
+      "attrs": {},
+      "children": [
+          {
+              "type": "social-embeds",
+              "attrs": {
+                  "src": "www.youtube.com/watch?v=Gw7EqoOYC9A\">",
+                  "width": 560,
+                  "height": 320
+              },
+          }
+      ]
+  }
+```
+The resulting HTML:
+```HTML
+<iframe width="560" height="320" data-type="social-embeds" ></iframe>
+```  
+
+<br>
 
 ### Convert HTML to JSON
 
