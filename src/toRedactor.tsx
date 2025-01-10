@@ -1,6 +1,6 @@
 import kebbab from 'lodash.kebabcase'
 import isEmpty from 'lodash.isempty'
-
+import DOMPurify from 'dompurify'
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
 import isPlainObject from 'lodash.isplainobject'
 
@@ -494,6 +494,19 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         }
         figureStyles.fieldsEdited.push(figureStyles.caption)
       }
+    
+      if (!options?.skipURLSanitization && (jsonValue['type'] === 'social-embeds' || jsonValue['type'] === 'embed')) {
+        const sanitizedHTML = DOMPurify.sanitize(allattrs['src']);
+  
+        const urlMatch = sanitizedHTML.match(/https?:\/\/[^\s"'<>()]+/);
+    
+        if (urlMatch) {
+            attrsJson['src'] = decodeURIComponent(urlMatch[0]);
+        } else {
+            delete attrsJson['src'];
+        } 
+    }
+    
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']
       }
