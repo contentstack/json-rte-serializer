@@ -357,7 +357,7 @@ The resulting JSON-formatted data will look as follows:
 
 ## Automatic Conversion
 
-> **_Note_**: `src` url's provided for social-embeds and embed items will by default be encoded.
+> **_Note_**: `src` url's provided for social-embeds and embed items will by default be  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI">uri encoded</a>.
 
 By default, the JSON Rich Text Editor field supports limited HTML tags within the editor. Due to this, the JSON RTE Serializer tool is not able to recognize each and every standard HTML tag.
 
