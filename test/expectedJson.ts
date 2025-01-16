@@ -2002,9 +2002,10 @@ export default {
     },
     "RT-360":{  
         "html": [
-            `<iframe src="https://www.youtube.com/watch?v=Gw7EqoOYC9A" width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe>`,
+            `<iframe src=\"https://www.youtube.com/watch?v=Gw7EqoOYC9A%22%3E%3C/iframe%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E%3Ciframe%20\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/watch?v=Gw7EqoOYC9A%22%3E%3C/iframe%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E%3Ciframe%20\"></iframe>`,
             `<iframe width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\"></iframe>`,
-            '<iframe width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\"></iframe>',
+            '<iframe src=\"www.youtube.com/watch?v=Gw7EqoOYC9A\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"www.youtube.com/embed/VD6xJq8NguY\"></iframe>',
+            `<iframe src=\"https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU\"></iframe>`
         ],
         "json": 
         [
@@ -2057,7 +2058,7 @@ export default {
                     "uid": "45a850acbeb949db86afe415625ad1ce",
                     "type": "social-embeds",
                     "attrs": {
-                      "src": null, 
+                      "src": "", 
                       "width": 560,
                       "height": 320
                     },
@@ -2077,7 +2078,7 @@ export default {
                             "uid": "87fed1cc68ce435caa0f71d17788c618",
                             "type": "embed",
                             "attrs": {
-                                "src": null,
+                                "src": "",
                                 "redactor-attributes": {
                                     "allowfullscreen": true
                                 }
@@ -2118,6 +2119,46 @@ export default {
                             "type": "embed",
                             "attrs": {
                                 "src": "www.youtube.com/embed/VD6xJq8NguY",
+                                "redactor-attributes": {
+                                    "allowfullscreen": true
+                                }
+                            }
+                        }
+                    ]
+                }
+                ],
+                "_version": 1
+            },
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                  {
+                    "uid": "45a850acbeb949db86afe415625ad1ce",
+                    "type": "social-embeds",
+                    "attrs": {
+                      "src": "https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU",
+                      "width": 560,
+                      "height": 320
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                    "type": "doc",
+                    "_version": 11,
+                    "attrs": {},
+                    "children": [
+                        {
+                            "uid": "87fed1cc68ce435caa0f71d17788c618",
+                            "type": "embed",
+                            "attrs": {
+                                "src": "https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU",
                                 "redactor-attributes": {
                                     "allowfullscreen": true
                                 }
