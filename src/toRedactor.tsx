@@ -498,17 +498,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         figureStyles.fieldsEdited.push(figureStyles.caption)
       }
     
-      if (!options?.skipURLSanitization && (jsonValue['type'] === 'social-embeds' || jsonValue['type'] === 'embed')) {
-        const sanitizedHTML = DOMPurify.sanitize(allattrs['src']);
-  
-        const urlMatch = sanitizedHTML.match(/https?:\/\/[^\s"'<>()]+/);
-    
-        if (urlMatch) {
-            attrsJson['src'] = decodeURIComponent(urlMatch[0]);
-        } else {
-            delete attrsJson['src'];
-        } 
-    }
+      if (jsonValue['type'] === 'social-embeds' || jsonValue['type'] === 'embed') {
+        attrsJson['src'] = encodeURI(allattrs['src']);        
+      }
     
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']

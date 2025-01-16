@@ -250,7 +250,7 @@ describe("Testing json to html conversion", () => {
     })
 
     describe("RT-360", () =>{
-      it("should remove script and/or other tags from src links in HTML for social-embeds", () => {
+      it("should encode and not render invalid src urls", () => {
         const json = expectedValue["RT-360"].json[0]
         const html = toRedactor(json);
         expect(html).toBe(expectedValue["RT-360"].html[0]);
@@ -262,10 +262,16 @@ describe("Testing json to html conversion", () => {
         expect(html).toBe(expectedValue["RT-360"].html[1]);
       })
 
-      it("should handle src without protocol",()=>{
+      it("should handle src urls without protocol",()=>{
         const json = expectedValue["RT-360"].json[2]
         const html = toRedactor(json);
         expect(html).toBe(expectedValue["RT-360"].html[2]);
+      })
+
+      it("should work only for valid embed urls",()=>{
+        const json = expectedValue["RT-360"].json[3]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[3]);
       })
     })
 
