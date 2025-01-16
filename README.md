@@ -231,60 +231,6 @@ The resulting HTML data will look as follows:
 ```HTML
 <p><social-embed url="https://twitter.com/Contentstack/status/1508911909038436365?cxt=HHwWmsC9-d_Y3fApAAAA"></social-embed></p><p>This <color data-color="red">is</color> text.</p>
 ```
-<br>
-<br>
-
-##### <p>You can pass the option `skipURLSanitization` as true to bypass the validation checks and sanitization for the src URLs of JSON element types - social embed and embed.</p>
-<div>By default, this option is set to false.</div>
-
-#### Examples:
-
- 1. For the following JSON, with src url containing script tags
- ```JSON 
-    {
-        "type": "doc",
-        "attrs": {},
-        "children": [
-            {
-                "type": "social-embeds",
-                "attrs": {
-                    "src": "https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe><script>alert(document.cookie)</script><iframe ",
-                    "width": 560,
-                    "height": 320
-                },
-            }
-        ]
-  }
-```
-The resulting HTML:
-```HTML
-<iframe src="https://www.youtube.com/watch?v=Gw7EqoOYC9A" width="560" height="320" data-type="social-embeds" ></iframe>
-```    
-
-2. For any JSON containing src urls violating expected protocols, the src attribute will be removed when converted to HTML
-
- ```JSON  
-  {
-      "type": "doc",
-      "attrs": {},
-      "children": [
-          {
-              "type": "social-embeds",
-              "attrs": {
-                  "src": "www.youtube.com/watch?v=Gw7EqoOYC9A\">",
-                  "width": 560,
-                  "height": 320
-              },
-          }
-      ]
-  }
-```
-The resulting HTML:
-```HTML
-<iframe width="560" height="320" data-type="social-embeds" ></iframe>
-```  
-
-<br>
 
 ### Convert HTML to JSON
 
@@ -410,6 +356,8 @@ The resulting JSON-formatted data will look as follows:
 ```
 
 ## Automatic Conversion
+
+> **_Note_**: `src` url's provided for social-embeds and embed items will by default be  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI">uri encoded</a>.
 
 By default, the JSON Rich Text Editor field supports limited HTML tags within the editor. Due to this, the JSON RTE Serializer tool is not able to recognize each and every standard HTML tag.
 
