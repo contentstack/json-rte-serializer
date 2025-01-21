@@ -273,6 +273,12 @@ describe("Testing json to html conversion", () => {
         const html = toRedactor(json);
         expect(html).toBe(expectedValue["RT-360"].html[3]);
       })
+
+      it("should escape html entities in attribute values",()=>{
+        const json = expectedValue["RT-360"].json[4]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[4]);
+      })
     })
 
     test('should convert numeric width to string', () => {
