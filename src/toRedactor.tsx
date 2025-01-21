@@ -1,8 +1,8 @@
 import kebbab from 'lodash.kebabcase'
 import isEmpty from 'lodash.isempty'
-import DOMPurify from 'dompurify'
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
 import isPlainObject from 'lodash.isplainobject'
+import {replaceHtmlEntities } from './utils'
 
 const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {
@@ -507,7 +507,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       delete attrsJson['redactor-attributes']
       Object.entries(attrsJson).forEach((key) => {
-        return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${key[1]}" `) : '') : ''
+        return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${replaceHtmlEntities(key[1])}" `) : '') : ''
       })
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     }
@@ -564,7 +564,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
     if(['td','th'].includes(jsonValue['type'])){
       if(jsonValue?.['attrs']?.['void']) return ''
     }
-
+ 
     attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
 
     return ELEMENT_TYPES[orgType || jsonValue['type']](attrs, children,jsonValue, figureStyles)
