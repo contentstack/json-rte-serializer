@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "array-flat-polyfill": "^1.0.1",
-    "dompurify": "^3.2.3",
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
     "lodash.flatten": "^4.4.0",
