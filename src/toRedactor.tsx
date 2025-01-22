@@ -2,7 +2,7 @@ import kebbab from 'lodash.kebabcase'
 import isEmpty from 'lodash.isempty'
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
 import isPlainObject from 'lodash.isplainobject'
-import {replaceHtmlEntities } from './utils'
+import {replaceHtmlEntities, forbiddenAttrChars } from './utils'
 
 const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {
@@ -507,6 +507,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       delete attrsJson['redactor-attributes']
       Object.entries(attrsJson).forEach((key) => {
+        if (forbiddenAttrChars.some(char => key[0].includes(char))) {
+          return; 
+        }
         return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${replaceHtmlEntities(key[1])}" `) : '') : ''
       })
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()

@@ -2006,7 +2006,8 @@ export default {
             `<iframe width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\"></iframe>`,
             '<iframe src=\"www.youtube.com/watch?v=Gw7EqoOYC9A\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"www.youtube.com/embed/VD6xJq8NguY\"></iframe>',
             `<iframe src=\"https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU\"></iframe>`,
-            `<iframe src="null" width="560" height="320" title=" This is for &lt;/p&gt;testing &lt;/p&gt; purpose 'only' " data-type="social-embeds" ></iframe>`
+            `<iframe src="null" width="560" height="320" title=" This is for &lt;/p&gt;testing &lt;/p&gt; purpose 'only' " data-type="social-embeds" ></iframe>`,
+            `<iframe 123="456" src="https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU" width="560" height="320" status="Active" data-type="social-embeds" ></iframe>`
         ],
         "json": 
         [
@@ -2180,6 +2181,25 @@ export default {
                   title: " This is for </p>testing </p> purpose 'only' "
                 },
                 children: [{ text: "" }],
+            },
+            {
+                "uid": "45a850acbeb949db86afe415625ad1ce",
+                "type": "social-embeds",
+                "attrs": {
+                    "123": "456",
+                    "src": "https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU",
+                    "width": 560,
+                    "height": 320,
+                    "<p>ding": 234,
+                    "status": "Active",
+                    "emptyKey<": "12",
+                    "country/": "USA"
+                },
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
             },
 
         ]    
