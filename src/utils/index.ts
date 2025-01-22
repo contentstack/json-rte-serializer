@@ -5,3 +5,5 @@ export function replaceHtmlEntities(str: string): string {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
 }
+
+export const forbiddenAttrChars = ['"', "'", '>','<', '/', '='];
