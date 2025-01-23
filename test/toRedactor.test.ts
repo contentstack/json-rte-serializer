@@ -248,5 +248,49 @@ describe("Testing json to html conversion", () => {
       const html = toRedactor(json);
       expect(html).toBe(`<iframe src="https://www.***REMOVED***.com/embed/3V-Sq7_uHXQ" width="560" height="320" data-type="social-embeds" ></iframe>`);
     })
+
+    describe("RT-360", () =>{
+      it("should encode and not render invalid src urls", () => {
+        const json = expectedValue["RT-360"].json[0]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[0]);
+      })
+
+      it("should handle undefined or null cases",()=>{
+        const json = expectedValue["RT-360"].json[1]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[1]);
+      })
+
+      it("should handle src urls without protocol",()=>{
+        const json = expectedValue["RT-360"].json[2]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[2]);
+      })
+
+      it("should work only for valid embed urls",()=>{
+        const json = expectedValue["RT-360"].json[3]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[3]);
+      })
+
+      it("should escape html entities in attribute values",()=>{
+        const json = expectedValue["RT-360"].json[4]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[4]);
+      })
+
+      it("should drop invalid attribute names",()=>{
+        const json = expectedValue["RT-360"].json[5]
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue["RT-360"].html[5]);
+      })
+    })
+
+    test('should convert numeric width to string', () => {
+      const json = {"type":"doc","uid":"0ebe9a3b835d413595885c44d9527b72","attrs":{},"children":[{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"alt":"Infographic showing 3 results from Forrester study of Contentstack CMS: $3M increase in profit, $507.3K productivity savings and $2.0M savings due to reduced time to publish.","src":"https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png","position":"center","width":641},"url":"https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png","width":641},"uid":"15516d511e7a4e28b418e49bdba0464d","children":[{"text":""}]}]    }
+    const html = toRedactor(json);
+    expect(html).toBe(`<img alt="Infographic showing 3 results from Forrester study of Contentstack CMS: $3M increase in profit, $507.3K productivity savings and $2.0M savings due to reduced time to publish." src="https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png" position="center" width="641" style="width: 641; height: auto;" />`)
+    })
 })
 

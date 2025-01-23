@@ -161,6 +161,7 @@ On the other hand, the `customTextWrapper` parser function provides the followin
 -   `child`: The HTML string that specifies the child element
 -   `value`: The value passed against the child element
 
+
 You can use the following customized JSON RTE Serializer code to convert your JSON RTE field data into HTML format.
 
 ```javascript
@@ -356,12 +357,43 @@ The resulting JSON-formatted data will look as follows:
 
 ## Automatic Conversion
 
+> **_Note_**: `src` url's provided for social-embeds and embed items will by default be  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI">uri encoded</a>.
+
 By default, the JSON Rich Text Editor field supports limited HTML tags within the editor. Due to this, the JSON RTE Serializer tool is not able to recognize each and every standard HTML tag.
 
 To help the JSON RTE Serializer recognize and process additional tags that are commonly used across HTML, you can use the automatic conversion option. When using this option, you need to pass the `allowNonStandardTags: true` parameter within the `jsonToHtml` or `htmlToJson` method to manipulate the working of the JSON RTE Serializer package as per your requirements. When you pass this parameter, it customizes your JSON RTE Serializer code to allow the support for all standard HTML-recognized tags or element types in the JSON Rich Text Editor field.
 
 ### Convert JSON to HTML
 
+#### HTML Attribute Name and Value Sanitization
+
+
+This project ensures that HTML attributes are properly validated and sanitized according to the W3C HTML specification. It validates attribute names based on the HTML standards and sanitizes attribute values to ensure correct rendering and security, particularly against cross-site scripting (XSS) vulnerabilities.
+
+#### Attribute Name Guidelines
+
+All HTML attribute names must conform to the [W3C HTML specification](https://www.w3.org/TR/2012/WD-html-markup-20120329/syntax.html#attribute-name). These guidelines specify the following rules:
+
+- **Printable ASCII Characters:** Attribute names must consist only of printable ASCII characters.
+- **Case-Insensitive:** Attribute names are case-insensitive, but lowercase is preferred for consistency.
+- **No Special Characters:** Attribute names cannot contain spaces or special characters such as `=`, `>`, `<`, `"`, etc.
+- **Allowed Attributes:** Attributes such as `xmlns`, `aria-*`, `data-*`, and others defined by HTML5 standards are allowed and must follow specific rules.
+  
+##### Important Note:
+If an attribute name does not conform to these rules, the attribute will be **dropped** from the element.
+
+#### Attribute Value Guidelines
+
+The values of HTML attributes are sanitized to ensure proper rendering and to mitigate security risks, such as Cross-Site Scripting (XSS). This sanitization process involves replacing HTML entities (like `&lt;`, `&gt;`, `&amp;`, etc.) with their corresponding characters and removing any invalid or unsafe characters.
+
+Here are some common HTML entities and their replacements:
+
+- `&lt;` → `<`
+- `&gt;` → `>`
+- `&amp;` → `&`
+
+
+<hr>
 You can pass the `allowNonStandardTags: true` parameter within the `jsonToHtml` method to allow the JSON RTE Serializer tool to recognize standard HTML tags or element types and convert them into JSON format.
 
 You can use the following customized JSON RTE Serializer code to convert your JSON RTE field data into HTML format.
