@@ -1,8 +1,8 @@
 import kebbab from 'lodash.kebabcase'
 import isEmpty from 'lodash.isempty'
-
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
 import isPlainObject from 'lodash.isplainobject'
+import {replaceHtmlEntities, forbiddenAttrChars } from './utils'
 
 const ELEMENT_TYPES: IJsonToHtmlElementTags = {
   'blockquote': (attrs: string, child: string) => {
@@ -379,6 +379,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       if (attrsJson['width']) {
         let width = attrsJson['width']
+        if(typeof width === 'number'){
+          width = width.toString()
+        }
         if (width.slice(width.length - 1) === '%') {
           style = `width: ${allattrs['width'] + '%'}; height: ${attrsJson['height'] ? attrsJson['height'] : 'auto'};`
         } else {
@@ -494,12 +497,20 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         }
         figureStyles.fieldsEdited.push(figureStyles.caption)
       }
+    
+      if (jsonValue['type'] === 'social-embeds' || jsonValue['type'] === 'embed') {
+        attrsJson['src'] = encodeURI(allattrs['src']);        
+      }
+    
       if(!(options?.customElementTypes && !isEmpty(options.customElementTypes) && options.customElementTypes[jsonValue['type']])) {
         delete attrsJson['url']
       }
       delete attrsJson['redactor-attributes']
       Object.entries(attrsJson).forEach((key) => {
-        return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${key[1]}" `) : '') : ''
+        if (forbiddenAttrChars.some(char => key[0].includes(char))) {
+          return; 
+        }
+        return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${replaceHtmlEntities(key[1])}" `) : '') : ''
       })
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     }
@@ -556,7 +567,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
     if(['td','th'].includes(jsonValue['type'])){
       if(jsonValue?.['attrs']?.['void']) return ''
     }
-
+ 
     attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
 
     return ELEMENT_TYPES[orgType || jsonValue['type']](attrs, children,jsonValue, figureStyles)

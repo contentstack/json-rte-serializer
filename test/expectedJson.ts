@@ -1999,6 +1999,211 @@ export default {
             }
         ],
         "htmlUpdated": "<p></p><img asset_uid=\"blt5523ee02703e39f5\" src=\"https://images.com/captain_pardip.jpg\" width=\"24.193548387096776\" height=\"auto\" style=\"width: 24.193548387096776%; height: auto;height: auto;\" type=\"asset\" sys-style-type=\"download\"/><p></p><iframe src=\"https://www.***REMOVED***.com/embed/CSvFpBOe8eY\"></iframe><img asset_uid=\"blta2aad0332073026c\" src=\"https://images.com/logo_1.jpg\" height=\"auto\" type=\"asset\" sys-style-type=\"download\"/>"
+    },
+    "RT-360":{  
+        "html": [
+            `<iframe src=\"https://www.youtube.com/watch?v=Gw7EqoOYC9A%22%3E%3C/iframe%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E%3Ciframe%20\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/watch?v=Gw7EqoOYC9A%22%3E%3C/iframe%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E%3Ciframe%20\"></iframe>`,
+            `<iframe width="560" height="320" data-type="social-embeds" ></iframe><iframe allowfullscreen=\"true\"></iframe>`,
+            '<iframe src=\"www.youtube.com/watch?v=Gw7EqoOYC9A\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"www.youtube.com/embed/VD6xJq8NguY\"></iframe>',
+            `<iframe src=\"https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU\" width=\"560\" height=\"320\" data-type=\"social-embeds\" ></iframe><iframe allowfullscreen=\"true\" src=\"https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU\"></iframe>`,
+            `<iframe src="null" width="560" height="320" title=" This is for &lt;/p&gt;testing &lt;/p&gt; purpose 'only' " data-type="social-embeds" ></iframe>`,
+            `<iframe 123="456" src="https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU" width="560" height="320" status="Active" data-type="social-embeds" ></iframe>`
+        ],
+        "json": 
+        [
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                    {
+                        "uid": "45a850acbeb949db86afe415625ad1ce",
+                        "type": "social-embeds",
+                        "attrs": {
+                            "src": "https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe><script>alert(document.cookie)</script><iframe ",
+                            "width": 560,
+                            "height": 320
+                        },
+                        "children": [
+                            {
+                                "text": ""
+                            }
+                        ]
+                    },
+                    {
+                        "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                        "type": "doc",
+                        "_version": 11,
+                        "attrs": {},
+                        "children": [
+                            {
+                                "uid": "87fed1cc68ce435caa0f71d17788c618",
+                                "type": "embed",
+                                "attrs": {
+                                    "src": "https://www.youtube.com/watch?v=Gw7EqoOYC9A\"></iframe><script>alert(document.cookie)</script><iframe ",
+                                    "redactor-attributes": {
+                                        "allowfullscreen": true
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "_version": 1
+            },
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                  {
+                    "uid": "45a850acbeb949db86afe415625ad1ce",
+                    "type": "social-embeds",
+                    "attrs": {
+                      "src": "", 
+                      "width": 560,
+                      "height": 320
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                    "type": "doc",
+                    "_version": 11,
+                    "attrs": {},
+                    "children": [
+                        {
+                            "uid": "87fed1cc68ce435caa0f71d17788c618",
+                            "type": "embed",
+                            "attrs": {
+                                "src": "",
+                                "redactor-attributes": {
+                                    "allowfullscreen": true
+                                }
+                            }
+                        }
+                    ]
+                }
+                ],
+                "_version": 1
+            },
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                  {
+                    "uid": "45a850acbeb949db86afe415625ad1ce",
+                    "type": "social-embeds",
+                    "attrs": {
+                      "src": "www.youtube.com/watch?v=Gw7EqoOYC9A",
+                      "width": 560,
+                      "height": 320
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                    "type": "doc",
+                    "_version": 11,
+                    "attrs": {},
+                    "children": [
+                        {
+                            "uid": "87fed1cc68ce435caa0f71d17788c618",
+                            "type": "embed",
+                            "attrs": {
+                                "src": "www.youtube.com/embed/VD6xJq8NguY",
+                                "redactor-attributes": {
+                                    "allowfullscreen": true
+                                }
+                            }
+                        }
+                    ]
+                }
+                ],
+                "_version": 1
+            },
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "18396bf67f1f4b0a9da57643ac0542ca",
+                "children": [
+                  {
+                    "uid": "45a850acbeb949db86afe415625ad1ce",
+                    "type": "social-embeds",
+                    "attrs": {
+                      "src": "https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU",
+                      "width": 560,
+                      "height": 320
+                    },
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "uid": "d3c2ab78a5e547b082f95dc01123b0c1",
+                    "type": "doc",
+                    "_version": 11,
+                    "attrs": {},
+                    "children": [
+                        {
+                            "uid": "87fed1cc68ce435caa0f71d17788c618",
+                            "type": "embed",
+                            "attrs": {
+                                "src": "https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU",
+                                "redactor-attributes": {
+                                    "allowfullscreen": true
+                                }
+                            }
+                        }
+                    ]
+                }
+                ],
+                "_version": 1
+            },
+            {
+                uid: "45a850acbeb949db86afe415625ad1ce",
+                type: "social-embeds",
+                attrs: {
+                  src: "null",
+                  width: 560,
+                  height: 320,
+                  title: " This is for </p>testing </p> purpose 'only' "
+                },
+                children: [{ text: "" }],
+            },
+            {
+                "uid": "45a850acbeb949db86afe415625ad1ce",
+                "type": "social-embeds",
+                "attrs": {
+                    "123": "456",
+                    "src": "https://www.youtube.com/embed/Gw7EqoOYC9A?si=bWdnezma6qFAePQU",
+                    "width": 560,
+                    "height": 320,
+                    "<p>ding": 234,
+                    "status": "Active",
+                    "emptyKey<": "12",
+                    "country/": "USA"
+                },
+                "children": [
+                    {
+                        "text": ""
+                    }
+                ]
+            },
+
+        ]    
+        
     }
      
 }
