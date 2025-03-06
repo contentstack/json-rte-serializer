@@ -3,6 +3,7 @@ import isEqual from "lodash.isequal"
 
 import expectedValue from "./expectedJson"
 import { imageAssetData } from "./testingData"
+import exp from "constants"
 
 describe("Testing json to html conversion", () => {
     it("heading conversion", () => {
@@ -291,6 +292,12 @@ describe("Testing json to html conversion", () => {
       const json = {"type":"doc","uid":"0ebe9a3b835d413595885c44d9527b72","attrs":{},"children":[{"type":"img","attrs":{"style":{"text-align":"center"},"redactor-attributes":{"alt":"Infographic showing 3 results from Forrester study of Contentstack CMS: $3M increase in profit, $507.3K productivity savings and $2.0M savings due to reduced time to publish.","src":"https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png","position":"center","width":641},"url":"https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png","width":641},"uid":"15516d511e7a4e28b418e49bdba0464d","children":[{"text":""}]}]    }
     const html = toRedactor(json);
     expect(html).toBe(`<img alt="Infographic showing 3 results from Forrester study of Contentstack CMS: $3M increase in profit, $507.3K productivity savings and $2.0M savings due to reduced time to publish." src="https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png" position="center" width="641" style="width: 641; height: auto;" />`)
+    })
+
+    test(' should retain empty string value for alt attribute', () => {
+       const json = expectedValue['RT-268'].json;
+       const html = toRedactor(json);
+       expect(html).toBe(expectedValue['RT-268'].html);
     })
 })
 
