@@ -1,9 +1,7 @@
 import { toRedactor } from "../src/toRedactor"
-import isEqual from "lodash.isequal"
-
 import expectedValue from "./expectedJson"
 import { imageAssetData } from "./testingData"
-import exp from "constants"
+
 
 describe("Testing json to html conversion", () => {
     it("heading conversion", () => {
