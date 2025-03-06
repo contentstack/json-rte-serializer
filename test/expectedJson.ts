@@ -2204,6 +2204,36 @@ export default {
 
         ]    
         
+    },
+    "RT-268":{
+        "html": `<img alt="" src="image_url.jpeg" width="100" style="width: 100; height: auto;" />`,
+        "json": 
+            {
+                "id": "a4794fb7214745a2a47fc24104b762f9",
+                "type": "docs",
+                "children": [
+                    {
+                        "type": "img",
+                        "attrs": {
+                            "url": "image_url.jpeg",
+                            "redactor-attributes": {
+                                "alt": "",
+                                "src": "image_url.jpeg",
+                                "width": "100"
+                            },
+                            "width": "100"
+                        },
+                        "uid": "18ff239605014dcaaa23c705caf99403",
+                        "children": [
+                            {
+                                "text": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+            
+        
     }
      
 }

@@ -506,11 +506,15 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         delete attrsJson['url']
       }
       delete attrsJson['redactor-attributes']
-      Object.entries(attrsJson).forEach((key) => {
-        if (forbiddenAttrChars.some(char => key[0].includes(char))) {
+      Object.entries(attrsJson).forEach((item) => {
+        if (forbiddenAttrChars.some(char => item[0].includes(char))) {
           return; 
         }
-        return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${replaceHtmlEntities(key[1])}" `) : '') : ''
+        if((jsonValue['type'] === 'img' || (jsonValue['type'] === 'reference') && jsonValue.attrs['display-type'] === 'display' ) && item[0] === 'alt'){
+          attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `
+          return;
+        }
+        return item[1] ? (item[1] !== '' ? (attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `) : '') : ''
       })
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     }
