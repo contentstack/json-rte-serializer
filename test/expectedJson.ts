@@ -2206,8 +2206,13 @@ export default {
         
     },
     "RT-268":{
-        "html": `<img alt="" src="image_url.jpeg" width="100" style="width: 100; height: auto;" />`,
-        "json": 
+        "html": [
+            `<img alt="" src="image_url.jpeg" width="100" style="width: 100; height: auto;" />`,
+            `<figure style="margin: 0"><img src="https://stag-images.csnonprod.com/v3/assets/blt3381770ff6804fa1/blt8c34458f407b3862/6572c368e7a0d4196d105010/compass-logo-v2-final.png" class="embedded-asset" content-type-uid="sys_assets" type="asset" alt="" asset-alt="compass-logo-v2-final.png" style="width: auto" data-sys-asset-filelink="https://stag-images.csnonprod.com/v3/assets/blt3381770ff6804fa1/blt8c34458f407b3862/6572c368e7a0d4196d105010/compass-logo-v2-final.png" data-sys-asset-uid="blt8c34458f407b3862" data-sys-asset-filename="compass-logo-v2-final.png" data-sys-asset-contenttype="image/png" data-sys-asset-alt="compass-logo-v2-final.png" sys-style-type="display"/></figure>`,
+            `<p dir="">This is for testing purpose</p>`,
+            `<img position="left" alt="" width="100" dirty="true" dir="" max-width="100" height="150" src="https://images.contentstack.io/v3/assets/blta29a98d37041ffc4/blt0f2e045a5f4ae8bd/646df9c6b8153a80eb810a6e/tony-litvyak-PzZQFFeRt54-unsplash.jpg" /><p dir="">This is for testing purpose</p>`
+        ],
+        "json": [
             {
                 "id": "a4794fb7214745a2a47fc24104b762f9",
                 "type": "docs",
@@ -2231,9 +2236,116 @@ export default {
                         ]
                     }
                 ]
+            },
+            {
+                "uid": "a59f9108e99747d4b3358d9e22b7c685",
+                "type": "doc",
+                "attrs": {
+                    "dirty": true
+                },
+                "children": [
+                    {
+                        "uid": "a41aede53efe46018e00de52b6d0970e",
+                        "type": "reference",
+                        "attrs": {
+                            "display-type": "display",
+                            "asset-uid": "blt8c34458f407b3862",
+                            "content-type-uid": "sys_assets",
+                            "asset-link": "https://stag-images.csnonprod.com/v3/assets/blt3381770ff6804fa1/blt8c34458f407b3862/6572c368e7a0d4196d105010/compass-logo-v2-final.png",
+                            "asset-name": "compass-logo-v2-final.png",
+                            "asset-type": "image/png",
+                            "type": "asset",
+                            "class-name": "embedded-asset",
+                            "alt": "",
+                            "asset-alt": "compass-logo-v2-final.png",
+                            "inline": false
+                        },
+                        "children": [
+                            {
+                                "text": ""
+                            }
+                        ]
+                    }
+                ],
+                "_version": 2
+            },
+            {
+                "uid": "a59f9108e99747d4b3358d9e22b7c685",
+                "type": "doc",
+                "attrs": {
+                    "dirty": true
+                },
+                "children": [
+                    {
+                        "uid": "8e7309d3c617401898f45c1c3ae62f1e",
+                        "type": "p",
+                        "attrs": {
+                            "style": {},
+                            "redactor-attributes": {},
+                            "dir": ""
+                        },
+                        "children": [
+                            {
+                                "text": "This is for testing purpose"
+                            }
+                        ]
+                    }
+                ],
+                "_version": 2
+            },
+            {
+                "uid": "a59f9108e99747d4b3358d9e22b7c685",
+                "type": "doc",
+                "attrs": {
+                    "dirty": true
+                },
+                "children": [
+                    {
+                        "uid": "e22e5bcaa65b41beb3cc48a8d8cf175c",
+                        "type": "img",
+                        "attrs": {
+                            "url": "https://images.contentstack.io/v3/assets/blta29a98d37041ffc4/blt0f2e045a5f4ae8bd/646df9c6b8153a80eb810a6e/tony-litvyak-PzZQFFeRt54-unsplash.jpg",
+                            "width": 100,
+                            "dirty": true,
+                            "style": {
+                                "text-align": "left",
+                                "width": "100px",
+                                "max-width": "100px",
+                                "float": "left"
+                            },
+                            "redactor-attributes": {
+                                "position": "left",
+                                "alt": ""
+                            },
+                            "dir": "",
+                            "alt": "",
+                            "max-width": 100,
+                            "height": 150
+                        },
+                        "children": [
+                            {
+                                "text": ""
+                            }
+                        ]
+                    },
+                    {
+                        "uid": "8e7309d3c617401898f45c1c3ae62f1e",
+                        "type": "p",
+                        "attrs": {
+                            "style": {},
+                            "redactor-attributes": {},
+                            "dir": ""
+                        },
+                        "children": [
+                            {
+                                "text": "This is for testing purpose"
+                            }
+                        ]
+                    }
+                ],
+                "_version": 2
             }
-            
-        
+        ]
     }
      
 }

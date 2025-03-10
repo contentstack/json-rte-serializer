@@ -162,6 +162,12 @@ On the other hand, the `customTextWrapper` parser function provides the followin
 -   `value`: The value passed against the child element
 
 
+You can pass an object to `allowedEmptyAttributes` to retain empty attribute values for specific element types during HTML conversion.
+
+**Note:**  
+By default, if nothing is passed to `allowedEmptyAttributes`, we retain the `alt` attribute for `<img>` and `reference` (asset) element types, even when its value is empty, during HTML conversion.
+
+
 You can use the following customized JSON RTE Serializer code to convert your JSON RTE field data into HTML format.
 
 ```javascript
@@ -216,6 +222,10 @@ const htmlValue = jsonToHtml(
                 return `<color data-color="${value}">${child}</color>`;
             },
         },
+        allowedEmptyAttributes : {
+             "p": ["dir"],
+             "img" : ["width"]
+        }
     }
 );
 

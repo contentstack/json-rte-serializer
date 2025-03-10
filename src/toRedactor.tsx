@@ -1,6 +1,6 @@
 import kebbab from 'lodash.kebabcase'
 import isEmpty from 'lodash.isempty'
-import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
+import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags, IJsonToHtmlAllowedEmptyAttributes} from './types'
 import isPlainObject from 'lodash.isplainobject'
 import {replaceHtmlEntities, forbiddenAttrChars } from './utils'
 
@@ -213,10 +213,27 @@ const TEXT_WRAPPERS: IJsonToHtmlTextTags = {
     return `<span data-type='inlineCode'>${child}</span>`
   },
 }
+const ALLOWED_EMPTY_ATTRIBUTES: IJsonToHtmlAllowedEmptyAttributes = {
+  img: ['alt'],
+  reference: ['alt']
+}
+
 export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string => {
   //TODO: optimize assign once per function call
   if(options?.customTextWrapper && !isEmpty(options.customTextWrapper)){
     Object.assign(TEXT_WRAPPERS,options.customTextWrapper)
+  }
+  if (options?.allowedEmptyAttributes && !isEmpty(options.allowedEmptyAttributes)) {
+    Object.keys(options.allowedEmptyAttributes).forEach(key => {
+      if (key === 'img' || key === 'reference') {
+        ALLOWED_EMPTY_ATTRIBUTES[key] = [
+          'alt',
+          ...(options.allowedEmptyAttributes?.[key] || [])
+        ];
+      } else {
+        ALLOWED_EMPTY_ATTRIBUTES[key] = options.allowedEmptyAttributes?.[key] ?? [];
+      }
+    });
   }
   if (jsonValue.hasOwnProperty('text')) {
     let text = jsonValue['text'].replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -510,12 +527,20 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         if (forbiddenAttrChars.some(char => item[0].includes(char))) {
           return; 
         }
-        if((jsonValue['type'] === 'img' || (jsonValue['type'] === 'reference') && jsonValue.attrs['display-type'] === 'display' ) && item[0] === 'alt'){
-          attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `
-          return;
-        }
+        if (ALLOWED_EMPTY_ATTRIBUTES.hasOwnProperty(jsonValue['type'])) {
+          if (ALLOWED_EMPTY_ATTRIBUTES[jsonValue['type']].includes(item[0])) {
+            // Check for 'display-type' attribute for reference type, as refernce is used for entries and assets
+            if (jsonValue['type'] === 'reference' && jsonValue.attrs['display-type'] === 'display') {
+              attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
+              return;
+            }
+            attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
+            return;        
+          }
+        }       
         return item[1] ? (item[1] !== '' ? (attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `) : '') : ''
       })
+      
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     }
     if (jsonValue['type'] === 'table') {
