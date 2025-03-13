@@ -227,7 +227,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
     Object.keys(options.allowedEmptyAttributes).forEach(key => {
       if (key === 'img' || key === 'reference') {
         ALLOWED_EMPTY_ATTRIBUTES[key] = [
-          'alt',
+          ...ALLOWED_EMPTY_ATTRIBUTES[key],
           ...(options.allowedEmptyAttributes?.[key] || [])
         ];
       } else {
@@ -523,24 +523,21 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         delete attrsJson['url']
       }
       delete attrsJson['redactor-attributes']
+
       Object.entries(attrsJson).forEach((item) => {
         if (forbiddenAttrChars.some(char => item[0].includes(char))) {
           return; 
         }
-        if (ALLOWED_EMPTY_ATTRIBUTES.hasOwnProperty(jsonValue['type'])) {
-          if (ALLOWED_EMPTY_ATTRIBUTES[jsonValue['type']].includes(item[0])) {
-            // Check for 'display-type' attribute for reference type, as refernce is used for entries and assets
-            if (jsonValue['type'] === 'reference' && jsonValue.attrs['display-type'] === 'display') {
+
+        if (ALLOWED_EMPTY_ATTRIBUTES.hasOwnProperty(jsonValue['type']) && ALLOWED_EMPTY_ATTRIBUTES[jsonValue['type']].includes(item[0])) {
+            if ( jsonValue['type'] !== 'reference' || (jsonValue['type'] === 'reference' && jsonValue.attrs['display-type'] === 'display')) {
               attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
               return;
-            }
-            attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
-            return;        
-          }
+            }     
         }       
         return item[1] ? (item[1] !== '' ? (attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `) : '') : ''
       })
-      
+
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     }
     if (jsonValue['type'] === 'table') {
