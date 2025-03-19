@@ -525,11 +525,9 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
           return; 
         }
 
-        if (ALLOWED_EMPTY_ATTRIBUTES.hasOwnProperty(jsonValue['type']) && ALLOWED_EMPTY_ATTRIBUTES[jsonValue['type']].includes(item[0])) {
-            if ( jsonValue['type'] !== 'reference' || (jsonValue['type'] === 'reference' && jsonValue.attrs['display-type'] === 'display')) {
-              attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
-              return;
-            }     
+        if (ALLOWED_EMPTY_ATTRIBUTES.hasOwnProperty(jsonValue['type']) && ALLOWED_EMPTY_ATTRIBUTES[jsonValue['type']].includes(item[0])) {  
+          attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
+          return;
         }       
         return item[1] ? (item[1] !== '' ? (attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `) : '') : ''
       })
