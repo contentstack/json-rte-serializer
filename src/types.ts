@@ -14,10 +14,12 @@ export interface IHtmlToJsonElementTags { [key: string]: (el:HTMLElement) => IHt
 
 export interface IJsonToHtmlTextTags { [key: string]: (child:any, value:any) => string }
 export interface IJsonToHtmlElementTags { [key: string]: (attrs:string,child:string,jsonBlock:IAnyObject,extraProps?:object) => string }
+export interface IJsonToHtmlAllowedEmptyAttributes { [key: string]: string[]; }
 export interface IJsonToMarkdownElementTags{[key: string]: (attrsJson:IAnyObject,child:string) => string}
 export interface IJsonToMarkdownTextTags{ [key: string]: (child:any, value:any) => string }
 export interface IJsonToHtmlOptions {
     customElementTypes?: IJsonToHtmlElementTags,
     customTextWrapper?: IJsonToHtmlTextTags,
     allowNonStandardTypes?: boolean,
+    allowedEmptyAttributes?: IJsonToHtmlAllowedEmptyAttributes,
 }
