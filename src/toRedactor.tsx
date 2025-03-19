@@ -105,7 +105,7 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     return `<div${attrs}>${child}</div>`
   },
   hr: (attrs: any, child: any) => {
-    return `<div data-type='hr' style='border-top: 3px solid #bbb'></div>`
+    return `<hr>`
   },
   span: (attrs: any, child: any) => {
     return `<span${attrs}>${child}</span>`
