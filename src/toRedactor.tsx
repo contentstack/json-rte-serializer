@@ -225,14 +225,10 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
   }
   if (options?.allowedEmptyAttributes && !isEmpty(options.allowedEmptyAttributes)) {
     Object.keys(options.allowedEmptyAttributes).forEach(key => {
-      if (key === 'img' || key === 'reference') {
-        ALLOWED_EMPTY_ATTRIBUTES[key] = [
-          ...ALLOWED_EMPTY_ATTRIBUTES[key],
-          ...(options.allowedEmptyAttributes?.[key] || [])
-        ];
-      } else {
-        ALLOWED_EMPTY_ATTRIBUTES[key] = options.allowedEmptyAttributes?.[key] ?? [];
-      }
+      ALLOWED_EMPTY_ATTRIBUTES[key] = [
+        ...(ALLOWED_EMPTY_ATTRIBUTES[key] ?? []),
+        ...(options.allowedEmptyAttributes?.[key] || [])
+      ];
     });
   }
   if (jsonValue.hasOwnProperty('text')) {
