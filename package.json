@@ -39,7 +39,7 @@
     "@types/lodash.kebabcase": "^4.1.9",
     "@types/omit-deep-lodash": "^1.1.1",
     "@types/uuid": "^8.3.0",
-    "esbuild": "0.19.11",
+    "esbuild": "0.25.0",
     "jest": "^27.5.1",
     "jest-html-reporter": "^3.7.0",
     "jsdom": "^16.6.0",
