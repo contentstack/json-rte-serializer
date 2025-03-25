@@ -66,7 +66,7 @@ describe("Testing html to json conversion", () => {
         let htmlDoc = dom.window.document.querySelector('body')
         let jsonValue = fromRedactor(htmlDoc)
         let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(docWrapper(expectedValue[7].json), "uid"))
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(docWrapper(expectedValue[7].json), "uid"))
     })
 
     it("Embedded entry as link", () => {

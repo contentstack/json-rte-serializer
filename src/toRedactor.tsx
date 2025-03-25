@@ -1,6 +1,6 @@
 import kebbab from 'lodash.kebabcase'
 import isEmpty from 'lodash.isempty'
-import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags} from './types'
+import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags, IJsonToHtmlAllowedEmptyAttributes} from './types'
 import isPlainObject from 'lodash.isplainobject'
 import {replaceHtmlEntities, forbiddenAttrChars } from './utils'
 
@@ -105,7 +105,7 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     return `<div${attrs}>${child}</div>`
   },
   hr: (attrs: any, child: any) => {
-    return `<div data-type='hr' style='border-top: 3px solid #bbb'></div>`
+    return `<hr>`
   },
   span: (attrs: any, child: any) => {
     return `<span${attrs}>${child}</span>`
@@ -213,10 +213,23 @@ const TEXT_WRAPPERS: IJsonToHtmlTextTags = {
     return `<span data-type='inlineCode'>${child}</span>`
   },
 }
+const ALLOWED_EMPTY_ATTRIBUTES: IJsonToHtmlAllowedEmptyAttributes = {
+  img: ['alt'],
+  reference: ['alt']
+}
+
 export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string => {
   //TODO: optimize assign once per function call
   if(options?.customTextWrapper && !isEmpty(options.customTextWrapper)){
     Object.assign(TEXT_WRAPPERS,options.customTextWrapper)
+  }
+  if (options?.allowedEmptyAttributes && !isEmpty(options.allowedEmptyAttributes)) {
+    Object.keys(options.allowedEmptyAttributes).forEach(key => {
+      ALLOWED_EMPTY_ATTRIBUTES[key] = [
+        ...(ALLOWED_EMPTY_ATTRIBUTES[key] ?? []),
+        ...(options.allowedEmptyAttributes?.[key] || [])
+      ];
+    });
   }
   if (jsonValue.hasOwnProperty('text')) {
     let text = jsonValue['text'].replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -506,12 +519,19 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
         delete attrsJson['url']
       }
       delete attrsJson['redactor-attributes']
-      Object.entries(attrsJson).forEach((key) => {
-        if (forbiddenAttrChars.some(char => key[0].includes(char))) {
+
+      Object.entries(attrsJson).forEach((item) => {
+        if (forbiddenAttrChars.some(char => item[0].includes(char))) {
           return; 
         }
-        return key[1] ? (key[1] !== '' ? (attrs += `${key[0]}="${replaceHtmlEntities(key[1])}" `) : '') : ''
+
+        if (ALLOWED_EMPTY_ATTRIBUTES.hasOwnProperty(jsonValue['type']) && ALLOWED_EMPTY_ATTRIBUTES[jsonValue['type']].includes(item[0])) {  
+          attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `;
+          return;
+        }       
+        return item[1] ? (item[1] !== '' ? (attrs += `${item[0]}="${replaceHtmlEntities(item[1])}" `) : '') : ''
       })
+
       attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
     }
     if (jsonValue['type'] === 'table') {
