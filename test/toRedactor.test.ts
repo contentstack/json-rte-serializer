@@ -1,8 +1,7 @@
 import { toRedactor } from "../src/toRedactor"
-import isEqual from "lodash.isequal"
-
 import expectedValue from "./expectedJson"
 import { imageAssetData } from "./testingData"
+
 
 describe("Testing json to html conversion", () => {
     it("heading conversion", () => {
@@ -292,5 +291,30 @@ describe("Testing json to html conversion", () => {
     const html = toRedactor(json);
     expect(html).toBe(`<img alt="Infographic showing 3 results from Forrester study of Contentstack CMS: $3M increase in profit, $507.3K productivity savings and $2.0M savings due to reduced time to publish." src="https://images.contentstack.io/v3/assets/blt7359e2a55efae483/bltea2a11144a2c68b5/63c08b7f438f80612c397994/CS_Infographics_ForresterReport_Data_3_1200x628_(1).png" position="center" width="641" style="width: 641; height: auto;" />`)
     })
+
+    describe("RT-268", ()=>{
+      it(' should retain empty string value for alt attribute for img type', () => {
+        const json = expectedValue['RT-268'].json[0];
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue['RT-268'].html[0]);
+     })
+     it(' should retain empty string value for alt attribute for asset reference', () => {
+      const json = expectedValue['RT-268'].json[1];
+      const html = toRedactor(json);
+      expect(html).toBe(expectedValue['RT-268'].html[1]);
+    })
+    it(' should retain empty string value for attributes passed through "allowedEmptyAttributes" prop', () => {
+      const json = expectedValue['RT-268'].json[2];
+      const html = toRedactor(json, {allowedEmptyAttributes: { p: ["dir"]} });
+      expect(html).toBe(expectedValue['RT-268'].html[2]);
+    })
+    it(' should retain empty string value for attributes passed through "allowedEmptyAttributes" prop, where alt is empty too (default empty)', () => {
+      const json = expectedValue['RT-268'].json[3];
+      const html = toRedactor(json, {allowedEmptyAttributes: { "img": ['dir'],"p": ["dir"]} });
+      expect(html).toBe(expectedValue['RT-268'].html[3]);
+    })
+    
+    })
+
 })
 
