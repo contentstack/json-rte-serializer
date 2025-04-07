@@ -234,7 +234,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
   if (jsonValue.hasOwnProperty('text')) {
     let text = jsonValue['text'].replace(/</g, '&lt;').replace(/>/g, '&gt;')
     if (jsonValue['break']) {
-      text += `<br/>`
+      text = text.replace(/\n/g, '<br/>')
     }
     if(jsonValue['classname'] || jsonValue['id']){
       if(jsonValue['classname'] && jsonValue['id']){
