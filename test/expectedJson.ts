@@ -1870,8 +1870,7 @@ export default {
     expectedJson: {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"table","attrs":{"style":{},"redactor-attributes":{"border":"1"},"rows":5,"cols":4,"colWidths":[250,250,250,250],"disabledCols":[1,2,3]},"uid":"uid","children":[{"type":"thead","attrs":{},"uid":"uid","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"th","attrs":{},"uid":"uid","children":[{"text":"Header 1"}]},{"type":"th","attrs":{"colSpan":3,"style":{},"redactor-attributes":{"colspan":"3"}},"uid":"uid","children":[{"text":"Header 2"}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]},{"type":"th","attrs":{"void":true},"children":[{"text":""}]},{"type":"th","attrs":{},"uid":"uid","children":[{"text":"Header 3"}]}]}]},{"type":"tbody","attrs":{},"uid":"uid","children":[{"type":"trgrp","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"rowSpan":2,"style":{},"redactor-attributes":{"rowspan":"2"}},"uid":"uid","children":[{"text":"Row 1, Col 1"}]},{"type":"td","attrs":{"colSpan":2,"style":{},"redactor-attributes":{"colspan":"2"}},"uid":"uid","children":[{"text":"Row 1, Col 2"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 1, Col 3"}]},{"type":"td","attrs":{"rowSpan":2,"style":{},"redactor-attributes":{"rowspan":"2"}},"uid":"uid","children":[{"text":"Row 1, Col 4"}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 2, Col 2"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 2, Col 3"}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 2, Col 4"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]}]}]},{"type":"trgrp","children":[{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 3, Col 1"}]},{"type":"td","attrs":{"rowSpan":2,"colSpan":3,"style":{},"redactor-attributes":{"colspan":"3","rowspan":"2"}},"uid":"uid","children":[{"text":"Row 3, Col 2"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 3, Col 5"}]}]},{"type":"tr","attrs":{},"uid":"uid","children":[{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 4, Col 1"}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{"void":true},"children":[{"text":""}]},{"type":"td","attrs":{},"uid":"uid","children":[{"text":"Row 4, Col 5"}]}]}]}]}]}]}
     },
     'fix_EB-745' : {
-        html: `<ul><li dir="ltr">Vehicle
-<br/>This is test</li></ul>`,
+        html: `<ul><li dir="ltr">Vehicle<br/>This is test</li></ul>`,
         expectedJson: {
             "uid": "uid",
             "type": "doc",
@@ -2340,6 +2339,76 @@ export default {
                         "children": [
                             {
                                 "text": "This is for testing purpose"
+                            }
+                        ]
+                    }
+                ],
+                "_version": 2
+            }
+        ]
+    },
+    "RT-483":{
+        "html" : [
+            `<p dir="ltr">HI<br/><br/>Hi shift enter x2</p>`,
+            `<p dir="ltr"><br/>HI<br/><br/>Hi <br/> shift enter x2</p>`
+        ],
+        "json" : [
+            {
+                "uid": "a59f9108e99747d4b3358d9e22b7c685",
+                "type": "doc",
+                "attrs": {
+                    "dirty": true
+                },
+                "children": [
+                    {
+                        "type": "p",
+                        "uid": "bedef68ac71c4f41bdee935e78fb7c31",
+                        "attrs": {
+                            "style": {},
+                            "redactor-attributes": {},
+                            "dir": "ltr"
+                        },
+                        "children": [
+                            {
+                                "text": "HI"
+                            },
+                            {
+                                "text": "\n\n",
+                                "break": true
+                            },
+                            {
+                                "text": "Hi shift enter x2"
+                            }
+                        ]
+                    }
+                ],
+                "_version": 2
+            },
+            {
+                "uid": "a59f9108e99747d4b3358d9e22b7c685",
+                "type": "doc",
+                "attrs": {
+                    "dirty": true
+                },
+                "children": [
+                    {
+                        "type": "p",
+                        "uid": "bedef68ac71c4f41bdee935e78fb7c31",
+                        "attrs": {
+                            "style": {},
+                            "redactor-attributes": {},
+                            "dir": "ltr"
+                        },
+                        "children": [
+                            {
+                                "text": "\nHI"
+                            },
+                            {
+                                "text": "\n\n",
+                                "break": true
+                            },
+                            {
+                                "text": "Hi \n shift enter x2"
                             }
                         ]
                     }
