@@ -14,32 +14,32 @@ const ELEMENT_TYPES: IJsonToMarkdownElementTags = {
   'h1': (attrs: any, child: string) => {
     return `
 
-#${child}#`
+# ${child} #`
   },
   'h2': (attrs: any, child: any) => {
     return `
 
-##${child}##`
+## ${child} ##`
   },
   'h3': (attrs: any, child: any) => {
     return `
 
-###${child}###`
+### ${child} ###`
   },
   'h4': (attrs: any, child: any) => {
     return `
 
-####${child}####`
+#### ${child} ####`
   },
   'h5': (attrs: any, child: any) => {
     return `
     
-#####${child}#####`
+##### ${child} #####`
   },
   'h6': (attrs: any, child: any) => {
     return `
     
-######${child}######`
+###### ${child} ######`
   },
   img: (attrsJson: any, child: any) => {
     if(attrsJson) {
