@@ -316,5 +316,18 @@ describe("Testing json to html conversion", () => {
     
     })
 
+    describe("RT-483",()=>{
+      it("should enter br tags equivalent to no.of times 'shift+enter' is pressed",()=>{
+        const json = expectedValue['RT-483'].json[0];
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue['RT-483'].html[0]);
+      })
+      it("should replace /n withing other texts to br tags",()=>{
+        const json = expectedValue['RT-483'].json[1];
+        const html = toRedactor(json);
+        expect(html).toBe(expectedValue['RT-483'].html[1]);
+      })
+    })
+
 })
 
