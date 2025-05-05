@@ -1,4 +1,7 @@
 fileignoreconfig:
+- filename: .github/workflows/secrets-scan.yml
+  ignore_detectors:
+    - filecontent
 - filename: README.md
   checksum: 4bffa07e1e88d50a311464c9f90ff92bcba7fe434be4d9374bcd49bf76b1e6a8
 - filename: coverage/lcov-report/base.css
