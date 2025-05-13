@@ -333,9 +333,7 @@ describe("Testing html to json conversion", () => {
         const json =expectedValue["RT-501"].jsonWithRedactorAttributes[0];
 
         let jsonValue = htmlToJson(html)
-        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(json, "uid"))
-
-        expect(testResult).toBe(true)
+        expect(omitdeep(jsonValue, "uid")).toStrictEqual(omitdeep(json, "uid"))
     })
 })
 
