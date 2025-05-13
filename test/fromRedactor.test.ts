@@ -328,6 +328,15 @@ describe("Testing html to json conversion", () => {
         expect(json).toStrictEqual({"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello","attrs":{"style":{}},"bold":true},{"text":" Hii"}]}]})
     
     })
+    test("should add title attr to anchor tag", () => {
+        const html = expectedValue["RT-501"].html[0];
+        const json =expectedValue["RT-501"].jsonWithRedactorAttributes[0];
+
+        let jsonValue = htmlToJson(html)
+        let testResult = isEqual(omitdeep(jsonValue, "uid"), omitdeep(json, "uid"))
+
+        expect(testResult).toBe(true)
+    })
 })
 
 

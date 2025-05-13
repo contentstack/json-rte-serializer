@@ -329,5 +329,16 @@ describe("Testing json to html conversion", () => {
       })
     })
 
+    describe("RT-501",()=>{
+      it("should add title attr to anchor tag",()=>{
+        const html = expectedValue["RT-501"].html[0];
+        const json =expectedValue["RT-501"].json[0];
+
+        let htmlValue = toRedactor(json)
+        expect(htmlValue).toBe(html);
+      })
+      
+    })
+
 })
 
