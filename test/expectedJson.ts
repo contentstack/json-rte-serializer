@@ -2416,6 +2416,77 @@ export default {
                 "_version": 2
             }
         ]
+    },
+    "RT-501":{
+        "html" : [
+            `<p><a href="google.in" target="_blank" title="google">ABC</a></p>`
+        ],
+        "json" : [
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "bd63f151aa8d402cae046c8dae440134",
+                "children": [
+                    {
+                        "type": "p",
+                        "uid": "d2949ce0e0974ce783543edd37410c71",
+                        "attrs": {},
+                        "children": [
+                            {
+                                "uid": "7a2fd904668447ca8720428cbd2b0acc",
+                                "type": "a",
+                                "attrs": {
+                                    "url": "google.in",
+                                    "target": "_blank",
+                                    "title": "google"
+                                },
+                                "children": [
+                                    {
+                                        "text": "ABC"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+            }
+        ],
+        "jsonWithRedactorAttributes": [
+            {
+                "type": "doc",
+                "attrs": {},
+                "uid": "bd63f151aa8d402cae046c8dae440134",
+                "children": [
+                  {
+                    "type": "p",
+                    "uid": "d2949ce0e0974ce783543edd37410c71",
+                    "attrs": {},
+                    "children": [
+                      {
+                        "uid": "7a2fd904668447ca8720428cbd2b0acc",
+                        "type": "a",
+                        "attrs": {
+                          "url": "google.in",
+                          "target": "_blank",
+                          "title": "google",
+                          "style": {},
+                          "redactor-attributes": {
+                            "href": "google.in",
+                            "target": "_blank",
+                            "title": "google"
+                          }
+                        },
+                        "children": [
+                          {
+                            "text": "ABC"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+        ]
     }
      
 }

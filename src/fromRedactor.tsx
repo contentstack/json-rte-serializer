@@ -20,11 +20,15 @@ export const ELEMENT_TAGS: IHtmlToJsonElementTags = {
     const attrs: Record<string, string> = {}
     const target = el.getAttribute('target');
     const href = el.getAttribute('href');
+    const title = el.getAttribute('title');
 
     attrs.url = href ? href : '#';
     
     if(target && target !== '') {
       attrs.target = target; 
+    }
+    if(title && title !== '') {
+      attrs.title = title; 
     }
 
     return {
