@@ -24,3 +24,5 @@ fileignoreconfig:
   checksum: 3d014702628ad538065c970d988a695af003c61663596a8f6b9267b4e57ef6ea
 - filename: test/expectedJson.json
   checksum: 9979f84be3e5aa27f24381a0c49e0e6696388d19615c4f3b09082780968236ee
+- filename: README.md
+  checksum: cccb3cd93c499acc87593eca5cc032e256c11cf530d4de67ece09e57fc430215

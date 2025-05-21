@@ -2,7 +2,8 @@ export interface IAnyObject {[key:string]:any}
 export interface IHtmlToJsonOptions {
     allowNonStandardTags?: boolean,
     customElementTags?: IHtmlToJsonElementTags,
-    customTextTags?: IHtmlToJsonTextTags
+    customTextTags?: IHtmlToJsonTextTags,
+    addNbspForEmptyBlocks?: boolean
 }
 export interface IHtmlToJsonElementTagsAttributes {
     type:string,
@@ -22,4 +23,5 @@ export interface IJsonToHtmlOptions {
     customTextWrapper?: IJsonToHtmlTextTags,
     allowNonStandardTypes?: boolean,
     allowedEmptyAttributes?: IJsonToHtmlAllowedEmptyAttributes,
+    addNbspForEmptyBlocks?: boolean
 }
