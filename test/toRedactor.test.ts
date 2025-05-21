@@ -342,3 +342,9 @@ describe("Testing json to html conversion", () => {
 
 })
 
+test("should add nbsp for empty blocks", () => {
+  const json = {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hi"}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":""}]},{"type":"p","attrs":{},"uid":"uid","children":[{"text":"Hello"}]}]};
+  const html = toRedactor(json, {addNbspForEmptyBlocks: true});
+  expect(html).toBe(`<p>Hi</p><p>&nbsp;</p><p>&nbsp;</p><p>Hello</p>`);
+});
+
