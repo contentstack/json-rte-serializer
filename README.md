@@ -161,12 +161,27 @@ On the other hand, the `customTextWrapper` parser function provides the followin
 -   `child`: The HTML string that specifies the child element
 -   `value`: The value passed against the child element
 
+___
 
-You can pass an object to `allowedEmptyAttributes` to retain empty attribute values for specific element types during HTML conversion.
+ `allowedEmptyAttributes`
 
-**Note:**  
-By default, if nothing is passed to `allowedEmptyAttributes`, we retain the `alt` attribute for `<img>` and `reference` (asset) element types, even when its value is empty, during HTML conversion.
+- Type: `object`  
+- Default: `{ img: ['alt'], reference: ['alt'] }`
 
+Specifies which empty attributes should be retained for specific HTML elements during the jsonToHtml conversion.
+By default, the converter preserves the alt attribute for <img> and reference (asset) elements, even when their values are empty. 
+This is particularly useful for ensuring semantic correctness and accessibility.
+
+Use this option when you want to retain specific attributes with empty values during the conversion process. 
+
+___
+
+ `addNbspForEmptyBlocks`
+
+- Type: `boolean`  
+- Default:`false`
+
+When set to true, this option adds a non-breaking space (nbsp;) to empty blocks during the jsonToHtml conversion. This helps maintain the visual structure of the HTML output—especially useful for preserving spacing in editable content or content editors.
 
 You can use the following customized JSON RTE Serializer code to convert your JSON RTE field data into HTML format.
 
@@ -197,6 +212,16 @@ const jsonValue = {
             ],
         },
         {
+            "type": "p",
+            "uid": "28c837c127504d3c85b9cb6d7099cb0b",
+            "attrs": {},
+            "children": [
+                {
+                    "text": ""
+                }
+            ]
+        },
+        {
             type: "p",
             attrs: {},
             uid: "54a7340da87846dda28aaf622069559a",
@@ -225,7 +250,8 @@ const htmlValue = jsonToHtml(
         allowedEmptyAttributes : {
              "p": ["dir"],
              "img" : ["width"]
-        }
+        },
+        addNbspForEmptyBlocks : true
     }
 );
 
