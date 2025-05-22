@@ -206,6 +206,9 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     if (el.textContent === '\n') {
       return null
     }
+    if (options?.addNbspForEmptyBlocks && el.textContent.trim() === '') {
+      return { text: '' }
+    }
     if (el.parentNode.nodeName === 'SPAN') {
       let attrs = { style: {} }
       const metadata = {}
@@ -297,6 +300,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
   children = children.filter((child: any) => child !== null)
   children = traverseChildAndWarpChild(children, options?.allowNonStandardTags)
+
   if (children.length === 0) {
     children = [{ text: '' }]
   }
