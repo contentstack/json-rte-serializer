@@ -218,8 +218,13 @@ const ALLOWED_EMPTY_ATTRIBUTES: IJsonToHtmlAllowedEmptyAttributes = {
   reference: ['alt']
 }
 
+let ADD_NBSP_FOR_EMPTY_BLOCKS : boolean = false
+
 export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string => {
   //TODO: optimize assign once per function call
+  if(options?.addNbspForEmptyBlocks){
+    ADD_NBSP_FOR_EMPTY_BLOCKS = options?.addNbspForEmptyBlocks
+  }
   if(options?.customTextWrapper && !isEmpty(options.customTextWrapper)){
     Object.assign(TEXT_WRAPPERS,options.customTextWrapper)
   }
@@ -590,7 +595,12 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
  
     attrs = (attrs.trim() ? ' ' : '') + attrs.trim()
 
-    return ELEMENT_TYPES[orgType || jsonValue['type']](attrs, children,jsonValue, figureStyles)
+     return ELEMENT_TYPES[orgType || jsonValue['type']](
+       attrs, 
+       ADD_NBSP_FOR_EMPTY_BLOCKS && !children ? '&nbsp;' : children,
+       jsonValue, 
+       figureStyles
+     )
   }
 
   return children
