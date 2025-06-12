@@ -60,7 +60,7 @@ const ELEMENT_TYPES: IJsonToHtmlElementTags = {
     return `<ul${attrs}>${child}</ul>`
   },
   code: (attrs: any, child: any) => {
-    return `<pre${attrs}>${child}</pre>`
+    return `<pre${attrs}>${child.replace(/<br\/?>/g, '\n')}</pre>`
   },
   li: (attrs: any, child: any) => {
     return `<li${attrs}>${child}</li>`
@@ -602,7 +602,6 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
        figureStyles
      )
   }
-
   return children
 }
 
