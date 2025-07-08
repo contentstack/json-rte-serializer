@@ -348,3 +348,8 @@ test("should add nbsp for empty blocks", () => {
   expect(html).toBe(`<p>Hi</p><p>&nbsp;</p><p>&nbsp;</p><p>Hello</p>`);
 });
 
+test("should convert codeblock to proper html, where \n should not be replaced with <br/>",()=>{
+  const json = {"type":"doc","uid":"uid","attrs":{},"children":[{"type":"code","attrs":{},"uid":"uid","children":[{"text":"Hi\nHello"}]}]};
+  const html = toRedactor(json);
+  expect(html).toBe(`<pre>Hi\nHello</pre>`);
+})
