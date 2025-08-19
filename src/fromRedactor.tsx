@@ -7,129 +7,12 @@ import cloneDeep from "lodash/cloneDeep"
 import isUndefined from "lodash/isUndefined"
 
 import { jsx } from './utils/jsx'
+import { ELEMENT_TAGS, TEXT_TAGS, isInline, isVoid, whiteCharPattern } from './constants'
  
 import {IHtmlToJsonElementTags,IHtmlToJsonOptions, IHtmlToJsonTextTags, IAnyObject} from './types'
 
 const generateId = () => v4().split('-').join('')
-const isInline = ['span', 'a', 'inlineCode', 'reference']
-const isVoid = ['img', 'embed']
 
-
-export const ELEMENT_TAGS: IHtmlToJsonElementTags = {
-  A: (el: HTMLElement) => {
-    const attrs: Record<string, string> = {}
-    const target = el.getAttribute('target');
-    const href = el.getAttribute('href');
-    const title = el.getAttribute('title');
-
-    attrs.url = href ? href : '#';
-    
-    if(target && target !== '') {
-      attrs.target = target; 
-    }
-    if(title && title !== '') {
-      attrs.title = title; 
-    }
-
-    return {
-      type: "a",
-      attrs: attrs,
-    };
-  },
-  BLOCKQUOTE: () => ({ type: 'blockquote', attrs: {} }),
-  H1: () => ({ type: 'h1', attrs: {} }),
-  H2: () => ({ type: 'h2', attrs: {} }),
-  H3: () => ({ type: 'h3', attrs: {} }),
-  H4: () => ({ type: 'h4', attrs: {} }),
-  H5: () => ({ type: 'h5', attrs: {} }),
-  H6: () => ({ type: 'h6', attrs: {} }),
-  IMG: (el: HTMLElement) => {
-    let imageUrl = el.getAttribute('src')?.split(".") || ["png"]
-    let imageType = imageUrl[imageUrl?.length - 1]
-    const assetUid = el.getAttribute('asset_uid')
-    if(assetUid){
-
-        const splittedUrl =  el.getAttribute('src')?.split('/')! || [null]
-        const assetName = splittedUrl[splittedUrl?.length - 1]
-        return { type: 'reference', attrs: { "asset-name": assetName,"content-type-uid" : "sys_assets", "asset-link": el.getAttribute('src'), "asset-type": `image/${imageType}`, "display-type": "display", "type": "asset", "asset-uid": assetUid } }
-    }
-    const imageAttrs : any = { type: 'img', attrs: { url: el.getAttribute('src') } }
-    if (el.getAttribute('width')) {
-      imageAttrs.attrs['width'] = el.getAttribute('width')
-    }
-    return imageAttrs
-  },
-  LI: () => ({ type: 'li', attrs: {} }),
-  OL: () => ({ type: 'ol', attrs: {} }),
-  P: () => ({ type: 'p', attrs: {} }),
-  PRE: () => ({ type: 'code', attrs: {} }),
-  UL: () => ({ type: 'ul', attrs: {} }),
-  IFRAME: (el: HTMLElement) => {
-    if(el.getAttribute('data-type') === "social-embeds") {
-      const src = el.getAttribute('src')
-      el.removeAttribute('data-type')
-      el.removeAttribute('src')
-      return { type: 'social-embeds', attrs: { src } }
-    }
-    return { type: 'embed', attrs: { src: el.getAttribute('src') } }
-  },
-  TABLE: (el: HTMLElement) => ({ type: 'table', attrs: {} }),
-  THEAD: (el: HTMLElement) => ({ type: 'thead', attrs: {} }),
-  TBODY: (el: HTMLElement) => ({ type: 'tbody', attrs: {} }),
-  TR: (el: HTMLElement) => ({ type: 'tr', attrs: {} }),
-  TD: (el: HTMLElement) => ({ type: 'td', attrs: { ...spanningAttrs(el) } }),
-  TH: (el: HTMLElement) => ({ type: 'th', attrs: { ...spanningAttrs(el) } }),
-  // FIGURE: (el: HTMLElement) => ({ type: 'reference', attrs: { default: true, "display-type": "display", "type": "asset" } }),
-  
-  FIGURE: (el: HTMLElement) => {
-    if (el.lastChild && el.lastChild.nodeName === 'P') {
-      return { type: 'figure', attrs: {} }
-    }
-    else {
-      return { type: 'img', attrs: {} }
-    }
-
-  },
-  SPAN: (el: HTMLElement) => {
-    return { type: 'span', attrs: {} }
-  },
-  DIV: (el: HTMLElement) => {
-    return { type: 'div', attrs: {} }
-  },
-  VIDEO: (el: HTMLElement) => {
-    const srcArray = Array.from(el.querySelectorAll("source")).map((source) =>
-      source.getAttribute("src")
-    );
-
-    return {
-      type: 'embed',
-      attrs: {
-        src: srcArray.length > 0 ? srcArray[0] : null,
-      },
-    }
-  },
-  STYLE: (el: HTMLElement) => {
-    return { type: 'style', attrs: { "style-text": el.textContent } }
-  },
-  SCRIPT: (el: HTMLElement) => {
-    return { type: 'script', attrs: {} }
-  },
-  HR: () => ({ type: 'hr', attrs: {} }),
-  FIGCAPTION: () => ({ type: 'figcaption', attrs: {} }),
-}
-
-const TEXT_TAGS: IHtmlToJsonTextTags = {
-  CODE: () => ({ code: true }),
-  DEL: () => ({ strikethrough: true }),
-  EM: () => ({ italic: true }),
-  I: () => ({ italic: true }),
-  S: () => ({ strikethrough: true }),
-  STRONG: () => ({ bold: true }),
-  B: () => ({ bold: true }),
-  U: () => ({ underline: true }),
-  SUP: () => ({ superscript: true }),
-  SUB: () => ({ subscript: true })
-}
 const trimChildString = (child: any) => {
   if (typeof child === 'string') {
     return child.trim() !== ''
@@ -201,8 +84,9 @@ const traverseChildAndWarpChild = (children: Array<Object>, allowNonStandardTags
   return children
 }
 
-const whiteCharPattern = /^[\s ]{2,}$/
 export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject | null => {
+  let localElementTags: IHtmlToJsonElementTags = ELEMENT_TAGS;
+  let localTextTags: IHtmlToJsonTextTags = TEXT_TAGS;
   // If node is text node
   if (el.nodeType === 3) {
     if (whiteCharPattern.test(el.textContent)) return null
@@ -293,12 +177,13 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   }
   const { nodeName } = el
   let parent = el
+
   if(el.nodeName === "BODY"){
     if(options?.customElementTags && !isEmpty(options.customElementTags)){
-      Object.assign(ELEMENT_TAGS, options.customElementTags)
+      localElementTags = { ...localElementTags, ...options.customElementTags };
     }
     if(options?.customTextTags && !isEmpty(options.customTextTags)) {
-      Object.assign(TEXT_TAGS, options.customTextTags)
+      localTextTags = { ...localTextTags, ...options.customTextTags };
     }
   }
   let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
@@ -317,7 +202,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     }
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
-  if (options?.allowNonStandardTags && !Object.keys(ELEMENT_TAGS).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
+  if (options?.allowNonStandardTags && !Object.keys(localElementTags).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
     const attributes = (el as HTMLElement).attributes
     const attributeMap = {}
     Array.from(attributes).forEach((attribute) => {
@@ -535,7 +420,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     }
   }
 
-  if (ELEMENT_TAGS[nodeName]) {
+  if (localElementTags[nodeName]) {
     if (el.nodeName === 'P') {
       children = children.map((child: any) => {
         if (typeof child === 'string') {
@@ -553,7 +438,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       return null
     }
 
-    let elementAttrs = ELEMENT_TAGS[nodeName](el)
+    let elementAttrs = localElementTags[nodeName](el)
     const attributes = el.attributes
     if (attributes.length !== 0) {
       const attribute = Array.from(attributes).map(getDomAttributes)
@@ -1014,16 +899,6 @@ export const getNestedValueIfAvailable = (value: string) => {
   }
 };
 
-
-const spanningAttrs = (el: HTMLElement) => {
-  const attrs = {}
-  const rowSpan = parseInt(el.getAttribute('rowspan') ?? '1')
-  const colSpan = parseInt(el.getAttribute('colspan') ?? '1')
-  if (rowSpan > 1) attrs['rowSpan'] = rowSpan
-  if (colSpan > 1) attrs['colSpan'] = colSpan
-
-  return attrs
-}
 const emptyCell = (cellType: string, attrs = {}) => {
   return jsx('element', { type: cellType, attrs: { void: true, ...attrs } }, [{ text: '' }])
 }
