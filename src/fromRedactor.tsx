@@ -85,7 +85,6 @@ const traverseChildAndWarpChild = (children: Array<Object>, allowNonStandardTags
 }
 
 export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject | null => {
-  
   let localElementTags: IHtmlToJsonElementTags = ELEMENT_TAGS;
   let localTextTags: IHtmlToJsonTextTags = TEXT_TAGS;
   
