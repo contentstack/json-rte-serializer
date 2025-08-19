@@ -87,6 +87,14 @@ const traverseChildAndWarpChild = (children: Array<Object>, allowNonStandardTags
 export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject | null => {
   let localElementTags: IHtmlToJsonElementTags = ELEMENT_TAGS;
   let localTextTags: IHtmlToJsonTextTags = TEXT_TAGS;
+  
+  if (options?.customElementTags && !isEmpty(options.customElementTags)){
+    localElementTags = { ...localElementTags, ...options.customElementTags };
+  }
+  
+  if (options?.customTextTags && !isEmpty(options.customTextTags)) {
+    localTextTags = { ...localTextTags, ...options.customTextTags };
+  }
   // If node is text node
   if (el.nodeType === 3) {
     if (whiteCharPattern.test(el.textContent)) return null
@@ -178,14 +186,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
   const { nodeName } = el
   let parent = el
 
-  if(el.nodeName === "BODY"){
-    if(options?.customElementTags && !isEmpty(options.customElementTags)){
-      localElementTags = { ...localElementTags, ...options.customElementTags };
-    }
-    if(options?.customTextTags && !isEmpty(options.customTextTags)) {
-      localTextTags = { ...localTextTags, ...options.customTextTags };
-    }
-  }
+
   let children: any = flatten(Array.from(parent.childNodes).map((child) => fromRedactor(child, options)))
   children = children.filter((child: any) => child !== null)
   children = traverseChildAndWarpChild(children, options?.allowNonStandardTags)
@@ -202,7 +203,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     }
     return jsx('element', { type: "doc", uid: generateId(), attrs: {} }, children)
   }
-  if (options?.allowNonStandardTags && !Object.keys(localElementTags).includes(nodeName) && !Object.keys(TEXT_TAGS).includes(nodeName)) {
+  if (options?.allowNonStandardTags && !Object.keys(localElementTags).includes(nodeName) && !Object.keys(localTextTags).includes(nodeName)) {
     const attributes = (el as HTMLElement).attributes
     const attributeMap = {}
     Array.from(attributes).forEach((attribute) => {
@@ -757,7 +758,7 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       let noOfInlineElement = 0
       Array.from(el.parentNode?.childNodes || []).forEach((child: any) => {
-        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline')) || child.nodeName in TEXT_TAGS) {
+        if (child.nodeType === 3 || child.nodeName === 'SPAN' || child.nodeName === 'A' || (options?.allowNonStandardTags && child.getAttribute('inline')) || child.nodeName in localTextTags) {
           noOfInlineElement += 1
         }
       })
@@ -787,8 +788,8 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
     return jsx('element', elementAttrs, children)
   }
 
-  if (TEXT_TAGS[nodeName]) {
-    const attrs = TEXT_TAGS[nodeName](el)
+  if (localTextTags[nodeName]) {
+    const attrs = localTextTags[nodeName](el)
     let attrsStyle = { attrs: { style: {} }, ...attrs }
 
     let newChildren = children.map((child: any) => {
