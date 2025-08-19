@@ -3,7 +3,7 @@ import isEmpty from 'lodash.isempty'
 import {IJsonToHtmlElementTags, IJsonToHtmlOptions, IJsonToHtmlTextTags, IJsonToHtmlAllowedEmptyAttributes} from './types'
 import isPlainObject from 'lodash.isplainobject'
 import {replaceHtmlEntities, forbiddenAttrChars } from './utils'
-import { HTML_ELEMENT_TYPES, TEXT_WRAPPERS, ALLOWED_EMPTY_ATTRIBUTES } from './constants'
+import { HTML_ELEMENT_TYPES, HTML_TEXT_WRAPPERS, ALLOWED_EMPTY_ATTRIBUTES } from './constants'
 
 let ADD_NBSP_FOR_EMPTY_BLOCKS : boolean = false
 
@@ -12,7 +12,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
   if(options?.addNbspForEmptyBlocks){
     ADD_NBSP_FOR_EMPTY_BLOCKS = options?.addNbspForEmptyBlocks
   }
-  let localTextWrappers: IJsonToHtmlTextTags = TEXT_WRAPPERS;
+  let localTextWrappers: IJsonToHtmlTextTags = HTML_TEXT_WRAPPERS;
   let localAllowedEmptyAttributes: IJsonToHtmlAllowedEmptyAttributes = ALLOWED_EMPTY_ATTRIBUTES;
   let localElementTypes: IJsonToHtmlElementTags = HTML_ELEMENT_TYPES;
   
