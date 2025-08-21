@@ -1,10 +1,12 @@
 // @ts-nocheck
-import { ELEMENT_TAGS, fromRedactor, getNestedValueIfAvailable } from "../src/fromRedactor"
+import { fromRedactor, getNestedValueIfAvailable } from "../src/fromRedactor"
 import { JSDOM } from "jsdom"
 import isEqual from "lodash.isequal"
 import omitdeep from "omit-deep-lodash"
 import expectedValue from "./expectedJson"
 import { IHtmlToJsonOptions } from "../src/types"
+
+import { ELEMENT_TAGS } from "../src/constants"
 
 const docWrapper = (children: any) => {
     return {
