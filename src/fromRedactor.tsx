@@ -20,6 +20,7 @@ const trimChildString = (child: any) => {
   return true
 }
 const getDomAttributes = (child: any) => {
+  console.log(child)
   return {
     [child.nodeName]: child.nodeValue
   }
@@ -475,6 +476,13 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           ...elementAttrs,
           attrs: { ...elementAttrs['attrs'], 'data-sys-asset-uid': redactor['data-sys-asset-uid'] }
         }
+      }
+      if (redactor['data-indent-level']) {
+        elementAttrs = {
+          ...elementAttrs,
+          attrs: { ...elementAttrs['attrs'], 'data-indent-level': redactor['data-indent-level'] }
+        }
+        delete redactor['data-indent-level']
       }
 
       elementAttrs = { ...elementAttrs, attrs: { ...elementAttrs['attrs'], "redactor-attributes": redactor } }
