@@ -421,6 +421,141 @@ describe("ELEMENT_TAGS", () => {
     })
 })
 
+describe("Indent support", () => {
+    test("should parse data-indent-level from paragraph", () => {
+        const html = `<p data-indent-level="1">Indented paragraph</p>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "style": {},
+                    "data-indent-level": "1",
+                    "redactor-attributes": {}
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented paragraph" }]
+            }]
+        })
+    })
+
+    test("should parse data-indent-level from paragraph with other attributes", () => {
+        const html = `<p class="custom-class" data-indent-level="1" id="para-1">Indented paragraph</p>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "style": {},
+                    "data-indent-level": "1",
+                    "id": "para-1",
+                    "class-name": "custom-class",
+                    "redactor-attributes": {
+                        "class": "custom-class",
+                        "id": "para-1"
+                    }
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented paragraph" }]
+            }]
+        })
+    })
+
+    test("should parse data-indent-level from paragraph with bold text", () => {
+        const html = `<p data-indent-level="1"><strong>Bold indented text</strong></p>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "style": {},
+                    "data-indent-level": "1",
+                    "redactor-attributes": {}
+                },
+                "uid": "uid",
+                "children": [{ "text": "Bold indented text", "attrs": { "style": {} }, "bold": true }]
+            }]
+        })
+    })
+
+    test("should parse data-indent-level from heading", () => {
+        const html = `<h1 data-indent-level="1">Indented Heading</h1>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "h1",
+                "attrs": {
+                    "style": {},
+                    "data-indent-level": "1",
+                    "redactor-attributes": {}
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented Heading" }]
+            }]
+        })
+    })
+
+    test("should parse data-indent-level from blockquote", () => {
+        const html = `<blockquote data-indent-level="1">Indented blockquote</blockquote>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "blockquote",
+                "attrs": {
+                    "style": {},
+                    "data-indent-level": "1",
+                    "redactor-attributes": {}
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented blockquote" }]
+            }]
+        })
+    })
+
+    test("should parse data-indent-level from figure with image", () => {
+        const html = `<figure data-indent-level="1"><img src="test.png" /></figure>`
+        const json = htmlToJson(html)
+        expect(json).toStrictEqual({
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "img",
+                "attrs": {
+                    "style": {
+                        "text-align": undefined
+                    },
+                    "url": "test.png",
+                    "width": "auto",
+                    "data-indent-level": "1",
+                    "redactor-attributes": {
+                        "src": "test.png",
+                        "position": null,
+                        "width": "auto"
+                    }
+                },
+                "uid": "uid",
+                "children": [{ "text": "" }]
+            }]
+        })
+    })
+})
+
 function htmlToJson (html: string, options: IHtmlToJsonOptions) {
     const dom = new JSDOM(html);
     let htmlDoc = dom.window.document.querySelector("body");

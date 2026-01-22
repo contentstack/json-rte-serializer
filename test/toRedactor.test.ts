@@ -353,3 +353,116 @@ test("should convert codeblock to proper html, where \n should not be replaced w
   const html = toRedactor(json);
   expect(html).toBe(`<pre>Hi\nHello</pre>`);
 })
+
+describe("Indent support", () => {
+    test("should convert paragraph with data-indent-level to HTML", () => {
+        const json = {
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "data-indent-level": "1"
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented paragraph" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<p data-indent-level="1">Indented paragraph</p>`)
+    })
+
+    test("should convert paragraph with data-indent-level and other attributes to HTML", () => {
+        const json = {
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "data-indent-level": "1",
+                    "id": "para-1",
+                    "class-name": "custom-class"
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented paragraph" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<p class="custom-class" data-indent-level="1" id="para-1">Indented paragraph</p>`)
+    })
+
+    test("should convert paragraph with data-indent-level and bold text to HTML", () => {
+        const json = {
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "data-indent-level": "1"
+                },
+                "uid": "uid",
+                "children": [{ "text": "Bold indented text", "bold": true }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<p data-indent-level="1"><strong>Bold indented text</strong></p>`)
+    })
+
+    test("should convert heading with data-indent-level to HTML", () => {
+        const json = {
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "h1",
+                "attrs": {
+                    "data-indent-level": "1"
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented Heading" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<h1 data-indent-level="1">Indented Heading</h1>`)
+    })
+
+    test("should convert blockquote with data-indent-level to HTML", () => {
+        const json = {
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "blockquote",
+                "attrs": {
+                    "data-indent-level": "1"
+                },
+                "uid": "uid",
+                "children": [{ "text": "Indented blockquote" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<blockquote data-indent-level="1">Indented blockquote</blockquote>`)
+    })
+
+    test("should convert image with data-indent-level to HTML", () => {
+        const json = {
+            "type": "doc",
+            "uid": "uid",
+            "attrs": {},
+            "children": [{
+                "type": "img",
+                "attrs": {
+                    "url": "test.png",
+                    "data-indent-level": "1"
+                },
+                "uid": "uid",
+                "children": [{ "text": "" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<img data-indent-level="1" src="test.png" />`)
+    })
+})
