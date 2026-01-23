@@ -353,3 +353,85 @@ test("should convert codeblock to proper html, where \n should not be replaced w
   const html = toRedactor(json);
   expect(html).toBe(`<pre>Hi\nHello</pre>`);
 })
+
+describe("data-indent-level handling", () => {
+    test("should generate margin-left based on data-indent-level value", () => {
+        const json = {
+            "type": "doc",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": { "data-indent-level": "2" },
+                "children": [{ "text": "Indented paragraph" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe('<p data-indent-level="2" style="margin-left: 60px;">Indented paragraph</p>')
+    })
+
+    test("should use data-indent-level instead of margin-left from style when both are present", () => {
+        const json = {
+            "type": "doc",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "data-indent-level": "3",
+                    "style": { "margin-left": "100px", "color": "red" }
+                },
+                "children": [{ "text": "Indented paragraph" }]
+            }]
+        }
+        const html = toRedactor(json)
+        // margin-left should be 90px (3 * 30px) not 100px, and color should be preserved
+        expect(html).toBe('<p data-indent-level="3" style="color: red;margin-left: 90px;">Indented paragraph</p>')
+    })
+
+    test("should preserve margin-left from style when data-indent-level is NOT present", () => {
+        const json = {
+            "type": "doc",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": {
+                    "style": { "margin-left": "100px" }
+                },
+                "children": [{ "text": "Non-indented paragraph" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe('<p style="margin-left: 100px;">Non-indented paragraph</p>')
+    })
+
+    test("should not add margin-left when data-indent-level is 0", () => {
+        const json = {
+            "type": "doc",
+            "attrs": {},
+            "children": [{
+                "type": "p",
+                "attrs": { "data-indent-level": "0" },
+                "children": [{ "text": "No indent" }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe('<p data-indent-level="0">No indent</p>')
+    })
+
+    test("should handle data-indent-level with multiple style properties correctly", () => {
+        const json = {
+            "type": "doc",
+            "attrs": {},
+            "children": [{
+                "type": "h2",
+                "attrs": {
+                    "data-indent-level": "1",
+                    "style": { "margin-left": "50px", "text-align": "center", "font-size": "24px" }
+                },
+                "children": [{ "text": "Indented heading" }]
+            }]
+        }
+        const html = toRedactor(json)
+        // margin-left should be 30px (1 * 30px), other styles should be preserved
+        expect(html).toBe('<h2 data-indent-level="1" style="text-align: center;font-size: 24px;margin-left: 30px;">Indented heading</h2>')
+    })
+})

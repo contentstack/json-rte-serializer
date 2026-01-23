@@ -452,8 +452,13 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
       }
       if (el.style) {
         let allStyleAttrs: { [key: string]: any } = {}
+        const hasIndentLevel = redactor['data-indent-level']
         Array.from({ length: el.style.length }).forEach((child, index) => {
           let property = el.style.item(index)
+          // If data-indent-level is present, skip margin-left as indent-level is source of truth
+          if (hasIndentLevel && kebabCase(property) === 'margin-left') {
+            return
+          }
           allStyleAttrs[kebabCase(property)] = el.style.getPropertyValue(property)
         })
         elementAttrs = {
@@ -475,6 +480,16 @@ export const fromRedactor = (el: any, options?:IHtmlToJsonOptions) : IAnyObject 
           ...elementAttrs,
           attrs: { ...elementAttrs['attrs'], 'data-sys-asset-uid': redactor['data-sys-asset-uid'] }
         }
+      }
+      // If data-indent-level is present, keep it as a proper attribute (not in redactor-attributes)
+      // Also delete style from redactor to prevent margin-left from appearing in redactor-attributes
+      if (redactor['data-indent-level']) {
+        elementAttrs = {
+          ...elementAttrs,
+          attrs: { ...elementAttrs['attrs'], 'data-indent-level': redactor['data-indent-level'] }
+        }
+        delete redactor['data-indent-level']
+        delete redactor['style']
       }
 
       elementAttrs = { ...elementAttrs, attrs: { ...elementAttrs['attrs'], "redactor-attributes": redactor } }

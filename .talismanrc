@@ -28,3 +28,8 @@ fileignoreconfig:
   checksum: cccb3cd93c499acc87593eca5cc032e256c11cf530d4de67ece09e57fc430215
 - filename: test/expectedJson.ts
   checksum: a1966b0b3993c8e3a0e9e45de49204e7788ba74ba0089a8a6b6eba0729f990bd
+- filename: package-lock.json
+  checksum: 96da2dcdb517a744b09062fad7fbe38f49e4efe5535a3e9e65a94805e7e4808c
+- filename: src/toRedactor.tsx
+  checksum: c6792b5b19cf89024ab33333a77d22af0375d4976c2fc64dae1d2f5971493397
+version: "1.0"
