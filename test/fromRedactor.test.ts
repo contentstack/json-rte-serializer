@@ -421,10 +421,58 @@ describe("ELEMENT_TAGS", () => {
     })
 })
 
-function htmlToJson (html: string, options: IHtmlToJsonOptions) {
+function htmlToJson (html: string, options?: IHtmlToJsonOptions) {
     const dom = new JSDOM(html);
     let htmlDoc = dom.window.document.querySelector("body");
    return fromRedactor(htmlDoc, options);
 
 }
+
+describe("data-indent-level handling", () => {
+    test("should keep data-indent-level as a proper attribute, not in redactor-attributes", () => {
+        const html = `<p data-indent-level="2" style="margin-left: 60px;">Indented paragraph</p>`
+        const json = htmlToJson(html)
+        
+        expect(json.children[0].attrs['data-indent-level']).toBe('2')
+        expect(json.children[0].attrs['redactor-attributes']['data-indent-level']).toBeUndefined()
+    })
+
+    test("should not include margin-left in style when data-indent-level is present", () => {
+        const html = `<p data-indent-level="2" style="margin-left: 60px; color: red;">Indented paragraph</p>`
+        const json = htmlToJson(html)
+        
+        expect(json.children[0].attrs.style['margin-left']).toBeUndefined()
+        expect(json.children[0].attrs.style['color']).toBe('red')
+        expect(json.children[0].attrs['data-indent-level']).toBe('2')
+    })
+
+    test("should include margin-left in style when data-indent-level is NOT present", () => {
+        const html = `<p style="margin-left: 60px; color: blue;">Non-indented paragraph</p>`
+        const json = htmlToJson(html)
+        
+        expect(json.children[0].attrs.style['margin-left']).toBe('60px')
+        expect(json.children[0].attrs.style['color']).toBe('blue')
+        expect(json.children[0].attrs['data-indent-level']).toBeUndefined()
+    })
+
+    test("should not include style in redactor-attributes when data-indent-level is present", () => {
+        const html = `<p data-indent-level="3" style="margin-left: 90px;">Deeply indented</p>`
+        const json = htmlToJson(html)
+        
+        expect(json.children[0].attrs['redactor-attributes']['style']).toBeUndefined()
+        expect(json.children[0].attrs['data-indent-level']).toBe('3')
+    })
+
+    test("should handle data-indent-level with multiple style properties correctly", () => {
+        const html = `<h2 data-indent-level="1" style="margin-left: 30px; text-align: center; font-size: 24px;">Indented heading</h2>`
+        const json = htmlToJson(html)
+        
+        expect(json.children[0].attrs['data-indent-level']).toBe('1')
+        expect(json.children[0].attrs.style['margin-left']).toBeUndefined()
+        expect(json.children[0].attrs.style['text-align']).toBe('center')
+        expect(json.children[0].attrs.style['font-size']).toBe('24px')
+        expect(json.children[0].attrs['redactor-attributes']['data-indent-level']).toBeUndefined()
+        expect(json.children[0].attrs['redactor-attributes']['style']).toBeUndefined()
+    })
+})
 

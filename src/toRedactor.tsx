@@ -211,9 +211,19 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       }
       if (allattrs['style'] && jsonValue['type'] !== 'img') {
         Object.keys(allattrs['style']).forEach((key) => {
+          // If data-indent-level is present, skip margin-left from style as indent-level is source of truth
+          if (allattrs['data-indent-level'] && kebbab(key) === 'margin-left') {
+            return
+          }
           style += `${kebbab(key)}: ${allattrs.style[key]};`
         })
         delete allattrs['style']
+      }
+      if (allattrs['data-indent-level']) {
+        const indentLevel = Number(allattrs['data-indent-level'])
+        if (!isNaN(indentLevel) && indentLevel > 0) {
+          style += `margin-left: ${indentLevel * 30}px;`
+        }
       }
       if (allattrs['rows'] && allattrs['cols'] && allattrs['colWidths']) {
         delete allattrs['rows']
