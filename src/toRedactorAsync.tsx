@@ -1,12 +1,12 @@
-import {IJsonToHtmlOptions} from './types'
+import {IJsonToHtmlAsyncOptions} from './types'
 import { initLocals, ILocals, processTextNode, processNonStandardType, processElementNode } from './toRedactorHelpers'
 
-export const toRedactor = (jsonValue: any, options?: IJsonToHtmlOptions): string => {
+export const toRedactorAsync = async (jsonValue: any, options?: IJsonToHtmlAsyncOptions): Promise<string> => {
   const locals = initLocals(options)
-  return _toRedactor(jsonValue, options, locals)
+  return _toRedactorAsync(jsonValue, options, locals)
 }
 
-function _toRedactor(jsonValue: any, options: IJsonToHtmlOptions | undefined, locals: ILocals): string {
+async function _toRedactorAsync(jsonValue: any, options: IJsonToHtmlAsyncOptions | undefined, locals: ILocals): Promise<string> {
   const { localTextWrappers, localElementTypes, localAllowedEmptyAttributes, addNbspForEmptyBlocks } = locals
 
   if (jsonValue.hasOwnProperty('text')) {
@@ -15,7 +15,7 @@ function _toRedactor(jsonValue: any, options: IJsonToHtmlOptions | undefined, lo
 
   let children: string = ''
   if (jsonValue.children) {
-    let mapped = Array.from(jsonValue.children).map((child) => _toRedactor(child, options, locals))
+    let mapped = await Promise.all(Array.from(jsonValue.children).map((child) => _toRedactorAsync(child, options, locals)))
     if (jsonValue['type'] === 'blockquote') {
       mapped = mapped.map((child: any) => child === '\n' ? '<br/>' : child)
     }
@@ -30,12 +30,12 @@ function _toRedactor(jsonValue: any, options: IJsonToHtmlOptions | undefined, lo
     if ('earlyReturn' in result) return result.earlyReturn
 
     const { attrs, orgType, figureStyles, children: finalChildren } = result
-    return localElementTypes[orgType || jsonValue['type']](
+    return await localElementTypes[orgType || jsonValue['type']](
       attrs,
       addNbspForEmptyBlocks && !finalChildren ? '&nbsp;' : finalChildren,
       jsonValue,
       figureStyles,
-    ) as string
+    )
   }
 
   return children
