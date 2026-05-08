@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface IAnyObject {[key:string]:any}
 export interface IHtmlToJsonOptions {
     allowNonStandardTags?: boolean,
@@ -32,4 +34,19 @@ export interface IJsonToHtmlAsyncOptions {
     allowNonStandardTypes?: boolean,
     allowedEmptyAttributes?: IJsonToHtmlAllowedEmptyAttributes,
     addNbspForEmptyBlocks?: boolean
+}
+
+// --- React tree output mode ---
+
+/** Handler for element nodes. Receives the full JSON block and pre-rendered children. */
+export type IJsonToReactElementHandler = (jsonBlock: IAnyObject, children: ReactNode) => ReactNode
+
+/** Handler for text marks (bold, italic, etc.). Wraps children in a mark element. */
+export type IJsonToReactTextHandler = (children: ReactNode, value?: any) => ReactNode
+
+export interface IJsonToReactOptions {
+    /** Override or extend element type handlers. */
+    customElementTypes?: Record<string, IJsonToReactElementHandler>,
+    /** Override or extend text mark handlers (bold, italic, etc.). */
+    customTextMarks?: Record<string, IJsonToReactTextHandler>,
 }
