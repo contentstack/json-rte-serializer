@@ -5,11 +5,23 @@
   "main": "lib/index.js",
   "module": "lib/index.mjs",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./lib/index.mjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./react": {
+      "require": "./lib/react.js",
+      "import": "./lib/react.mjs",
+      "types": "./lib/react.d.ts"
+    }
+  },
   "scripts": {
     "test": "jest",
     "prepare": "npm run build",
-    "build:cjs": "esbuild src/index.tsx --bundle --outdir=lib --platform=node --minify --external:react",
-    "build:esm": "esbuild src/index.tsx --bundle --outdir=lib --format=esm --out-extension:.js=.mjs --minify --external:react",
+    "build:cjs": "esbuild src/index.tsx src/react.tsx --bundle --outdir=lib --platform=node --minify --external:react",
+    "build:esm": "esbuild src/index.tsx src/react.tsx --bundle --outdir=lib --format=esm --out-extension:.js=.mjs --minify --external:react",
     "build": "npm run build:cjs && npm run build:esm && tsc --emitDeclarationOnly --outDir lib"
   },
   "repository": {
