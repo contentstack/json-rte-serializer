@@ -610,6 +610,129 @@ The resulting JSON-formatted data will look as follows:
 }
 ```
 
+## Async JSON to HTML Conversion
+
+For scenarios where custom element handlers need to perform asynchronous operations (e.g., resolving dynamic imports, fetching data), use `jsonToHtmlAsync`:
+
+```typescript
+import { jsonToHtmlAsync } from "@contentstack/json-rte-serializer";
+
+const html = await jsonToHtmlAsync(jsonValue, {
+  customElementTypes: {
+    // Sync handlers still work
+    p: (attrs, child) => `<p${attrs}>${child}</p>`,
+
+    // Async handlers are now supported
+    reference: async (attrs, child, jsonBlock) => {
+      const mod = await import(`./components/${jsonBlock.attrs.type}`);
+      return renderToStaticMarkup(<mod.default {...jsonBlock.attrs} />);
+    },
+  },
+});
+```
+
+`jsonToHtmlAsync` has the same API as `jsonToHtml` — the only difference is that handler return values are `await`ed, so both `string` and `Promise<string>` work. Children are resolved concurrently via `Promise.all`.
+
+## Generic Tree Walker — `toTree<T>()`
+
+For consumers who need output other than HTML strings (React elements, Preact vnodes, Vue render functions, etc.), `toTree<T>()` provides a framework-agnostic tree walker. You supply the construction callbacks; the walker handles recursion, text marks, and line breaks.
+
+```typescript
+import { toTree, IJsonToTreeOptions } from "@contentstack/json-rte-serializer";
+
+const options: IJsonToTreeOptions<MyOutputType> = {
+  // Required: map element types to your output format
+  elementTypes: {
+    p: (jsonBlock, children) => myCreateElement("p", children),
+    h1: (jsonBlock, children) => myCreateElement("h1", children),
+    a: (jsonBlock, children) => myCreateElement("a", { href: jsonBlock.attrs?.url }, children),
+    // ...add handlers for each type you need
+  },
+
+  // Required: how to create a text node in your output format
+  createText: (text) => text,
+
+  // Required: how to create a line break
+  createLineBreak: (key) => myCreateElement("br", { key }),
+
+  // Required: how to combine multiple children into one
+  combineChildren: (children) => myCreateFragment(children),
+
+  // Optional: text mark wrappers (bold, italic, etc.)
+  textMarks: {
+    bold: (children) => myCreateElement("strong", children),
+    italic: (children) => myCreateElement("em", children),
+  },
+
+  // Optional: wrap text nodes that have classname/id attrs
+  wrapTextAttrs: (node, { classname, id }) =>
+    myCreateElement("span", { className: classname, id }, node),
+
+  // Optional: wrap text nodes with inline styles
+  wrapTextStyle: (node, style) =>
+    myCreateElement("span", { style }, node),
+
+  // Optional: assign a key to an element (for keyed lists in virtual DOM frameworks)
+  keyElement: (element, key) => myAssignKey(element, key),
+};
+
+const result = toTree(jsonRteDocument, options);
+```
+
+### React Reference Implementation (`/react`)
+
+This package includes a ready-to-use React entry point at `@contentstack/json-rte-serializer/react` that implements all the callbacks above for React. It exports:
+
+- **`reactPrimitives`** — the `createText`, `createLineBreak`, `combineChildren`, `wrapTextAttrs`, `wrapTextStyle`, and `keyElement` callbacks for React
+- **`defaultElementTypes`** — handlers for all standard JSON RTE element types (`p`, `h1`–`h6`, `a`, `img`, `table`, lists, grid, etc.)
+- **`defaultTextMarks`** — handlers for bold, italic, underline, strikethrough, superscript, subscript, inlineCode
+- **`jsonToReact()`** — convenience wrapper that combines all of the above
+
+```tsx
+import { jsonToReact } from "@contentstack/json-rte-serializer/react";
+
+// Basic usage — renders all standard types out of the box
+const content = jsonToReact(jsonRteDocument);
+
+// With custom overrides
+const content = jsonToReact(jsonRteDocument, {
+  customElementTypes: {
+    // Override specific handlers — merged on top of defaults
+    reference: (jsonBlock, children) => {
+      return <MyComponent type={jsonBlock.attrs?.["content-type-uid"]} />;
+    },
+    a: (jsonBlock, children) => {
+      return <Link to={jsonBlock.attrs?.url}>{children}</Link>;
+    },
+  },
+  customTextMarks: {
+    // Add custom text marks or override defaults
+    highlight: (children) => <mark>{children}</mark>,
+  },
+});
+
+// Render directly — no dangerouslySetInnerHTML needed
+return <div className="rich-text">{content}</div>;
+```
+
+Unlike `jsonToHtml` (which produces strings requiring `dangerouslySetInnerHTML`), `jsonToReact` returns real React elements. Components rendered from handlers participate in the normal React lifecycle — hooks, context, Suspense, and lazy loading all work naturally.
+
+You can also use `toTree` directly with the exported primitives for full control:
+
+```tsx
+import { toTree } from "@contentstack/json-rte-serializer";
+import { reactPrimitives, defaultElementTypes, defaultTextMarks } from "@contentstack/json-rte-serializer/react";
+
+const result = toTree(jsonRteDocument, {
+  ...reactPrimitives,
+  elementTypes: {
+    ...defaultElementTypes,
+    // your overrides here
+  },
+  textMarks: defaultTextMarks,
+});
+```
+
 # Documentation
 
 Refer to our [JSON Rich Text Editor](https://www.contentstack.com/docs/developers/json-rich-text-editor/) documentation for more information.
