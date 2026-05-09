@@ -354,6 +354,60 @@ test("should convert codeblock to proper html, where \n should not be replaced w
   expect(html).toBe(`<pre>Hi\nHello</pre>`);
 })
 
+describe("inline text styles", () => {
+    test("should render font-family from text attrs", () => {
+        const json = {
+            type: "doc", attrs: {}, children: [{
+                type: "p", attrs: {}, children: [{
+                    text: "styled",
+                    attrs: { style: { "font-family": "Arial" } }
+                }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe('<p><span style=\'font-family:"Arial";\'>styled</span></p>')
+    })
+
+    test("should render font-size from text attrs", () => {
+        const json = {
+            type: "doc", attrs: {}, children: [{
+                type: "p", attrs: {}, children: [{
+                    text: "sized",
+                    attrs: { style: { "font-size": "20px" } }
+                }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe('<p><span style=\'font-size: 20px;\'>sized</span></p>')
+    })
+
+    test("should render color from text attrs", () => {
+        const json = {
+            type: "doc", attrs: {}, children: [{
+                type: "p", attrs: {}, children: [{
+                    text: "colored",
+                    attrs: { style: { color: "red" } }
+                }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe("<p><span style='color:red;'>colored</span></p>")
+    })
+
+    test("should render all text style properties together", () => {
+        const json = {
+            type: "doc", attrs: {}, children: [{
+                type: "p", attrs: {}, children: [{
+                    text: "all",
+                    attrs: { style: { color: "blue", "font-family": "Helvetica", "font-size": "14px" } }
+                }]
+            }]
+        }
+        const html = toRedactor(json)
+        expect(html).toBe(`<p><span style='color:blue;font-family:"Helvetica";font-size: 14px;'>all</span></p>`)
+    })
+})
+
 describe("data-indent-level handling", () => {
     test("should generate margin-left based on data-indent-level value", () => {
         const json = {
