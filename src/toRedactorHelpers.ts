@@ -78,10 +78,10 @@ export function processTextNode(jsonValue: any, localTextWrappers: IJsonToHtmlTe
         attrsStyle = `color:${style.color};`
       }
       if (style["font-family"]) {
-        attrsStyle += `font-family:"${style.fontFamily}";`
+        attrsStyle += `font-family:"${style["font-family"]}";`
       }
       if (style["font-size"]) {
-        attrsStyle += `font-size: ${style.fontSize};`
+        attrsStyle += `font-size: ${style["font-size"]};`
       }
       if (attrsStyle !== '') {
         text = `<span style='${attrsStyle}'>${text}</span>`
@@ -288,7 +288,7 @@ export function processElementNode(
         }
         if (allattrs['asset-alt']) {
           attrsJson['data-sys-asset-alt'] = allattrs['asset-alt']
-          delete attrsJson['aasset-alt']
+          delete attrsJson['asset-alt']
         }
         if (allattrs['link']) {
           attrsJson['data-sys-asset-link'] = allattrs['link']
@@ -357,7 +357,7 @@ export function processElementNode(
   if (jsonValue['type'] === 'table') {
     let colWidths = jsonValue.attrs.colWidths
     let totalWidth = colWidths.reduce((a: any, b: any) => a + b, 0)
-    var setCol = new Set(colWidths)
+    const setCol = new Set(colWidths)
     if (!(setCol.size === 1 && jsonValue.attrs.cols * setCol.values().next().value === totalWidth)) {
       let col = ''
       Array.from(colWidths).forEach((colWidth, index) => {
