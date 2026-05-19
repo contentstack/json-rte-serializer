@@ -205,6 +205,62 @@ describe('defaultElementTypes', () => {
     const result = defaultElementTypes.reference({}, 'child')
     expect(rootType(result)).toBe('div')
   })
+
+  describe('phrasing container auto-upgrade', () => {
+    const phrasingOnlyTypes = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+
+    it.each(phrasingOnlyTypes)('%s renders native tag when children are text-only', (type) => {
+      const jsonBlock = { children: [{ text: 'hello' }] }
+      const result = defaultElementTypes[type](jsonBlock, 'hello')
+      expect(rootType(result)).toBe(type)
+    })
+
+    it.each(phrasingOnlyTypes)('%s renders native tag when children are phrasing types', (type) => {
+      const jsonBlock = { children: [{ text: 'before ' }, { type: 'a', attrs: { url: '#' }, children: [{ text: 'link' }] }] }
+      const result = defaultElementTypes[type](jsonBlock, 'child')
+      expect(rootType(result)).toBe(type)
+    })
+
+    it.each(phrasingOnlyTypes)('%s upgrades to <div> when children contain reference', (type) => {
+      const jsonBlock = { children: [{ text: '' }, { type: 'reference', attrs: {} }, { text: '' }] }
+      const result = defaultElementTypes[type](jsonBlock, 'child')
+      expect(rootType(result)).toBe('div')
+      expect(rootProps(result)?.className).toBe(`rte-${type}`)
+    })
+
+    it.each(phrasingOnlyTypes)('%s upgrades to <div> when children contain div', (type) => {
+      const jsonBlock = { children: [{ type: 'div', children: [{ text: 'block' }] }] }
+      const result = defaultElementTypes[type](jsonBlock, 'child')
+      expect(rootType(result)).toBe('div')
+      expect(rootProps(result)?.className).toBe(`rte-${type}`)
+    })
+
+    it.each(phrasingOnlyTypes)('%s upgrades to <div> for unknown custom types', (type) => {
+      const jsonBlock = { children: [{ type: 'my-custom-widget', attrs: {}, children: [{ text: '' }] }] }
+      const result = defaultElementTypes[type](jsonBlock, 'child')
+      expect(rootType(result)).toBe('div')
+      expect(rootProps(result)?.className).toBe(`rte-${type}`)
+    })
+
+    it('p allows img children without upgrade', () => {
+      const jsonBlock = { children: [{ type: 'img', attrs: { src: 'pic.jpg' } }] }
+      const result = defaultElementTypes.p(jsonBlock, 'child')
+      expect(rootType(result)).toBe('p')
+    })
+
+    it('p allows span children without upgrade', () => {
+      const jsonBlock = { children: [{ type: 'span', children: [{ text: 'inline' }] }] }
+      const result = defaultElementTypes.p(jsonBlock, 'child')
+      expect(rootType(result)).toBe('p')
+    })
+
+    it('check-list upgrades to <div> when children contain block types', () => {
+      const jsonBlock = { children: [{ type: 'reference', attrs: {} }] }
+      const result = defaultElementTypes['check-list'](jsonBlock, 'child')
+      expect(rootType(result)).toBe('div')
+      expect(rootProps(result)?.className).toBe('rte-p')
+    })
+  })
 })
 
 // ---------------------------------------------------------------------------
@@ -324,5 +380,42 @@ describe('jsonToReact', () => {
     const span = rootProps(result)?.children
     expect(rootType(span)).toBe('span')
     expect(rootProps(span)?.style).toEqual({ color: 'red' })
+  })
+
+  it('upgrades p to div when it contains a reference (block) child', () => {
+    const json = {
+      type: 'doc',
+      children: [
+        {
+          type: 'p',
+          children: [
+            { text: '' },
+            { type: 'reference', attrs: { 'content-type-uid': 'layout', 'entry-uid': 'abc' }, children: [{ text: '' }] },
+            { text: '' },
+          ],
+        },
+      ],
+    }
+    const result = jsonToReact(json)
+    expect(rootType(result)).toBe('div')
+    expect(rootProps(result)?.className).toBe('rte-p')
+  })
+
+  it('keeps p as <p> when children are only text and inline types', () => {
+    const json = {
+      type: 'doc',
+      children: [
+        {
+          type: 'p',
+          children: [
+            { text: 'click ' },
+            { type: 'a', attrs: { url: '#' }, children: [{ text: 'here' }] },
+            { text: ' please' },
+          ],
+        },
+      ],
+    }
+    const result = jsonToReact(json)
+    expect(rootType(result)).toBe('p')
   })
 })

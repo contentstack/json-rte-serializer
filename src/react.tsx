@@ -55,17 +55,58 @@ export const defaultTextMarks: Record<string, (children: ReactNode, value?: any)
 }
 
 // ---------------------------------------------------------------------------
+// HTML content model helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * JSON RTE types whose rendered output is phrasing (inline) content.
+ * Text nodes (which have no `type`) are implicitly phrasing.
+ * Any child type NOT in this set is assumed to produce block-level output
+ * and will cause phrasing-only parents (p, h1–h6) to upgrade to <div>.
+ *
+ * This is a whitelist — unknown/custom types default to block-level,
+ * which is the safe choice for valid HTML nesting.
+ */
+const PHRASING_TYPES: ReadonlySet<string> = new Set([
+  'a', 'span', 'img', 'fragment',
+  'embed', 'social-embeds',
+])
+
+/**
+ * Check whether a JSON RTE node contains any children that would produce
+ * block-level HTML output. Text nodes (no `type` property) are always safe.
+ */
+function hasBlockChild(jsonBlock: any): boolean {
+  return jsonBlock.children?.some(
+    (child: any) => child.type && !PHRASING_TYPES.has(child.type),
+  ) ?? false
+}
+
+/**
+ * Wrap children in a phrasing-only element (p, h1–h6), auto-upgrading to
+ * <div> with a CSS class when block-level children are present.
+ * This prevents invalid HTML nesting (e.g. <div> inside <p>) that causes
+ * hydration mismatches in React SSR.
+ */
+function phrasingContainer(tag: string, jsonBlock: any, children: ReactNode | null): ReactNode {
+  if (hasBlockChild(jsonBlock)) {
+    return <div className={`rte-${tag}`}>{children}</div>
+  }
+  return React.createElement(tag, null, children)
+}
+
+// ---------------------------------------------------------------------------
 // Default element type handlers
 // ---------------------------------------------------------------------------
 
 export const defaultElementTypes: Record<string, (jsonBlock: any, children: ReactNode | null) => ReactNode> = {
-  p: (_, ch) => <p>{ch}</p>,
-  h1: (_, ch) => <h1>{ch}</h1>,
-  h2: (_, ch) => <h2>{ch}</h2>,
-  h3: (_, ch) => <h3>{ch}</h3>,
-  h4: (_, ch) => <h4>{ch}</h4>,
-  h5: (_, ch) => <h5>{ch}</h5>,
-  h6: (_, ch) => <h6>{ch}</h6>,
+  p: (jb, ch) => phrasingContainer('p', jb, ch),
+  h1: (jb, ch) => phrasingContainer('h1', jb, ch),
+  h2: (jb, ch) => phrasingContainer('h2', jb, ch),
+  h3: (jb, ch) => phrasingContainer('h3', jb, ch),
+  h4: (jb, ch) => phrasingContainer('h4', jb, ch),
+  h5: (jb, ch) => phrasingContainer('h5', jb, ch),
+  h6: (jb, ch) => phrasingContainer('h6', jb, ch),
   blockquote: (_, ch) => <blockquote>{ch}</blockquote>,
   code: (_, ch) => <pre>{ch}</pre>,
   ol: (_, ch) => <ol>{ch}</ol>,
@@ -94,7 +135,7 @@ export const defaultElementTypes: Record<string, (jsonBlock: any, children: Reac
   span: (_, ch) => <span>{ch}</span>,
   div: (_, ch) => <div>{ch}</div>,
   fragment: (_, ch) => <>{ch}</>,
-  'check-list': (_, ch) => <p>{ch}</p>,
+  'check-list': (jb, ch) => phrasingContainer('p', jb, ch),
   row: (_, ch) => <div style={{ maxWidth: '100%', display: 'flex' }}>{ch}</div>,
   column: (jb, ch) => {
     const width = jb?.meta?.width
