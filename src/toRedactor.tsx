@@ -48,7 +48,7 @@ export const toRedactor = (jsonValue: any,options?:IJsonToHtmlOptions) : string 
       text = text.replace(/\n/g, '<br/>')
     }
     Object.entries(jsonValue).forEach(([key, value]) => {
-      if(localTextWrappers.hasOwnProperty(key)){
+      if(localTextWrappers.hasOwnProperty(key) && value){
         text = localTextWrappers[key](text,value)
       }
     })

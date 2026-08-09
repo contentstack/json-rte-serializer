@@ -104,6 +104,28 @@ describe("Testing json to html conversion", () => {
         expect(htmlValue).toBe(expectedValue["inline-classname-and-id"].html)
     })
 
+    describe("Falsy text marks", () => {
+        it("does not wrap text when bold/italic/underline are false", () => {
+            const jsonValue = [{
+                type: "p",
+                attrs: {},
+                children: [{ text: "Plain text", bold: false, italic: false, underline: false }]
+            }]
+            const htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
+            expect(htmlValue).toBe("<p>Plain text</p>")
+        })
+
+        it("wraps only the marks whose value is true", () => {
+            const jsonValue = [{
+                type: "p",
+                attrs: {},
+                children: [{ text: "Mixed", bold: true, italic: false, underline: true }]
+            }]
+            const htmlValue = toRedactor({ type: "doc", attrs: {}, children: jsonValue })
+            expect(htmlValue).toBe("<p><u><strong>Mixed</strong></u></p>")
+        })
+    })
+
     describe("Nested attrs", () => {
 
         test("should have stringified attrs for nested json", () => {
