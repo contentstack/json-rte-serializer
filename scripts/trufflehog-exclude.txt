@@ -1,0 +1,8 @@
+(^|/)node_modules/
+(^|/)coverage/
+(^|/)\.git/
+(^|/)dist/
+(^|/)lib/
+(^|/)build/
+(^|/)package-lock\.json$
+(^|/)\.npmrc$
